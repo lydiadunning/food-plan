@@ -1,5 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
+import {useState, React} from 'react';
+import ChildProfile from './components/childProfile';
 
 //const Person = ({ person, deleteEntry }) => <p>{person.name} {person.number} <DeleteButton deleteEntry={() => deleteEntry(person.id)}/> </p>
 
@@ -38,20 +40,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ChildProfile/>
     </div>
   );
 }

@@ -1,36 +1,48 @@
+import {useState, React} from 'react';
 // a component for adding a child, during app setup
 
-const addChild = ({ form, setForm }) => {
+const AddChild = ({ setChild }) => {
+  
+  const createGoal = (text = 'introduce a new food each day') => {
+    const date = new Date() 
+    date.setDate(date.getDate() + 7);
+    console.log(date)
+
+    return {
+      description: text,
+      endDate: date,
+    }
+  }
+
+  const createThresholds = () => {
+    return ['pick up with fork', 'smell', 'touch', 'lick', 'place in mouth', 'bite']
+  }
+
+  const createChild = (name) => {
+    setChild({
+      'name': name,
+      thresholds: createThresholds(),
+      goal: createGoal(),
+    })
+  }
+
+  const [form, setForm] = useState('') 
+
+  const clickHandler = (event) => {
+    createChild(form)
+  }
+  
   return(
     <form className="new-child">
-      
-
-    </form>
-  )
-}
-
-import Entry from './Entry.jsx'
-
-const Inputs = ({ form, setForm, errors, setErrors }) => {
-
-  return(
-		<form className="input">
       <label className="name" > Child
       <input type='text' placeholder="name"
-        value={ form.name} onChange={ e =>  
-        { setForm({ ...form, name: e.target.value })
-
+        value={ form} onChange={ e => { 
+          setForm(e.target.value)
         }} />
       </label>
-      <label className="name" > Child
-      <input type='text' placeholder="name"
-        value={ form.name} onChange={ e =>  
-        { setForm({ ...form, name: e.target.value })
-        }} />
-      </label>
-
+    <button onClick={ clickHandler }>Done</button>
 	</form>
 	)
 }
 
-export default Inputs;
+export default AddChild;
