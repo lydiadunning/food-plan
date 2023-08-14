@@ -24,13 +24,18 @@ const ChildProfile = () => {
     return (<SetThresholds child={ child } setChild={ setChild }></SetThresholds>)
   }
 
+  // TO DO: fix this
+  const editThresholds = () => {
+    console.log('edit')
+    return (<SetThresholds child={ child } setChild={ setChild }></SetThresholds>)
+  }
 
   // the below code uses the threshold's index as a key, a react anti-pattern. This was chosen for expediency
   // currently, this list is constant. Keys will be necessary when implementing changeable thresholds. 
   return(
     <section className={ child.name }>
       <h2>{ child.name }</h2>
-      <h3>Thresholds <a href="">✏️</a></h3>
+      <h3>Thresholds <button onClick={editThresholds}>✏️</button></h3>
       <ol>
         { Object.keys(child.thresholds).map(key => <li key={key}>{ child.thresholds[key] }</li>) }
       </ol>
