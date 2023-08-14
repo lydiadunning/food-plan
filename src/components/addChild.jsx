@@ -15,7 +15,8 @@ const AddChild = ({ setChild }) => {
   }
 
   const createThresholds = () => {
-    return ['pick up with fork', 'smell', 'touch', 'lick', 'place in mouth', 'bite']
+    return {}
+    // return ['pick up with fork', 'smell', 'touch', 'lick', 'place in mouth', 'bite']
   }
 
   const createChild = (name) => {
