@@ -11,23 +11,28 @@ const ChildProfile = () => {
     goal: null,
   }
   
+  
   const [child, setChild] = useState(childState)
   const [customThresholds, setCustomThresholds] = useState({})
+
+  const isChildThreshold = child ? Object.keys(child.thresholds).length === 0 : false
+  const [isEditingThresholds, setIsEditingThresholds] = useState(isChildThreshold)
 
 
   if (child.name === '') {
     return (
       <AddChild setChild={ setChild } ></AddChild>
     )
-  } else if (Object.keys(child.thresholds).length === 0) {
+  } else if (isEditingThresholds) {
     console.log('thresholds')
-    return (<SetThresholds child={ child } setChild={ setChild }></SetThresholds>)
+    return (<SetThresholds child={ child } setChild={ setChild } keepEditing={setIsEditingThresholds}></SetThresholds>)
+  } else {
+    console.log(child)
   }
 
   // TO DO: fix this
   const editThresholds = () => {
-    console.log('edit')
-    return (<SetThresholds child={ child } setChild={ setChild }></SetThresholds>)
+    setIsEditingThresholds(true)
   }
 
   // the below code uses the threshold's index as a key, a react anti-pattern. This was chosen for expediency
@@ -37,7 +42,7 @@ const ChildProfile = () => {
       <h2>{ child.name }</h2>
       <h3>Thresholds <button onClick={editThresholds}>✏️</button></h3>
       <ol>
-        { Object.keys(child.thresholds).map(key => <li key={key}>{ child.thresholds[key] }</li>) }
+        { child.thresholds.map(threshold => <li key={threshold.key}>{ threshold.text }</li>) }
       </ol>
       <h3>Goal <a href="">✏️</a></h3>
       <p>{ child.goal.description}</p>

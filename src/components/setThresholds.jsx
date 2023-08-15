@@ -1,7 +1,6 @@
 import {useState, useEffect, React} from 'react';
-// a component for adding a child, during app setup
 
-const SetThresholds = ({ child, setChild }) => {
+const SetThresholds = ({ child, setChild, keepEditing }) => {
   
   const allDefaultThresholds = [
     'on the plate',
@@ -17,70 +16,78 @@ const SetThresholds = ({ child, setChild }) => {
     'eat average portion'
   ]
 
-  const [thresholds, setThresholds] = useState({})
-  const [custom, setCustom] = useState({})
+  const defaults = allDefaultThresholds.map((x, i) => {
+    return {
+      text: x,
+      key: i,
+      isActive: false,
+      isDefault: true
+    }
+  })
+
+  const allKeys = child.thresholds.map(x => x.key)
+
+  const startingThresholds = child.thresholds.length === 0 ? defaults :
+    child.thresholds.concat(defaults.filter(threshold => !allKeys.includes(threshold.key)))
+
+  const [allThresholds, setAllThresholds] = useState(startingThresholds)
+
+  const getActiveThresholds = () => {
+    return allThresholds.filter(x =>  x.isActive )
+  }
 
   const checkboxHandler = (e) => {
-    const index = e.target.value
-    console.log('checking', index, e.target.name)
-    if (index in thresholds) {
-      console.log(index,'in there')
-      const {[index]: discard, ...rest} = thresholds
-      console.log('rest', rest, 'index', discard)
-      setThresholds(rest)
-    } else {
-      setThresholds({...thresholds, [index]: e.target.name})
-    }  
+    const key = parseInt(e.target.value)
+    setAllThresholds(
+      allThresholds.map(x => {
+        if (key === x.key) {
+          return {
+            ...x,
+            isActive: !x.isActive
+          }
+        }
+        return x
+      })
+    )
   }
-  console.log(setChild)
 
   const acceptThresholds = () => {
-    setChild({...child, 'thresholds': thresholds})
+    const active = getActiveThresholds()
+    setChild({...child, 'thresholds': active})
+    keepEditing(false)
   }
 
   const customHandler = (e) => {
     if (e.key === 'Enter') {
       // interface with database, use db provided index
-      let newKey = 0
-      while (newKey in thresholds){
-        newKey = (Math.floor(Math.random() * 10) + 15)
-      }
-      // setThresholds({...thresholds, [newKey]: e.target.value})
-      setCustom({...custom, [newKey]: e.target.value})
+      let newKey = allThresholds.length + 1
+      setAllThresholds([...allThresholds, {
+        text: e.target.value,
+        key: newKey,
+        isActive: false,
+        isDefault: false
+      }])
+      e.value = ''
     }
   }
 
-console.log(thresholds)
+console.log('allActiveThresholds', getActiveThresholds())
 
   return(
     <section>
       <h2>Set Thresholds</h2>
       <ol>
-        {allDefaultThresholds.map((threshold, index) => {
+        {allThresholds.map((threshold, index) => {
           return (
             <li>
-              <label>{ threshold }</label>
+              <label>{ threshold.text }</label>
               <input
                 type="checkbox"
-                id={`checkbox-${index}`}
-                name={threshold}
-                value={index}
+                id={`checkbox-${threshold.key}`}
+                name={threshold.text}
+                value={threshold.key}
                 onChange={checkboxHandler}
-              />
-            </li>
-            
-          )
-        })}
-        {Object.values(custom).map((threshold, index) => {
-          return (
-            <li>
-              <label>{ threshold }</label>
-              <input
-                type="checkbox"
-                id={`checkbox-${index}`}
-                name={threshold}
-                value={index}
-                onChange={checkboxHandler}
+                checked={threshold.isActive}
               />
             </li>
             
@@ -90,7 +97,7 @@ console.log(thresholds)
       <input type='text' onKeyUp={customHandler} placeholder='Custom Threshold'></input>
       <br></br>
       <button type='button' onClick={acceptThresholds}>Measure these Thresholds</button>
-      {Object.values(thresholds).map((x, i) => { return <p>{x}</p> })}
+      {getActiveThresholds().map((x, i) => { return <p>{x.text}</p> })}
     </section>
 	)
 }
