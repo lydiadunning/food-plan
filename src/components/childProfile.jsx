@@ -1,6 +1,7 @@
 import {useState, React} from 'react';
 import AddChild from './addChild';
 import SetThresholds from './setThresholds';
+import SetGoal from './setGoal';
 // a component for adding a child, during app setup
 
 const ChildProfile = () => {
@@ -11,9 +12,7 @@ const ChildProfile = () => {
     goal: null,
   }
   
-  
   const [child, setChild] = useState(childState)
-  const [customThresholds, setCustomThresholds] = useState({})
 
   const isChildThreshold = child ? Object.keys(child.thresholds).length === 0 : false
   const [isEditingThresholds, setIsEditingThresholds] = useState(isChildThreshold)
@@ -44,9 +43,10 @@ const ChildProfile = () => {
       <ol>
         { child.thresholds.map(threshold => <li key={threshold.key}>{ threshold.text }</li>) }
       </ol>
-      <h3>Goal <a href="">✏️</a></h3>
+      {/* <h3>Goal <a href="">✏️</a></h3>
       <p>{ child.goal.description}</p>
-      <p>until { child.goal.endDate.toDateString() }</p>
+      <p>until { child.goal.endDate.toDateString() }</p> */}
+      <SetGoal child={child} setChild={setChild}></SetGoal>
       <br/>
       <br/>
     </section>

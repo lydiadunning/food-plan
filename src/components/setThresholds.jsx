@@ -1,4 +1,4 @@
-import {useState, useEffect, React} from 'react';
+import {useState, React} from 'react';
 
 const SetThresholds = ({ child, setChild, keepEditing }) => {
   
