@@ -30,9 +30,12 @@ const childSchema = new Schema ({
   },
 })
 
+const Child = mongoose.model('Child', childSchema)
+
 module.exports = {
   Introduction,
-  Ingredient
+  Ingredient,
+  Child
 }
 
 //https://github.com/Zwimber/mongoose-style-guide
