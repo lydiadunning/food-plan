@@ -1,3 +1,5 @@
+import Child from '../model.js'
+
 
 describe('Creating a child profile', () => {
 
@@ -8,13 +10,13 @@ describe('Creating a child profile', () => {
       'thresholds': [
         'pick up with a fork', 
         'smell', 
-          'touch', 
-      'lick', 
+        'touch', 
+        'lick', 
         'place in mouth'
       ],
       'goal': {
         description: 'Serve beans every day',
-        'endDate': date.getDate(),
+        'endDate': date.getDate(), // adds the current date for testing purposes. 
         success: 0
       }
     }
