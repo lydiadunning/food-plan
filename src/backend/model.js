@@ -1,42 +1,113 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-const introductionSchema = new Schema ({
-  ingredient: { type: Schema.Types.ObjectId, ref: 'Ingredient' },
-  description: String,
-  thresholdPassed: String,
-  // child: String,
-  date: {
-    type: Date,
-    default: Date.now,
-  }
+const userSchema = new Schema ({
+  // use a library for validation here, pass off as much user-creation work as possible to simplify and reduce risk.
+  userName: {
+    type: String,
+    required: false
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  password: String
 })
 
-// May not need this schema- replace with a string?
-// const ingredientSchema = new Schema ({
-//   name: String,
-//   introductions: [{ type: Schema.Types.ObjectId, ref: 'Introduction' }],
-// })
-
-const Introduction = mongoose.model('Introduction', introductionSchema)
-// const Ingredient = mongoose.model('Ingredient', ingredientSchema)
+const User = mongoose.model('User', userSchema)
 
 const childSchema = new Schema ({
-  name: String,
-  introductions: { type: 'ObjectId', ref: 'Introduction' },
-  thresholds: [String],
-  goal: {
+  name: {
     type: String,
-    end: Date,
+    required: true
   },
+  introductions: { 
+    type: 'ObjectId', 
+    ref: 'Introduction',
+    required: false
+  }
+
 })
 
 const Child = mongoose.model('Child', childSchema)
 
+const foodSchema = new Schema ({
+  name: {
+    type: String,
+    required: true
+  },
+  introductions: { 
+    type: 'ObjectId', 
+    ref: 'Introduction',
+    required: false
+  }
+})
+
+const Food = mongoose.model('Food', foodSchema)
+
+const systemThresholdSchema = new Schema ({
+  thresholds: [{ 
+    type: String,
+    required: true
+  }]
+})
+
+const SystemThreshold = mongoose.model('SystemThreshold', systemThresholdSchema)
+
+const isSystemThresholdOrString = (value) => {
+  // https://stackoverflow.com/questions/30334767/mongoose-schema-validate-xor-fields
+  // keep using this 
+  if (!value) return false
+  return value instanceof String || value instanceof SystemThreshold
+}
+
+const thresholdSchema = new Schema ({
+  // I want to be able to activate and deactivate thresholds, not sure how to structure this data so I can do that.
+  thresholds: [{
+    type: Schema.Types.Mixed,
+    required: false,
+    validate: [isSystemThresholdOrString, "Threshold must be a string or a SystemThreshold"],
+  }]
+})
+
+// I think I want to require either a food or a description
+const introductionSchema = new Schema ({
+  // haven't decided how to cross-reference schemas yet
+  ingredient: { 
+    type: Schema.Types.ObjectId, 
+    ref: 'Ingredient', 
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  thresholdPassed: {
+    
+  },
+  meal: {
+    type: String,
+    required: false
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+    required: false
+  }
+})
+
+const Introduction = mongoose.model('Introduction', introductionSchema)
+
+
+const Threshold = mongoose.model('Threshold', thresholdSchema)
+
 module.exports = {
+  User,
+  Child,
+  Food,
   Introduction,
-  // Ingredient,
-  Child
+  SystemThreshold,
+  Threshold
 }
 
 //https://github.com/Zwimber/mongoose-style-guide
