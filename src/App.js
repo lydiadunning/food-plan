@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState, React} from 'react';
-import ChildProfile from './components/childProfile';
+import Home from './components/home';
 
 //const Person = ({ person, deleteEntry }) => <p>{person.name} {person.number} <DeleteButton deleteEntry={() => deleteEntry(person.id)}/> </p>
 
@@ -40,7 +40,7 @@ import ChildProfile from './components/childProfile';
 function App() {
   return (
     <div className="App">
-      <ChildProfile/>
+      <Home/>
     </div>
   );
 }
