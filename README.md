@@ -65,8 +65,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/a
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-![image](https://github.com/lydiadunning/food-plan/assets/71429289/13bd0aa8-93b2-49b8-b80d-1b82f30b5a20)
-
+<div style="position: relative; padding-bottom: 52.5%; height: 0;"><iframe src="https://www.loom.com/embed/14f9249f069949119c9c6c92606ba09c?sid=d08d992b-f3d2-4e93-9af9-3195c6496584" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
 ### `npm run build` fails to minify
 
