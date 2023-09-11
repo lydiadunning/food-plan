@@ -13,7 +13,7 @@ describe('introductions can be queried', () => {
     }
 
     await api
-      .get('/api/)
+      .get('/api/introduction')
       .expect(201)
       .expect('Content-Type', /application\/json/)
   

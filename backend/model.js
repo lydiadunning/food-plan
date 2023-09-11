@@ -25,8 +25,12 @@ const childSchema = new Schema ({
     type: 'ObjectId', 
     ref: 'Introduction',
     required: false
-  }
-
+  },
+  thresholds: [{
+    type: 'ObjectId',
+    ref: 'Threshold',
+    required: false
+  }]
 })
 
 const Child = mongoose.model('Child', childSchema)
@@ -83,7 +87,9 @@ const introductionSchema = new Schema ({
     required: true
   },
   thresholdPassed: {
-    
+    type: Schema.Types.ObjectId,
+    ref: 'Threshold',
+    required: false
   },
   meal: {
     type: String,
