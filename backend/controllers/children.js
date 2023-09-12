@@ -12,7 +12,7 @@ childRouter.post('/', async (request, response) => {
   const child = new Child(request.body)
   // return 400 error if request body missing vital info
   const result = await child.save()
-  response status(201).json(result)
+  response.status(201).json(result)
 })
 
 // After fully implementing users, allow a user to remove the link between their profile and a child, but don't delete the child until it has no remaining ties to any user. 

@@ -52,7 +52,8 @@ const Food = mongoose.model('Food', foodSchema)
 const systemThresholdSchema = new Schema ({
   thresholds: [{ 
     type: String,
-    required: true
+    required: true,
+    index: true // trying this out, I don't fully understand the purpose of index here
   }]
 })
 
@@ -67,12 +68,16 @@ const isSystemThresholdOrString = (value) => {
 
 const thresholdSchema = new Schema ({
   // I want to be able to activate and deactivate thresholds, not sure how to structure this data so I can do that.
-  thresholds: [{
+  threshold: {
     type: Schema.Types.Mixed,
     required: false,
     validate: [isSystemThresholdOrString, "Threshold must be a string or a SystemThreshold"],
-  }]
+    index: true // trying this out, I don't fully understand the purpose of index here
+  }
 })
+
+const Threshold = mongoose.model('Threshold', thresholdSchema)
+
 
 // I think I want to require either a food or a description
 const introductionSchema = new Schema ({
@@ -87,7 +92,7 @@ const introductionSchema = new Schema ({
     required: true
   },
   thresholdPassed: {
-    type: Schema.Types.ObjectId,
+    type: Schema.Types.Mixed,
     ref: 'Threshold',
     required: false
   },
@@ -105,7 +110,6 @@ const introductionSchema = new Schema ({
 const Introduction = mongoose.model('Introduction', introductionSchema)
 
 
-const Threshold = mongoose.model('Threshold', thresholdSchema)
 
 module.exports = {
   User,
