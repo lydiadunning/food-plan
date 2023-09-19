@@ -53,7 +53,6 @@ const systemThresholdSchema = new Schema ({
   thresholds: [{ 
     type: String,
     required: true,
-    index: true // trying this out, I don't fully understand the purpose of index here
   }]
 })
 
@@ -72,7 +71,6 @@ const thresholdSchema = new Schema ({
     type: Schema.Types.Mixed,
     required: false,
     validate: [isSystemThresholdOrString, "Threshold must be a string or a SystemThreshold"],
-    index: true // trying this out, I don't fully understand the purpose of index here
   }
 })
 
