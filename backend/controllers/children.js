@@ -1,7 +1,6 @@
 const Child  = require('model.js')
 const childRouter = require('express').Router()
 
-
 childRouter.get('/', async (request, response) => {
   const children = await Child.find({})
 
@@ -17,7 +16,7 @@ childRouter.post('/', async (request, response) => {
 
 // After fully implementing users, allow a user to remove the link between their profile and a child, but don't delete the child until it has no remaining ties to any user. 
 childRouter.delete('/:id', async (request, response) => {
-  const child = await Blog.findByIdAndDelete(request.params.id)
+  const child = await Child.findByIdAndDelete(request.params.id)
   response.status(204).end()
 })
 

@@ -1,6 +1,9 @@
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
+const childRouter = require('./controllers/children')
+const userRouter = require('./controllers/users')
+
 const app = express()
 
 mongoose.set('strictQuery', false)
@@ -14,6 +17,6 @@ app.use(express.json())// what does the json method return?
 
 // app.use the router - to direct requests
 app.use('/api/child', childRouter)
-
+app.use('/api/user', userRouter)
 
 module.exports = app
