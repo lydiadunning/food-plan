@@ -1,4 +1,4 @@
-const Introduction  = require('model.js')
+const Introduction  = require('../models/introduction.js')
 const introductionRouter = require('express').Router()
 
 
@@ -12,7 +12,7 @@ introductionRouter.post('/', async (request, response) => {
   const introduction = new introduction(request.body)
   // return 400 error if request body missing vital info
   const result = await Introduction.save()
-  response status(201).json(result)
+  response.status(201).json(result)
 })
 
 // After fully implementing users, allow a user to remove the link between their profile and a introduction, but don't delete the introduction until it has no remaining ties to any user. 
@@ -27,4 +27,4 @@ introductionRouter.put('/:id', async (request, response) => {
   response.json(updated)
 })
 
-module.exports(introductionRouter)
+module.exports = introductionRouter

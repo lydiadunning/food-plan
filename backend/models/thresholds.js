@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-const { Schema } = mongoose;
+const { Schema, model } = require('mongoose');
+
 
 const systemThresholdSchema = new Schema ({
   thresholds: [{ 
@@ -8,7 +8,7 @@ const systemThresholdSchema = new Schema ({
   }]
 })
 
-const SystemThreshold = mongoose.model('SystemThreshold', systemThresholdSchema)
+const SystemThreshold = model('SystemThreshold', systemThresholdSchema)
 
 const isSystemThresholdOrString = (value) => {
   // https://stackoverflow.com/questions/30334767/mongoose-schema-validate-xor-fields
@@ -27,7 +27,7 @@ const thresholdSchema = new Schema ({
   }
 })
 
-const Threshold = mongoose.model('Threshold', thresholdSchema)
+const Threshold = model('Threshold', thresholdSchema)
 
 module.exports = {
   SystemThreshold,

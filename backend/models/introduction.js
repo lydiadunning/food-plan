@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-const { Schema } = mongoose;
+const { Schema, model } = require('mongoose');
 
 // I think I want to require either a food or a description
 const introductionSchema = new Schema ({
@@ -29,4 +28,4 @@ const introductionSchema = new Schema ({
   }
 })
 
-module.exports = mongoose.model('Introduction', introductionSchema)
+module.exports = model('Introduction', introductionSchema)

@@ -1,4 +1,4 @@
-const Child  = require('model.js')
+const Child  = require('../models/child.js')
 const childRouter = require('express').Router()
 
 childRouter.get('/', async (request, response) => {
@@ -26,4 +26,4 @@ childRouter.put('/:id', async (request, response) => {
   response.json(updated)
 })
 
-module.exports(childRouter)
+module.exports = childRouter

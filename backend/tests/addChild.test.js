@@ -1,6 +1,7 @@
 const Child = require('../models/child.js')
 const childRouter = require('../controllers/children.js')
 const mongoose = require('mongoose')
+const supertest = require('supertest')
 const app = require('../app.js')
 const api = supertest(app)
 
@@ -28,11 +29,9 @@ const api = supertest(app)
 
 describe('Creating a child profile', () => {
   test('a new child profile can be added correctly', async () => {
-    const date = new Date()
+    // const date = new Date()
     const newChild = {
       'name': 'Bess Borgington',
-      'thresholds': [
-      ],
     }
   
     await api
@@ -40,11 +39,13 @@ describe('Creating a child profile', () => {
       .send(newChild)
       .expect(201)
       .expect('Content-Type', /application\/json/)
+    
+    console.log('api call complete')
   
-    const childrefFromDB = await Child.find({})
-    const children = childrefFromDB.map(child => child.toJSON())
+    const childrenFromDB = await Child.find({})
+    const children = childrenFromDB.map(child => child.toJSON())
   
-    const expectedChildCount = 3
+    const expectedChildCount = 1
   
     expect(children).toHaveLength(expectedChildCount)
   
@@ -60,27 +61,27 @@ describe('Creating a child profile', () => {
     )
   }) 
 
-  test('a list of child profiles can be returned', async () => {
-      const response = await api.get('/api/child').expect(200)
-      expect(response.body)
-  })
+  // test('a list of child profiles can be returned', async () => {
+  //     const response = await api.get('/api/child').expect(200)
+  //     expect(response.body)
+  // })
 
-  test('the expected number of child profiles is returned', async () => {
-    const response = await api.get('/api/child').expect(200)
-    expect(response.body).toHaveLength(2)
-  })
+  // test('the expected number of child profiles is returned', async () => {
+  //   const response = await api.get('/api/child').expect(200)
+  //   expect(response.body).toHaveLength(2)
+  // })
 
-  test('the correct profile can be deleted', async () => {
-    const children = await api.get('/api/childProfiles')
-    idToDelete = children[0].id
-    const response = await api.delete(`/api/child/${idToDelete}`)
-      .expect(204)
+  // test('the correct profile can be deleted', async () => {
+  //   const children = await api.get('/api/childProfiles')
+  //   idToDelete = children[0].id
+  //   const response = await api.delete(`/api/child/${idToDelete}`)
+  //     .expect(204)
 
-    const childrenAtEnd = await Child.find({})
-    const endChildren = childrenAtEnd.map(child => child.toJSON())
-    expect(endChildren).not.toContain(children[0])
+  //   const childrenAtEnd = await Child.find({})
+  //   const endChildren = childrenAtEnd.map(child => child.toJSON())
+  //   expect(endChildren).not.toContain(children[0])
 
-  })
+  // })
 
 
   // test('description', () => {

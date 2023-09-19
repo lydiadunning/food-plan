@@ -1,4 +1,4 @@
-const Food  = require('model.js')
+const Food  = require('../models/food.js')
 const foodRouter = require('express').Router()
 
 
@@ -27,4 +27,4 @@ foodRouter.put('/:id', async (request, response) => {
   response.json(updated)
 })
 
-module.exports(foodRouter)
+module.exports = foodRouter
