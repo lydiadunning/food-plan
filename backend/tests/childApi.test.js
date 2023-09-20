@@ -65,7 +65,7 @@ describe('Creating a child profile', () => {
   }) 
 })
 
-describe('getting child profiles', () => {
+describe('Whith child profiles in the database', () => {
 
   beforeAll(async () => {
     await Child.deleteMany({})
@@ -98,8 +98,8 @@ describe('getting child profiles', () => {
   })
 
   test('the correct profile can be deleted', async () => {
-    const children = await api.get('/api/childProfiles')
-    console.log('children', children)
+    const allProfiles = await api.get('/api/child')
+    const children = allProfiles.body
     idToDelete = children[0]._id
     const response = await api.delete(`/api/child/${idToDelete}`)
       .expect(204)
@@ -107,11 +107,13 @@ describe('getting child profiles', () => {
     const childrenAtEnd = await Child.find({})
     const endChildren = childrenAtEnd.map(child => child.toJSON())
     expect(endChildren).not.toContain(children[0])
-
+    expect(endChildren).toHaveLength(2)
   })
 
-
+  
 })
+
+
 
 afterAll(async () => {
   await mongoose.connection.close()
