@@ -3,14 +3,20 @@ const childRouter = require('express').Router()
 
 childRouter.get('/', async (request, response) => {
   const children = await Child.find({})
-
   response.json(children)
 })
 
 childRouter.post('/', async (request, response) => {
+  console.log('in childRouter.post')
   const child = new Child(request.body)
+  console.log('child', child)
   // return 400 error if request body missing vital info
+  if (!child.name) {
+    response.status(400).end()
+  } 
+  console.log('child.name')
   const result = await child.save()
+  console.log('save complete')
   response.status(201).json(result)
 })
 

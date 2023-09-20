@@ -28,6 +28,11 @@ const api = supertest(app)
 
 
 describe('Creating a child profile', () => {
+
+  beforeEach(async () => {
+    await Child.deleteMany({})
+  })
+
   test('a new child profile can be added correctly', async () => {
     // const date = new Date()
     const newChild = {
@@ -52,42 +57,62 @@ describe('Creating a child profile', () => {
     const childrenNoId = children.map(x => {
       return {
         'name': x.name,
-        'thresholds': x.thresholds,
-        'goal': x.goal
       }
     })
     expect(childrenNoId).toContainEqual(
       newChild
     )
   }) 
+})
 
-  // test('a list of child profiles can be returned', async () => {
-  //     const response = await api.get('/api/child').expect(200)
-  //     expect(response.body)
-  // })
+describe('getting child profiles', () => {
 
-  // test('the expected number of child profiles is returned', async () => {
-  //   const response = await api.get('/api/child').expect(200)
-  //   expect(response.body).toHaveLength(2)
-  // })
+  beforeAll(async () => {
+    await Child.deleteMany({})
+    const children = [
+      {
+        'name': 'one'
+      },
+      {
+        'name': 'two'
+      },
+      {
+        'name': 'three'
+      }
+    ]
 
-  // test('the correct profile can be deleted', async () => {
-  //   const children = await api.get('/api/childProfiles')
-  //   idToDelete = children[0].id
-  //   const response = await api.delete(`/api/child/${idToDelete}`)
-  //     .expect(204)
+    const childObjects = children
+      .map(child => new Child(child))
+    await childObjects.forEach(child => child.save())
+  })
 
-  //   const childrenAtEnd = await Child.find({})
-  //   const endChildren = childrenAtEnd.map(child => child.toJSON())
-  //   expect(endChildren).not.toContain(children[0])
+  test('a list of child profiles can be returned', async () => {
+      const response = await api.get('/api/child').expect(200)
+      expect(response.body)
+      expect(response.body[0])
+  })
 
-  // })
+  test('the expected number of child profiles is returned', async () => {
+    const response = await api.get('/api/child').expect(200)
+    expect(response.body).toHaveLength(3)
+  })
+
+  test('the correct profile can be deleted', async () => {
+    const children = await api.get('/api/childProfiles')
+    console.log('children', children)
+    idToDelete = children[0]._id
+    const response = await api.delete(`/api/child/${idToDelete}`)
+      .expect(204)
+
+    const childrenAtEnd = await Child.find({})
+    const endChildren = childrenAtEnd.map(child => child.toJSON())
+    expect(endChildren).not.toContain(children[0])
+
+  })
 
 
-  // test('description', () => {
-  //   const result = listHelper.totalLikes(listWithOneBlog)
-  //   expect(result).toBe(5)
-  // })
+})
 
-
+afterAll(async () => {
+  await mongoose.connection.close()
 })
