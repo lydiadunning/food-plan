@@ -1,0 +1,1 @@
+DELETE http://localhost:2002/api/threshold/system

@@ -1,4 +1,4 @@
-import { Threshold, SystemThreshold } from '../thresholds'
+const { Threshold, SystemThreshold, SystemThresholdArray } = require('../models/thresholds.js')
 
 // system threshold operations: can delay for later version - these are not interactive
 
@@ -10,7 +10,6 @@ import { Threshold, SystemThreshold } from '../thresholds'
 // threshold operations
 // get all current thresholds? revisit data model.
 
-const Child = require('../models/child.js')
 const thresholdRouter = require('../controllers/thresholds.js')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
@@ -38,17 +37,16 @@ const api = supertest(app)
  * trying to delete a profile that doesn't exist works
  */
 
-
-describe('System Thresholds', () => {
-
-  beforeEach(async () => {
+describe('System Thresholds can be added once', () => {
+  beforeAll(async () => {
     await SystemThreshold.deleteMany({})
+    await SystemThresholdArray.deleteMany({})
   })
 
-  test('a new System Threshold can be added to the database', async () => {
+  test('an array of new System Thresholds can be added to the database', async () => {
     await api
-      .post('/api/child')
-      .send({threshold: 'one'})
+      .post('/api/threshold/system')
+      .send(['one', 'two', 'three'])
       .expect(201)
       .expect('Content-Type', /application\/json/)
     
@@ -57,59 +55,36 @@ describe('System Thresholds', () => {
     const systemThresholdsFromDb = await SystemThreshold.find({})
     const systemThresholds = systemThresholdsFromDb.map(sT => sT.toJSON())
     
-    expect(systemThresholds).toHaveLength(1)
-    expect(systemThresholds).toHaveProperty('threshold', 'one')
+    expect(systemThresholds).toHaveLength(3)
+    expect(systemThresholds[0]).toHaveProperty('threshold', 'one')
   }) 
-})
 
-// describe('Whith child profiles in the database', () => {
+  test('and retrieved from the database', async () => {
+    const response = await api 
+      .get('/api/threshold/system')
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+    
+    expect(response.body).toHaveProperty('_id')
+    expect(response.body.thresholds).toHaveLength(3)
+    expect(response.body.thresholds[1]).toHaveProperty('threshold', 'two')
+    expect(response.body.thresholds[1]).toHaveProperty('_id')
+  })
 
-//   beforeAll(async () => {
-//     await Child.deleteMany({})
-//     const children = [
-//       {
-//         'name': 'one'
-//       },
-//       {
-//         'name': 'two'
-//       },
-//       {
-//         'name': 'three'
-//       }
-//     ]
-
-//     const childObjects = children
-//       .map(child => new Child(child))
-//     await childObjects.forEach(child => child.save())
-//   })
-
-//   test('a list of child profiles can be returned', async () => {
-//       const response = await api.get('/api/child').expect(200)
-//       expect(response.body)
-//       expect(response.body[0])
-//   })
-
-//   test('the expected number of child profiles is returned', async () => {
-//     const response = await api.get('/api/child').expect(200)
-//     expect(response.body).toHaveLength(3)
-//   })
-
-//   test('the correct profile can be deleted', async () => {
-//     const allProfiles = await api.get('/api/child')
-//     const children = allProfiles.body
-//     idToDelete = children[0]._id
-//     const response = await api.delete(`/api/child/${idToDelete}`)
-//       .expect(204)
-
-//     const childrenAtEnd = await Child.find({})
-//     const endChildren = childrenAtEnd.map(child => child.toJSON())
-//     expect(endChildren).not.toContain(children[0])
-//     expect(endChildren).toHaveLength(2)
-//   })
-
+  test('a second systemThresholdArray cannot be added', async () => {
+    await api
+      .post('/api/threshold/system')
+      .send(['four', 'five', 'six'])
+      .expect(400)
   
-// })
+    console.log('api call complete')
+    const systemThresholds = await SystemThresholdArray.findOne({}).populate('thresholds', {threshold: 1, _id: 1})
+    expect(systemThresholds.thresholds[0]).toHaveProperty('threshold', 'one')
+  })
 
+  test('deleting system thresholds removes the array and all thresholds', )
+})
+// after these tests, the thresholds added remain in the database. 
 
 
 afterAll(async () => {

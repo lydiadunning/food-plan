@@ -1,0 +1,8 @@
+POST http://localhost:2002/api/threshold/system
+Content-Type: application/json
+
+[
+  "one",
+  "two",
+  "three"
+]

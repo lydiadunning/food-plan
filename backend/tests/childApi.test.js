@@ -65,7 +65,7 @@ describe('Creating a child profile', () => {
   }) 
 })
 
-describe('Whith child profiles in the database', () => {
+describe('With child profiles in the database', () => {
 
   beforeAll(async () => {
     await Child.deleteMany({})
@@ -109,11 +109,7 @@ describe('Whith child profiles in the database', () => {
     expect(endChildren).not.toContain(children[0])
     expect(endChildren).toHaveLength(2)
   })
-
-  
 })
-
-
 
 afterAll(async () => {
   await mongoose.connection.close()
