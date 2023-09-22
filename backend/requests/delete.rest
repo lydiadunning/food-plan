@@ -1,0 +1,3 @@
+# DELETE http://localhost:2002/api/threshold/system
+
+DELETE http://localhost:2002/api/child

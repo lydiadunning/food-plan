@@ -6,5 +6,6 @@ Content-Type: application/json
 # }
 
 {
-  "name": "Jenny"
+  "name": "Kim",
+  "thresholds": ["650c9d0ac1eb14226293dadc", "650c9d0ac1eb14226293dade"]
 }

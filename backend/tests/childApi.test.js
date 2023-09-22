@@ -3,6 +3,7 @@ const childRouter = require('../controllers/children.js')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app.js')
+const { SystemThresholdArray } = require('../models/thresholds.js')
 const api = supertest(app)
 
 
@@ -63,7 +64,82 @@ describe('Creating a child profile', () => {
       newChild
     )
   }) 
+
+  test('a new child profile can be added with custom thresholds', async () => {
+      
+    const newChild = {
+      'name': 'Bess Borgington',
+      'thresholds': ["alpha", "beta", "gamma"]
+    }
+  
+    await api
+      .post('/api/child')
+      .send(newChild)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+    
+    const childrenFromDB = await Child.find({})
+    const children = childrenFromDB.map(child => child.toJSON())
+  
+    const childrenNoId = children.map(x => {
+      return {
+        'name': x.name,
+        'thresholds': x.thresholds
+      }
+    })
+
+    expect(childrenNoId).toContainEqual(
+      newChild
+    )
+  })
 })
+
+describe('With SystemThresholds in the database', () => {
+
+  beforeAll(async () => {
+    await Child.deleteMany({})
+
+    const hasSystemThresholds = await SystemThresholdArray.findOne({})
+    if (!hasSystemThresholds) {
+      await api
+      .post('/api/threshold/system')
+      .send(['one', 'two', 'three'])
+    }
+  })
+
+  test.only('a new child profile can be added with system thresholds', async () => {
+    const systemThresholds = await SystemThresholdArray.findOne({}).populate('thresholds', {threshold: 1, _id: 1})  
+    console.log('systemThresholds', systemThresholds)
+    
+    const newChild = {
+      'name': 'Bess Borgington',
+      'thresholds': [systemThresholds.thresholds[0]._id, systemThresholds.thresholds[2]._id]
+    }
+  
+    await api
+      .post('/api/child')
+      .send(newChild)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+    
+    const childrenFromDB = await Child.find({})
+    const children = childrenFromDB.map(child => child.toJSON())
+  
+    const childrenNoId = children.map(x => {
+      return {
+        'name': x.name,
+        'thresholds': x.thresholds
+      }
+    })
+
+    console.log('newChild', newChild, 'childrenNoId', childrenNoId)
+
+    expect(childrenNoId).toContainEqual(
+      newChild
+    )
+  })
+})
+ 
 
 describe('With child profiles in the database', () => {
 
