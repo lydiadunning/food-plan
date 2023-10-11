@@ -11,8 +11,7 @@ const childSchema = new Schema ({
     required: false
   },
   thresholds: [{
-    type: Schema.Types.Mixed,
-    ref: 'Threshold',
+    type: 'String',
     required: false
   }]
 })

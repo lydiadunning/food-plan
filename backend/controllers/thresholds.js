@@ -11,6 +11,12 @@ const thresholdRouter = require('express').Router()
 // threshold operations
 // get all current thresholds? revisit data model.
 
+// get all thresholds
+thresholdRouter.get('/', async (request, response) => {
+  const thresholds = await Threshold.find({})
+  response.json(thresholds)
+})
+
 // get all system thresholds
 thresholdRouter.get('/system', async (request, response) => {
   console.log('in get system')

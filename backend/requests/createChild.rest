@@ -5,7 +5,12 @@ Content-Type: application/json
 #   "name": "Patience Bento"
 # }
 
+# {
+#   "name": "Erica Zeal",
+#   "thresholds": ["Ate it", "touched it"]
+# }
+
 {
-  "name": "Kim",
-  "thresholds": ["650c9d0ac1eb14226293dadc", "650c9d0ac1eb14226293dade"]
+  "name": "Den Bavidson",
+  "thresholds": ["didn't throw it", "tasted"]
 }

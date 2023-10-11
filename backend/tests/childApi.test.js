@@ -65,7 +65,7 @@ describe('Creating a child profile', () => {
     )
   }) 
 
-  test('a new child profile can be added with custom thresholds', async () => {
+  test('a new child profile can be added with threshold strings', async () => {
       
     const newChild = {
       'name': 'Bess Borgington',
@@ -94,56 +94,24 @@ describe('Creating a child profile', () => {
   })
 })
 
-describe('With SystemThresholds in the database', () => {
+// describe('With SystemThresholds in the database', () => {
 
-  beforeAll(async () => {
-    await Child.deleteMany({})
+//   beforeAll(async () => {
+//     await Child.deleteMany({})
 
-    const hasSystemThresholds = await SystemThresholdArray.findOne({})
-    if (!hasSystemThresholds) {
-      await api
-      .post('/api/threshold/system')
-      .send(['one', 'two', 'three'])
-    }
-  })
-
-  test.only('a new child profile can be added with system thresholds', async () => {
-    const systemThresholds = await SystemThresholdArray.findOne({}).populate('thresholds', {threshold: 1, _id: 1})  
-    console.log('systemThresholds', systemThresholds)
-    
-    const newChild = {
-      'name': 'Bess Borgington',
-      'thresholds': [systemThresholds.thresholds[0]._id, systemThresholds.thresholds[2]._id]
-    }
-  
-    await api
-      .post('/api/child')
-      .send(newChild)
-      .expect(201)
-      .expect('Content-Type', /application\/json/)
-    
-    const childrenFromDB = await Child.find({})
-    const children = childrenFromDB.map(child => child.toJSON())
-  
-    const childrenNoId = children.map(x => {
-      return {
-        'name': x.name,
-        'thresholds': x.thresholds
-      }
-    })
-
-    console.log('newChild', newChild, 'childrenNoId', childrenNoId)
-
-    expect(childrenNoId).toContainEqual(
-      newChild
-    )
-  })
-})
+//     const hasSystemThresholds = await SystemThresholdArray.findOne({})
+//     if (!hasSystemThresholds) {
+//       await api
+//       .post('/api/threshold/system')
+//       .send(['one', 'two', 'three'])
+//     }
+//   })
+// })
  
 
 describe('With child profiles in the database', () => {
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     await Child.deleteMany({})
     const children = [
       {
@@ -156,19 +124,19 @@ describe('With child profiles in the database', () => {
         'name': 'three'
       }
     ]
-
     const childObjects = children
       .map(child => new Child(child))
-    await childObjects.forEach(child => child.save())
+    await childObjects.forEach(async child => await child.save())
+    console.log('complete')
   })
 
   test('a list of child profiles can be returned', async () => {
       const response = await api.get('/api/child').expect(200)
       expect(response.body)
-      expect(response.body[0])
+      expect(response.body[0]).toHaveProperty('name')
   })
 
-  test('the expected number of child profiles is returned', async () => {
+  test.only('the expected number of child profiles is returned', async () => {
     const response = await api.get('/api/child').expect(200)
     expect(response.body).toHaveLength(3)
   })
@@ -176,7 +144,9 @@ describe('With child profiles in the database', () => {
   test('the correct profile can be deleted', async () => {
     const allProfiles = await api.get('/api/child')
     const children = allProfiles.body
+    console.log(children[0])
     idToDelete = children[0]._id
+    
     const response = await api.delete(`/api/child/${idToDelete}`)
       .expect(204)
 
