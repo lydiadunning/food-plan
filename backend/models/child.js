@@ -1,4 +1,4 @@
-const Threshold = require('../models/thresholds.js')
+const Threshold = require('../models/threshold.js')
 const { Schema, model } = require('mongoose');
 
 const childSchema = new Schema ({

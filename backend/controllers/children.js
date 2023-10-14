@@ -1,6 +1,6 @@
 const Child  = require('../models/child.js')
 const childRouter = require('express').Router()
-const { Threshold, SystemThreshold } = require('../models/thresholds.js')
+const { Threshold, SystemThreshold } = require('../models/threshold.js')
 
 childRouter.get('/', async (request, response) => {
   const children = await Child.find({})

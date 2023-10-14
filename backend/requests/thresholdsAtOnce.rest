@@ -1,4 +1,4 @@
-POST http://localhost:2002/api/threshold/system
+POST http://localhost:2002/api/threshold/hints
 Content-Type: application/json
 
 [

@@ -1,4 +1,4 @@
-const { Threshold, ThresholdHintArray }  = require('../models/thresholds.js')
+const { Threshold, ThresholdHintArray }  = require('../models/threshold.js')
 const thresholdRouter = require('express').Router()
 // system threshold operations: can delay for later version - these are not interactive
 // rename this
@@ -18,7 +18,7 @@ thresholdRouter.get('/', async (request, response) => {
 })
 
 // get all active threshold hints in ThresholdHintArray
-thresholdRouter.get('/threshold/hint', async (request, response) => {
+thresholdRouter.get('/hints', async (request, response) => {
   const thresholds = await ThresholdHintArray.findOne({ active: true }).populate('thresholds', {threshold: 1, _id: 1})
   // const notes = await Note.find({}).populate('user', { username: 1, name: 1 })
   // response.json(notes)
@@ -26,7 +26,7 @@ thresholdRouter.get('/threshold/hint', async (request, response) => {
 })
 
 // add all threshold hints, expects an array in the request body 
-thresholdRouter.post('/threshold/hint', async (request, response) => {
+thresholdRouter.post('/hints', async (request, response) => {
   try {
     // add all thresholds in the request body to db
     const result1 = await Threshold.insertMany(request.body.map(x => {
@@ -45,7 +45,7 @@ thresholdRouter.post('/threshold/hint', async (request, response) => {
 })
 
 
-thresholdRouter.delete('/threshold/hint', async (request, response) => {
+thresholdRouter.delete('/hints', async (request, response) => {
   await ThresholdHintArray.deleteMany({})
   response.status(204).end()
 })
