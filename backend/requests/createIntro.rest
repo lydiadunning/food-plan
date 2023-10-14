@@ -1,0 +1,21 @@
+
+65296bcfd39a409adc041064
+{
+  "ingredient": "broccoli",
+  "description": "tried broccoli",
+  "thresholdPassed": {
+  type: Schema.Types.Mixed,
+  ref: 'Threshold',
+  required: false
+},
+meal: {
+  type: String,
+  required: false
+},
+date: {
+  type: Date,
+  default: Date.now,
+  required: false
+}
+})
+}

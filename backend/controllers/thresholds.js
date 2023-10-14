@@ -1,4 +1,4 @@
-const { Threshold, SystemThreshold, SystemThresholdArray }  = require('../models/thresholds.js')
+const { Threshold, ThresholdHintArray }  = require('../models/thresholds.js')
 const thresholdRouter = require('express').Router()
 // system threshold operations: can delay for later version - these are not interactive
 // rename this
@@ -17,38 +17,26 @@ thresholdRouter.get('/', async (request, response) => {
   response.json(thresholds)
 })
 
-// get all system thresholds
-thresholdRouter.get('/system', async (request, response) => {
-  console.log('in get system')
-  const systemThresholds = await SystemThresholdArray.findOne({}).populate('thresholds', {threshold: 1, _id: 1})
+// get all active threshold hints in ThresholdHintArray
+thresholdRouter.get('/threshold/hint', async (request, response) => {
+  const thresholds = await ThresholdHintArray.findOne({ active: true }).populate('thresholds', {threshold: 1, _id: 1})
   // const notes = await Note.find({}).populate('user', { username: 1, name: 1 })
   // response.json(notes)
-  console.log(systemThresholds)
-  response.json(systemThresholds)
+  response.json(thresholds)
 })
 
-// add all system thresholds
-thresholdRouter.post('/system', async (request, response) => {
-  // console.log('in thresholdRouter/system.post')
-  // const thresholds = new SystemThreshold(request.body)
-  // const thresholds = request.body.map(threshold => new SystemThreshold(threshold))
-  // return 400 error if request body missing vital info
-  if (await SystemThresholdArray.findOne({})) {
-    response.status(400).end('System Thresholds have been added. Delete and post again to make changes.')
-  }
-
+// add all threshold hints, expects an array in the request body 
+thresholdRouter.post('/threshold/hint', async (request, response) => {
   try {
-    const result1 = await SystemThreshold.insertMany(request.body.map(x => {
+    // add all thresholds in the request body to db
+    const result1 = await Threshold.insertMany(request.body.map(x => {
       return { 'threshold': x }
     }))
-    const thresholdArray = new SystemThresholdArray({
+    // add the array to db
+    const thresholdArray = new ThresholdHintArray({
       thresholds: result1.map(result => result._id)
     })
-    console.log('thresholdArray', thresholdArray)
     const finalResult = await thresholdArray.save()
-    // console.log('save complete')
-    console.log('final result', finalResult)
-    // returning the 
     response.status(201).json(finalResult)
   } catch (exception) {
     console.error(exception)
@@ -57,32 +45,8 @@ thresholdRouter.post('/system', async (request, response) => {
 })
 
 
-// Holding off on put because it's really not working, returns pending promises. Optional at this point.
-
-// should: accept a list of desired threshold strings. for each string, either find an id or create a new threshold. add all of these strings to the thresholds array in the database.
-
-// update all system thresholds
-// request body: array of all strings of threshold names in order
-// thresholdRouter.put('/system/:id', async (request, response) => {
-//   console.log('request body', request.body) // synchronous
-//   const mapped = await request.body.map(async x => {  // async execution of async function
-//     id = await SystemThreshold.findOne({ 'threshold': x }, '_id') // async execution
-//     if (id) { // conditional, synchronous
-//       return id // synchronous, 
-//     } else { // synchronous
-//       const added = new SystemThreshold({ 'threshold': x }) // synchronous
-//       const result = await added.save() // async call
-//       return result // synchronous
-//     }
-
-//   })
-//   console.log('all thresholds', mapped) // synchronous. mapped was assigned asynchronously with await
-//     response.status(400)
-// })
-
-thresholdRouter.delete('/system', async (request, response) => {
-  await SystemThreshold.deleteMany({})
-  await SystemThresholdArray.deleteMany({})
+thresholdRouter.delete('/threshold/hint', async (request, response) => {
+  await ThresholdHintArray.deleteMany({})
   response.status(204).end()
 })
 

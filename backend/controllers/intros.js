@@ -8,10 +8,11 @@ introductionRouter.get('/', async (request, response) => {
   response.json(introduction)
 })
 
-introductionRouter.post('/', async (request, response) => {
+introductionRouter.post('/:childId', async (request, response) => {
   const introduction = new introduction(request.body)
   // return 400 error if request body missing vital info
   const result = await Introduction.save()
+  console.log(result)
   response.status(201).json(result)
 })
 

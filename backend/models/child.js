@@ -1,3 +1,4 @@
+const Threshold = require('../models/thresholds.js')
 const { Schema, model } = require('mongoose');
 
 const childSchema = new Schema ({
@@ -11,7 +12,8 @@ const childSchema = new Schema ({
     required: false
   },
   thresholds: [{
-    type: 'String',
+    type: 'ObjectId',
+    ref: 'Threshold',
     required: false
   }]
 })
