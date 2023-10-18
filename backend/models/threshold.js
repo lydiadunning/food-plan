@@ -8,7 +8,8 @@ const thresholdSchema = new Schema ({
   },
   active: {
     type: Boolean,
-    default: true
+    default: true,
+    required: true
   }
 })
 

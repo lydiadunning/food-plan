@@ -1,3 +1,3 @@
-GET http://localhost:2002/api/threshold
+# GET http://localhost:2002/api/threshold
 
-# GET http://localhost:2002/api/threshold/hints
+GET http://localhost:2002/api/threshold/hints

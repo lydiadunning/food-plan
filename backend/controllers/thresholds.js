@@ -19,12 +19,23 @@ thresholdRouter.get('/', async (request, response) => {
 
 // get all active threshold hints in ThresholdHintArray
 thresholdRouter.get('/hints', async (request, response) => {
-  const thresholds = await ThresholdHintArray.findOne({ active: true }).populate('thresholds', {threshold: 1, _id: 1})
+  const thresholds = await ThresholdHintArray.findOne()
+    .populate('thresholds')
+
+  console.log('thresholds in get hints', thresholds)
   response.json(thresholds)
 })
 
 // add all threshold hints, expects an array in the request body 
 thresholdRouter.post('/hints', async (request, response) => {
+  // return 400 if thresholdHints already in db
+  const thresholdHintArray = await ThresholdHintArray.findOne()
+  console.log('thresholdHintArray', thresholdHintArray)
+  if (thresholdHintArray) {
+    // response.statusMessage = "ThresholdHintArray already exists";
+    response.status(400).end()
+  }
+
   try {
     // add all thresholds in the request body to db
     const result1 = await Threshold.insertMany(request.body.map(x => {
