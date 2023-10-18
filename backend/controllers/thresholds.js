@@ -20,8 +20,6 @@ thresholdRouter.get('/', async (request, response) => {
 // get all active threshold hints in ThresholdHintArray
 thresholdRouter.get('/hints', async (request, response) => {
   const thresholds = await ThresholdHintArray.findOne({ active: true }).populate('thresholds', {threshold: 1, _id: 1})
-  // const notes = await Note.find({}).populate('user', { username: 1, name: 1 })
-  // response.json(notes)
   response.json(thresholds)
 })
 

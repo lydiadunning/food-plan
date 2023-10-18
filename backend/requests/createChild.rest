@@ -7,10 +7,23 @@ Content-Type: application/json
 
 # {
 #   "name": "Erica Zeal",
-#   "thresholds": ["Ate it", "touched it"]
+#   "thresholds": [
+#     { "threshold": "Ate it" }, 
+#     { "threshold": "touched it" }]
 # }
 
 {
   "name": "Den Bavidson",
-  "thresholds": ["didn't throw it", "tasted"]
+  "thresholds": [
+    { "threshold": "didn't throw it" },
+    { "threshold": "tasted" }
+  ]
 }
+
+# {
+#   "name": "Cara Brug",
+#   "thresholds": [
+#     { "thresholdId": "652a1dff98921751b5cf3c0e" }, 
+#     { "threshold": "danced on" }
+#   ]
+# }

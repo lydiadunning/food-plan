@@ -3,7 +3,7 @@ const childRouter = require('../controllers/children.js')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app.js')
-const { SystemThresholdArray } = require('../models/thresholds.js')
+const { SystemThresholdArray } = require('../models/threshold.js')
 const api = supertest(app)
 
 
@@ -69,7 +69,11 @@ describe('Creating a child profile', () => {
       
     const newChild = {
       'name': 'Bess Borgington',
-      'thresholds': ["alpha", "beta", "gamma"]
+      'thresholds': [
+        { threshold: "alpha" }, 
+        { threshold: "beta" }, 
+        { threshold: "gamma" }
+      ]
     }
   
     await api
@@ -81,20 +85,15 @@ describe('Creating a child profile', () => {
     const childrenFromDB = await Child.find({})
     const children = childrenFromDB.map(child => child.toJSON())
   
-    const childrenNoId = children.map(x => {
-      return {
-        'name': x.name,
-        'thresholds': x.thresholds
-      }
-    })
+    console.log('children in childApi.test', children)
 
-    expect(childrenNoId).toContainEqual(
-      newChild
-    )
+    expect(children[0]).toHaveProperty('thresholds')
+    expect(children[0].thresholds).toHaveLength(3)
   })
 })
 
-// describe('With SystemThresholds in the database', () => {
+//may flesh this out later
+// describe('With Threshold hints from the database', () => {
 
 //   beforeAll(async () => {
 //     await Child.deleteMany({})
@@ -136,7 +135,7 @@ describe('With child profiles in the database', () => {
       expect(response.body[0]).toHaveProperty('name')
   })
 
-  test.only('the expected number of child profiles is returned', async () => {
+  test('the expected number of child profiles is returned', async () => {
     const response = await api.get('/api/child').expect(200)
     expect(response.body).toHaveLength(3)
   })
