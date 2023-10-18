@@ -1,33 +1,34 @@
-const Introduction = require('../models/introduction.js')
+const Intro = require('../models/intro.js')
 const Food = require('../models/food.js')
 const introRouter = require('express').Router()
 
 
 introRouter.get('/', async (request, response) => {
-  const introduction = await Introduction.find({})
+  const intro = await Intro.find({})
 
-  response.json(introduction)
+  response.json(intro)
 })
 
 introRouter.post('/:childId', async (request, response) => {
   console.log("request.body", request.body)
+  console.log('request.body.threshold', request.body.threshold)
   // const foodInDb = 
-  const introduction = new Introduction({...request.body, date: Date.now()})
+  const intro = new Intro({...request.body, date: Date.now()})
   // return 400 error if request body missing vital info
-  const result = await introduction.save()
+  const result = await intro.save()
   console.log(result)
   response.status(201).json(result)
 })
 
-// After fully implementing users, allow a user to remove the link between their profile and a introduction, but don't delete the introduction until it has no remaining ties to any user. 
+// After fully implementing users, allow a user to remove the link between their profile and a intro, but don't delete the intro until it has no remaining ties to any user. 
 introRouter.delete('/:id', async (request, response) => {
-  const introduction = await Blog.findByIdAndDelete(request.params.id)
+  const intro = await Blog.findByIdAndDelete(request.params.id)
   response.status(204).end()
 })
 
 introRouter.put('/:id', async (request, response) => {
   const body = request.body
-  const updated = await Introduction.findByIdAndUpdate(request.params.id, body, { new: true })
+  const updated = await Intro.findByIdAndUpdate(request.params.id, body, { new: true })
   response.json(updated)
 })
 

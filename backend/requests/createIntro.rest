@@ -2,8 +2,9 @@ POST http://localhost:2002/api/intro/652c30dc3100ff29d1efa515
 Content-Type: application/json
 
 {
-  "food": "652f88a4fed1ab0acffd9e67",
-  "description": "tried broccoli",
+  # "food": "652f88a4fed1ab0acffd9e67",
+  "food": "broccoli",
+  "description": "in cheese",
   "thresholdPassed": "652a1dff98921751b5cf3c0e",
   "meal": "Dinner"
 }

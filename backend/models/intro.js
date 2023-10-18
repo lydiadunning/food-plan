@@ -3,13 +3,18 @@ const Food = require('../models/food.js')
 const { Schema, model } = require('mongoose');
 
 // I think I want to require either a food or a description
-const introductionSchema = new Schema ({
+const introSchema = new Schema ({
   // haven't decided how to cross-reference schemas yet
   food: { 
-    type: 'ObjectId', 
-    ref: 'Food', 
+    type: 'String', 
     required: true
   },
+  // I suspect the food model isn't necessary. trying out removing it.
+  // food: { 
+  //   type: 'ObjectId', 
+  //   ref: 'Food', 
+  //   required: true
+  // },
   description: {
     type: String,
     required: true
@@ -30,4 +35,4 @@ const introductionSchema = new Schema ({
   }
 })
 
-module.exports = model('Introduction', introductionSchema)
+module.exports = model('Intro', introSchema)

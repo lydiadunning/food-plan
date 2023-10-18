@@ -35,8 +35,10 @@ childRouter.post('/', async (request, response) => {
   try {
   // if the request contains an objectId, keep it, otherwise create a new Threshold. 
   // uses Promise.all as described here: https://www.youtube.com/shorts/KByYTibYQdY
+  console.log(request.body.thresholds)
   const thresholds = request.body.thresholds ? await Promise.all(
     request.body.thresholds?.map(async (obj) => {
+      console.log('obj.thresholdId', obj.thresholdId)
       return obj.thresholdId ? obj.thresholdId : await new Threshold({ threshold: obj.threshold }).save()
     })
   ) : []

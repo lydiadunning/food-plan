@@ -3,7 +3,7 @@ const childRouter = require('../controllers/children.js')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app.js')
-const { SystemThresholdArray } = require('../models/threshold.js')
+const { ThresholdHintArray } = require('../models/threshold.js')
 const api = supertest(app)
 
 
@@ -93,19 +93,57 @@ describe('Creating a child profile', () => {
 })
 
 //may flesh this out later
-// describe('With Threshold hints from the database', () => {
+describe('With Threshold hints from the database', () => {
+  let recievedThresholds = []
+  let sentThresholds = []
+  beforeAll(async () => {
+    await Child.deleteMany({})
 
-//   beforeAll(async () => {
-//     await Child.deleteMany({})
+    let thresholdHintArray = await ThresholdHintArray.findOne({})
+    if (!thresholdHintArray) {
+      thresholdHintArray = await api
+      .post('/api/threshold/hints')
+      .send(['one', 'two', 'three'])
+    }
+    console.log('thresholdHintArray', thresholdHintArray)
+    recievedThresholds = thresholdHintArray.thresholds
+    sentThresholds = thresholdHintArray.thresholds.map(x => {
+      return {thresholdId: x}
+    })
+  })
 
-//     const hasSystemThresholds = await SystemThresholdArray.findOne({})
-//     if (!hasSystemThresholds) {
-//       await api
-//       .post('/api/threshold/system')
-//       .send(['one', 'two', 'three'])
-//     }
-//   })
-// })
+  test('a new child profile can use threshold hints', async () => {
+    const newChild = {
+      'name': 'Bess Borgington',
+      'thresholds': sentThresholds
+    }
+  
+    await api
+      .post('/api/child')
+      .send(newChild)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+    
+    console.log('api call complete')
+  
+    const childrenFromDB = await Child.find({})
+    const children = childrenFromDB.map(child => child.toJSON())
+  
+    const childrenNoId = children.map(x => {
+      return {
+        'name': x.name,
+        'thresholds': x.thresholds
+      }
+    })
+    console.log('childrenNoId[0].thresholds', childrenNoId[0].thresholds)
+    expect(childrenNoId).toContainEqual(
+      {
+        'name': 'Bess Borgington',
+        'thresholds': recievedThresholds
+      }
+    )
+  }) 
+})
  
 
 describe('With child profiles in the database', () => {
