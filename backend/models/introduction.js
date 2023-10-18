@@ -6,7 +6,7 @@ const { Schema, model } = require('mongoose');
 const introductionSchema = new Schema ({
   // haven't decided how to cross-reference schemas yet
   food: { 
-    type: ObjectId, 
+    type: 'ObjectId', 
     ref: 'Food', 
     required: true
   },
@@ -15,7 +15,7 @@ const introductionSchema = new Schema ({
     required: true
   },
   thresholdPassed: {
-    type: ObjectId,
+    type: 'ObjectId',
     ref: 'Threshold',
     required: false
   },

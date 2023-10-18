@@ -1,21 +1,9 @@
+POST http://localhost:2002/api/intro/652c30dc3100ff29d1efa515
+Content-Type: application/json
 
-65296bcfd39a409adc041064
 {
-  "ingredient": "broccoli",
+  "food": "652f88a4fed1ab0acffd9e67",
   "description": "tried broccoli",
-  "thresholdPassed": {
-  type: Schema.Types.Mixed,
-  ref: 'Threshold',
-  required: false
-},
-meal: {
-  type: String,
-  required: false
-},
-date: {
-  type: Date,
-  default: Date.now,
-  required: false
-}
-})
+  "thresholdPassed": "652a1dff98921751b5cf3c0e",
+  "meal": "Dinner"
 }
