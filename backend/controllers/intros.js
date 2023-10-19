@@ -9,7 +9,15 @@ introRouter.get('/', async (request, response) => {
   response.json(intro)
 })
 
+introRouter.get('/:childId', async (request, response) => {
+  const child = await Child.findById(request.params.childId).populate('intros')
+
+  response.json(child.intros)
+})
+
 introRouter.post('/:childId', async (request, response) => {
+  console.log('request.body', request.body)
+
   const intro = new Intro({...request.body, date: Date.now()})
   // return 400 error if request body missing vital info
   const result = await intro.save()
@@ -24,6 +32,7 @@ introRouter.delete('/:id', async (request, response) => {
 })
 
 introRouter.put('/:id', async (request, response) => {
+  console.log('request.body', request.body)
   const body = request.body
   const updated = await Intro.findByIdAndUpdate(request.params.id, body, { new: true })
   response.json(updated)

@@ -22,6 +22,8 @@ childRouter.get('/', async (request, response) => {
  * }
  */
 childRouter.post('/', async (request, response) => {
+  console.log('request.body', request.body)
+
   // return 400 error if request body missing vital info
   if (!request.body.name) {
     response.status(400).end()

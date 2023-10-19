@@ -175,6 +175,60 @@ describe('with an intro in the database', () => {
   })
 })
 
+
+describe('with a child with several intros in the db', () => {
+  let childId = ''
+  let tryId = ''
+  const testIntros = [{    
+    'food': 'squash',
+    'description': 'roasted with salt',
+  }, {    
+    'food': 'beans',
+    'description': 'canned',
+  }]
+
+  beforeAll(async () => {
+    console.log('in beforeAll')
+    await Child.deleteMany({})
+
+    const newTry = new Try({ try: 'smell' })
+    const savedTries = await newTry.save()
+    tryId = savedTries._id
+    testIntros[0].try = tryId
+    testIntros[1].try = tryId
+
+    console.log('try created')
+
+    const child = new Child({ 
+      'name': 'Child Name', 
+      tries: [tryId] 
+    })
+
+    const savedChild = await child.save()
+    childId = savedChild._id    
+
+    console.log('child created')
+
+    const intros = await Promise.all(
+      testIntros.map(async (obj) => {
+        return await new Intro(obj).save()
+      })
+    )
+
+    console.log('intros inserted')
+
+    await Child.findByIdAndUpdate(childId, {$push: {'intros': intros}}, {upsert: true})
+  })
+
+  test("the child's intros can be retrieved", async () => {
+    const response = await api
+      .get(`/api/intro/${childId}`)
+      .expect(200)
+    expect(response.body)
+    expect(response.body).toHaveLength(2)
+  })
+})
+
 afterAll(async () => {
   await mongoose.connection.close()
 })
