@@ -68,24 +68,17 @@ describe('When ThresholdHintArray is in the database', () => {
 
     const newThresholds = await Threshold.insertMany([{ 'threshold': 'one' }, { 'threshold': 'two' }, { 'threshold': 'three' }])
     // add the array to db
-    console.log('newThresholds', newThresholds)
     const thresholdArray = new ThresholdHintArray({
       thresholds: newThresholds.map(result => result._id)
     })
-    console.log('thresholdArray', thresholdArray)
     const finalResult = await thresholdArray.save()
-    console.log('finalResult', finalResult
-    )
-
     const allTh = await ThresholdHintArray.find()
-    console.log('allTHAs', allTh)
   })
   test('Threshold Hints can be retrieved from the database', async () => {
     const response = await api 
       .get('/api/threshold/hints')
       .expect(200)
       .expect('Content-Type', /application\/json/)
-    console.log('get response.body', response.body)
     expect(response.body).toHaveProperty('_id')
     expect(response.body.thresholds).toHaveLength(3)
     expect(response.body.thresholds[1]).toHaveProperty('threshold', 'two')

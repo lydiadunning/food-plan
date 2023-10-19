@@ -22,7 +22,6 @@ thresholdRouter.get('/hints', async (request, response) => {
   const thresholds = await ThresholdHintArray.findOne()
     .populate('thresholds')
 
-  console.log('thresholds in get hints', thresholds)
   response.json(thresholds)
 })
 
@@ -30,12 +29,11 @@ thresholdRouter.get('/hints', async (request, response) => {
 thresholdRouter.post('/hints', async (request, response) => {
   // return 400 if thresholdHints already in db
   const thresholdHintArray = await ThresholdHintArray.findOne()
-  console.log('thresholdHintArray', thresholdHintArray)
   if (thresholdHintArray) {
     // response.statusMessage = "ThresholdHintArray already exists";
     response.status(400).end()
+    return // why isn't response....end() not returning?
   }
-
   try {
     // add all thresholds in the request body to db
     const result1 = await Threshold.insertMany(request.body.map(x => {
