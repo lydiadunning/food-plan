@@ -70,7 +70,7 @@ childRouter.put('/:id', async (request, response) => {
   response.json(updated)
 })
 
-childRouter.put('/tries/:id', async (request, response) => {
+childRouter.put('/:childId/tries', async (request, response) => {
   try {
     const body = request.body
 
@@ -83,13 +83,18 @@ childRouter.put('/tries/:id', async (request, response) => {
     ) 
 
     newChild = {...request.body, tries: tries}
-    const updated = await Child.findByIdAndUpdate(request.params.id, newChild, { new: true })
+    const updated = await Child.findByIdAndUpdate(request.params.childId, newChild, { new: true })
 
     response.status(200).json(updated)
     } catch (err) {
       console.error(err)
       response.status(400)
     }
+})
+
+childRouter.get('/:childId/tries', async (request, response) => {
+  const child = await Child.findById(request.params.childId).populate('tries', {try: 1, _id: 1, active: 1})
+  response.json(child.tries)
 })
 
 module.exports = childRouter

@@ -188,7 +188,7 @@ describe('With child profiles in the database', () => {
     const child = allProfiles.body[0]
     child.tries = [{ try: 'taste' }]
 
-    const response = await api.put(`/api/child/tries/${child._id}`)
+    const response = await api.put(`/api/child/${child._id}/tries`)
       .send(child)
       .expect(200)
     
@@ -222,10 +222,10 @@ describe('With a child profile with tries', () => {
 
   test("the child's list of tries can be returned in order", async () => {
     const response = await api
-      .get(`/api/child/${child._id}`)
+      .get(`/api/child/${child._id}/tries`)
       .expect(200)
       console.log(response.body)
-      const responseTries = response.body.tries.map(x => { 
+      const responseTries = response.body.map(x => { 
         return {
           try: x.try
         }
@@ -245,7 +245,7 @@ describe('With a child profile with tries', () => {
     childTries.push({ try: 'touch' })
     child.tries = childTries
 
-    const response = await api.put(`/api/child/tries/${child._id}`)
+    const response = await api.put(`/api/child/${child._id}/tries`)
       .send(child)
       .expect(200)
     

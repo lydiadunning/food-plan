@@ -51,10 +51,11 @@
 | ----- | ------ | ----------- |
 | /child | GET |  yes  |
 | /child | POST | yes |
-| /child/:id | GET | yes |
+| /child/:id | GET |  |
 | /child/:id | DELETE | yes |
 | /child/:id | PUT |  |
-| /child/tries/:id | PUT | yes |
+| /child/:id/tries | GET | yes |
+| /child/:id/tries/ | PUT | yes |
 | /intro/ | GET | yes |
 | /intro/:childId | POST | yes |
 | /intro/:id | DELETE | |
