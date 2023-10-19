@@ -27,7 +27,9 @@
   * with a try property
   * and the new intro is added to the child's intros
 
-### GET: none
+### GET: verifies intros can be read
+  * correctly
+  * for a specific child, in order
 
 ### DELETE: none
 
@@ -46,14 +48,15 @@
 
 ### PUT: none
 
+## Coverage
 
 | Route | Request | Covered |
 | ----- | ------ | ----------- |
 | /child | GET |  yes  |
 | /child | POST | yes |
-| /child/:id | GET |  |
+| /child/:id | GET | yes |
 | /child/:id | DELETE | yes |
-| /child/:id | PUT |  |
+| /child/:id | PUT | yes |
 | /child/:id/tries | GET | yes |
 | /child/:id/tries/ | PUT | yes |
 | /intro/ | GET | yes |

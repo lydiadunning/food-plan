@@ -140,7 +140,7 @@ describe('With Try hints from the database', () => {
  
 
 describe('With child profiles in the database', () => {
-
+  let childId = ''
   beforeEach(async () => {
     await Child.deleteMany({})
     const children = [
@@ -155,12 +155,19 @@ describe('With child profiles in the database', () => {
       }
     ]
     const childObjects = await Child.insertMany(children)
+    childId = childObjects[1]._id
   })
 
   test('a list of child profiles can be returned', async () => {
-      const response = await api.get('/api/child').expect(200)
-      expect(response.body)
-      expect(response.body[0]).toHaveProperty('name')
+    const response = await api.get('/api/child').expect(200)
+    expect(response.body)
+    expect(response.body[0]).toHaveProperty('name')
+  })
+
+  test('a specific child profile can be returned', async () => {
+    const response = await api.get(`/api/child/${childId}`).expect(200)
+    expect(response.body)
+    expect(response.body).toHaveProperty('name', 'two')
   })
 
   test('the expected number of child profiles is returned', async () => {
@@ -197,6 +204,15 @@ describe('With child profiles in the database', () => {
     expect(newTry).toHaveProperty('try', 'taste')
   })
 
+  test('a child profile can be updated', async () => {
+    const newName = { 'name': '2' }
+    const response = await api
+      .put(`/api/child/${childId}`)
+      .send(newName)
+      .expect(200)
+    expect(response.body)
+    expect(response.body).toHaveProperty('name', '2')
+  })
 
 })
 
