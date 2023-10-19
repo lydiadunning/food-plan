@@ -154,9 +154,7 @@ describe('With child profiles in the database', () => {
         'name': 'three'
       }
     ]
-    const childObjects = children
-      .map(child => new Child(child))
-    const childIds = await childObjects.forEach(async child => await child.save())
+    const childObjects = await Child.insertMany(children)
   })
 
   test('a list of child profiles can be returned', async () => {
@@ -167,6 +165,7 @@ describe('With child profiles in the database', () => {
 
   test('the expected number of child profiles is returned', async () => {
     const response = await api.get('/api/child').expect(200)
+    console.log(response.body)
     expect(response.body).toHaveLength(3)
   })
 
@@ -184,7 +183,7 @@ describe('With child profiles in the database', () => {
     expect(endChildren).toHaveLength(2)
   })
 
-  test.only('a list of thresholds can be added', async () => {
+  test('a list of thresholds can be added', async () => {
     const allProfiles = await api.get('/api/child')
     const child = allProfiles.body[0]
     child.thresholds = [{ threshold: 'taste' }]
@@ -193,13 +192,68 @@ describe('With child profiles in the database', () => {
       .send(child)
       .expect(200)
     
-    console.log('response', response.body)
     expect(response.body.thresholds).toHaveLength(1)
     const newThreshold = await Threshold.findById(response.body.thresholds[0])
     expect(newThreshold).toHaveProperty('threshold', 'taste')
   })
+
+
 })
 
+describe('With a child profile with thresholds', () => {
+  let child = null
+  const thresholdsToAdd = [
+    { threshold: "alpha" }, 
+    { threshold: "beta" }, 
+    { threshold: "gamma" }
+  ]
+  beforeEach(async () => {
+    const newChild = {
+      'name': 'Ron Rees',
+      'thresholds': thresholdsToAdd
+    }
+  
+    const response = await api
+      .post('/api/child')
+      .send(newChild)
+    
+    child = response.body
+  })
+
+  test("the child's list of thresholds can be returned in order", async () => {
+    const response = await api
+      .get(`/api/child/${child._id}`)
+      .expect(200)
+      console.log(response.body)
+      const responseThresholds = response.body.thresholds.map(x => { 
+        return {
+          threshold: x.threshold
+        }
+      })
+      expect(responseThresholds[0]).toEqual(thresholdsToAdd[0])
+      expect(responseThresholds[1]).toEqual(thresholdsToAdd[1])
+      expect(responseThresholds[2]).toEqual(thresholdsToAdd[2])
+
+  })
+
+  test('a list of thresholds can be changed', async () => {
+    const childThresholds = child.thresholds.map(x => {
+      return {
+        thresholdId: x._id
+      }
+    })
+    childThresholds.push({ threshold: 'touch' })
+    child.thresholds = childThresholds
+
+    const response = await api.put(`/api/child/thresholds/${child._id}`)
+      .send(child)
+      .expect(200)
+    
+    expect(response.body.thresholds).toHaveLength(4)
+    const newThreshold = await Threshold.findById(response.body.thresholds[response.body.thresholds.length - 1])
+    expect(newThreshold).toHaveProperty('threshold', 'touch')
+  })
+})
 afterAll(async () => {
   await mongoose.connection.close()
 })

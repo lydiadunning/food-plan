@@ -4,9 +4,6 @@ const { Threshold } = require('../models/threshold.js')
 
 childRouter.get('/', async (request, response) => {
   const children = await Child.find({}).populate('thresholds', {threshold: 1, _id: 1})
-
-  console.log('children', children)
-
   response.json(children)
 
 })
@@ -25,8 +22,6 @@ childRouter.get('/', async (request, response) => {
  * }
  */
 childRouter.post('/', async (request, response) => {
-  console.log('in childRouter.post', request.body)
-
   // return 400 error if request body missing vital info
   if (!request.body.name) {
     response.status(400).end()
@@ -35,10 +30,8 @@ childRouter.post('/', async (request, response) => {
   try {
   // if the request contains an objectId, keep it, otherwise create a new Threshold. 
   // uses Promise.all as described here: https://www.youtube.com/shorts/KByYTibYQdY
-  console.log(request.body.thresholds)
   const thresholds = request.body.thresholds ? await Promise.all(
     request.body.thresholds?.map(async (obj) => {
-      console.log('obj.thresholdId', obj.thresholdId)
       return obj.thresholdId ? obj.thresholdId : await new Threshold({ threshold: obj.threshold }).save()
     })
   ) : []
@@ -47,9 +40,7 @@ childRouter.post('/', async (request, response) => {
     name: request.body.name,
     thresholds: thresholds
   })
-  console.log('child', child)
   const result = await child.save()
-  console.log('save complete')
   response.status(201).json(result)
   } catch (err) {
     console.error(err)
@@ -58,7 +49,6 @@ childRouter.post('/', async (request, response) => {
 })
 
 childRouter.get('/:id', async (request, response) => {
-  console.log('id', request.params.id)
   const child = await Child.findById(request.params.id).populate('thresholds', {threshold: 1, _id: 1})
   response.json(child)
 })
@@ -66,7 +56,6 @@ childRouter.get('/:id', async (request, response) => {
 // After fully implementing users, allow a user to remove the link between their profile and a child, but don't delete the child until it has no remaining ties to any user. 
 childRouter.delete('/:id', async (request, response) => {
   const child = await Child.findByIdAndDelete(request.params.id)
-  console.log('child', child)
   response.status(204).end()
 })
 

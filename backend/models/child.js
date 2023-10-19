@@ -1,4 +1,3 @@
-const Threshold = require('../models/threshold.js')
 const { Schema, model } = require('mongoose');
 
 const childSchema = new Schema ({
@@ -6,11 +5,11 @@ const childSchema = new Schema ({
     type: String,
     required: true
   },
-  introductions: { 
+  intros: [{ 
     type: 'ObjectId', 
-    ref: 'Introduction',
+    ref: 'Intro',
     required: false
-  },
+  }],
   thresholds: [{
     type: 'ObjectId',
     ref: 'Threshold',

@@ -1,5 +1,5 @@
 const Intro = require('../models/intro.js')
-const Food = require('../models/food.js')
+const Child = require('../models/child.js')
 const introRouter = require('express').Router()
 
 
@@ -10,13 +10,10 @@ introRouter.get('/', async (request, response) => {
 })
 
 introRouter.post('/:childId', async (request, response) => {
-  console.log("request.body", request.body)
-  console.log('request.body.threshold', request.body.threshold)
-  // const foodInDb = 
   const intro = new Intro({...request.body, date: Date.now()})
   // return 400 error if request body missing vital info
   const result = await intro.save()
-  console.log(result)
+  await Child.findByIdAndUpdate(request.params.childId, {$push: {'intros': result._id}}, {upsert: true})
   response.status(201).json(result)
 })
 

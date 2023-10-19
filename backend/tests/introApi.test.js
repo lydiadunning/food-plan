@@ -32,8 +32,6 @@ describe('creating an intro', () => {
   })
 
   test('a new intro can be added correctly', async () => {
-    const date = new Date()
-
     const newIntro = {
       'food': 'broccoli', 
       'description': 'roasted with salt',
@@ -126,10 +124,33 @@ describe('creating an intro', () => {
     )
   })
 
+  test("a new intro is added to the child's intros",  async() => {
+    const newIntro = {
+      'food': 'green beans', 
+      'description': 'steamed',
+      'threshold': thresholdId
+    }
+
+    const response = await api
+      .post(`/api/intro/${childId}`)
+      .send(newIntro)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+      
+    const child = await Child.findById(childId).populate('intros', { food: 1, description: 1, threshold: 1})
+    
+    const introsNoId = child.intros.map(x => {
+      return {
+        'food': x.food,
+        'description': x.description,
+        'threshold': thresholdId
+      }
+    })
+    expect(introsNoId).toContainEqual(
+      newIntro
+    )
+  })
 })
-
-// a new intro is added to the child's intros
-
 
 afterAll(async () => {
   await mongoose.connection.close()
