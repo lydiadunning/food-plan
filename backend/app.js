@@ -5,7 +5,6 @@ const mongoose = require('mongoose')
 const childRouter = require('./controllers/children.js')
 const thresholdRouter = require('./controllers/thresholds.js')
 const introRouter = require('./controllers/intros.js')
-const foodRouter = require('./controllers/foods.js')
 const { log } = require('console')
 // const userRouter = require('./controllers/users')
 
@@ -34,6 +33,5 @@ app.use('/api/child', childRouter)
 // app.use('/api/user', userRouter)
 app.use('/api/threshold', thresholdRouter)
 app.use('/api/intro', introRouter)
-app.use('/api/food', foodRouter)
 
 module.exports = app
