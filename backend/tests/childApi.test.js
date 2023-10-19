@@ -45,9 +45,7 @@ describe('Creating a child profile', () => {
       .send(newChild)
       .expect(201)
       .expect('Content-Type', /application\/json/)
-    
-    console.log('api call complete')
-  
+     
     const childrenFromDB = await Child.find({})
     const children = childrenFromDB.map(child => child.toJSON())
   
@@ -85,8 +83,6 @@ describe('Creating a child profile', () => {
     const childrenFromDB = await Child.find({})
     const children = childrenFromDB.map(child => child.toJSON())
   
-    console.log('children in childApi.test', children)
-
     expect(children[0]).toHaveProperty('thresholds')
     expect(children[0].thresholds).toHaveLength(3)
   })
@@ -105,7 +101,7 @@ describe('With Threshold hints from the database', () => {
       .post('/api/threshold/hints')
       .send(['one', 'two', 'three'])
     }
-    console.log('thresholdHintArray', thresholdHintArray)
+
     recievedThresholds = thresholdHintArray.thresholds
     sentThresholds = thresholdHintArray.thresholds.map(x => {
       return {thresholdId: x}
@@ -123,9 +119,7 @@ describe('With Threshold hints from the database', () => {
       .send(newChild)
       .expect(201)
       .expect('Content-Type', /application\/json/)
-    
-    console.log('api call complete')
-  
+      
     const childrenFromDB = await Child.find({})
     const children = childrenFromDB.map(child => child.toJSON())
   
@@ -135,7 +129,6 @@ describe('With Threshold hints from the database', () => {
         'thresholds': x.thresholds
       }
     })
-    console.log('childrenNoId[0].thresholds', childrenNoId[0].thresholds)
     expect(childrenNoId).toContainEqual(
       {
         'name': 'Bess Borgington',
@@ -164,7 +157,6 @@ describe('With child profiles in the database', () => {
     const childObjects = children
       .map(child => new Child(child))
     await childObjects.forEach(async child => await child.save())
-    console.log('complete')
   })
 
   test('a list of child profiles can be returned', async () => {
@@ -181,7 +173,6 @@ describe('With child profiles in the database', () => {
   test('the correct profile can be deleted', async () => {
     const allProfiles = await api.get('/api/child')
     const children = allProfiles.body
-    console.log(children[0])
     idToDelete = children[0]._id
     
     const response = await api.delete(`/api/child/${idToDelete}`)
