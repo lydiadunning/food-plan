@@ -55,7 +55,7 @@
 | /child/:id | DELETE | yes |
 | /child/:id | PUT |  |
 | /child/tries/:id | PUT | yes |
-| /intro/ | GET | |
+| /intro/ | GET | yes |
 | /intro/:childId | POST | yes |
 | /intro/:id | DELETE | |
 | /intro/:id | PUT | |

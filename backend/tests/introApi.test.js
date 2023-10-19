@@ -152,6 +152,29 @@ describe('creating an intro', () => {
   })
 })
 
+describe('with an intro in the database', () => {
+  const testIntro = {    
+    'food': 'squash',
+    'description': 'roasted with salt',
+  }
+  beforeAll(async () => {
+    await Intro.deleteMany({})
+    const intro = new Intro(testIntro)
+    await intro.save()
+  })
+  test('the intro can be retrieved', async () => {
+    const response = await api
+    .get(`/api/intro`)
+    .expect(200)
+    
+    expect(response.body)
+    expect(response.body[0]).toHaveProperty('food', 'squash')
+    expect(response.body[0]).toHaveProperty('description', 'roasted with salt')
+    expect(response.body[0]).toHaveProperty('_id')
+
+  })
+})
+
 afterAll(async () => {
   await mongoose.connection.close()
 })
