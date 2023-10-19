@@ -46,14 +46,15 @@
 
 ### PUT: none
 
+## Coverage
 
 | Route | Request | Covered |
 | ----- | ------ | ----------- |
 | /child | GET |  yes  |
 | /child | POST | yes |
-| /child/:id | GET |  |
+| /child/:id | GET | yes |
 | /child/:id | DELETE | yes |
-| /child/:id | PUT |  |
+| /child/:id | PUT | yes |
 | /child/:id/tries | GET | yes |
 | /child/:id/tries/ | PUT | yes |
 | /intro/ | GET | yes |
