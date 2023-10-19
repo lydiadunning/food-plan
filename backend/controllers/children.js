@@ -81,4 +81,26 @@ childRouter.put('/:id', async (request, response) => {
   response.json(updated)
 })
 
+childRouter.put('/thresholds/:id', async (request, response) => {
+  try {
+    const body = request.body
+
+    // if the request contains an objectId, keep it, otherwise create a new Threshold. 
+    // uses Promise.all as described here: https://www.youtube.com/shorts/KByYTibYQdY
+    const thresholds = await Promise.all(
+      body.thresholds.map(async (obj) => {
+        return obj.thresholdId ? obj.thresholdId : await new Threshold({ threshold: obj.threshold }).save()
+      })
+    ) 
+
+    newChild = {...request.body, thresholds: thresholds}
+    const updated = await Child.findByIdAndUpdate(request.params.id, newChild, { new: true })
+
+    response.status(200).json(updated)
+    } catch (err) {
+      console.error(err)
+      response.status(400)
+    }
+})
+
 module.exports = childRouter

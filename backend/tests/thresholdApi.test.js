@@ -39,6 +39,7 @@ const api = supertest(app)
 
 describe('When no Threshold Hints are in the database', () => {
   beforeAll(async () => {
+    await Threshold.deleteMany({})
     await ThresholdHintArray.deleteMany({})
   })
 
@@ -94,8 +95,10 @@ describe('When ThresholdHintArray is in the database', () => {
     const thresholdHints = await ThresholdHintArray.findOne({}).populate('thresholds')
     expect(thresholdHints.thresholds[0]).toHaveProperty('threshold', 'one')
   })
+  
 })
 
 afterAll(async () => {
+  console.log('closing connection')
   await mongoose.connection.close()
 })

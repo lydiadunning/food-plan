@@ -3,7 +3,7 @@ const childRouter = require('../controllers/children.js')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app.js')
-const { ThresholdHintArray } = require('../models/threshold.js')
+const { Threshold, ThresholdHintArray } = require('../models/threshold.js')
 const api = supertest(app)
 
 
@@ -156,7 +156,7 @@ describe('With child profiles in the database', () => {
     ]
     const childObjects = children
       .map(child => new Child(child))
-    await childObjects.forEach(async child => await child.save())
+    const childIds = await childObjects.forEach(async child => await child.save())
   })
 
   test('a list of child profiles can be returned', async () => {
@@ -183,8 +183,27 @@ describe('With child profiles in the database', () => {
     expect(endChildren).not.toContain(children[0])
     expect(endChildren).toHaveLength(2)
   })
+
+  test.only('a list of thresholds can be added', async () => {
+    const allProfiles = await api.get('/api/child')
+    const child = allProfiles.body[0]
+    child.thresholds = [{ threshold: 'taste' }]
+
+    const response = await api.put(`/api/child/thresholds/${child._id}`)
+      .send(child)
+      .expect(200)
+    
+    console.log('response', response.body)
+    expect(response.body.thresholds).toHaveLength(1)
+    const newThreshold = await Threshold.findById(response.body.thresholds[0])
+    expect(newThreshold).toHaveProperty('threshold', 'taste')
+  })
 })
 
 afterAll(async () => {
   await mongoose.connection.close()
 })
+
+// a child's list of thresholds can be retrieved
+
+// a child's list of thresholds can be updated

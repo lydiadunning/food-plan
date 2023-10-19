@@ -31,10 +31,6 @@ describe('creating an intro', () => {
     await Intro.deleteMany({})
   })
 
-  afterAll(async () => {
-    await mongoose.connection.close()
-  })
-
   test('a new intro can be added correctly', async () => {
     const date = new Date()
 
@@ -129,25 +125,12 @@ describe('creating an intro', () => {
       newIntro
     )
   })
+
 })
 
-describe('creating an intro', () => {
-  let childId = ''
-  let thresholdId = ''
+// a new intro is added to the child's intros
 
-  beforeAll(async () => {
-    await Child.deleteMany({})
 
-    const threshold = new Threshold({ threshold: 'smell' })
-    const savedThreshold = await threshold.save()
-    thresholdId = savedThreshold._id
-
-    const child = new Child({ 
-      'name': 'Child Name', 
-      thresholds: [thresholdId] 
-    })
-
-    const savedChild = await child.save()
-    childId = savedChild._id    
-  })
+afterAll(async () => {
+  await mongoose.connection.close()
 })
