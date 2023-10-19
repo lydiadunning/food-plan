@@ -1,9 +1,9 @@
 const Child  = require('../models/child.js')
 const childRouter = require('express').Router()
-const { Threshold } = require('../models/threshold.js')
+const { Try } = require('../models/try.js')
 
 childRouter.get('/', async (request, response) => {
-  const children = await Child.find({}).populate('thresholds', {threshold: 1, _id: 1})
+  const children = await Child.find({}).populate('tries', {try: 1, _id: 1})
   response.json(children)
 
 })
@@ -12,10 +12,10 @@ childRouter.get('/', async (request, response) => {
 /**
  * request.body: {
  *   name: String
- *   thresholds: Array [
+ *   tries: Array [
  *     Objects {
- *       threshold: String (optional)
- *       thresholdId: String - ObjectId (optional)
+ *       try: String (optional)
+ *       tryId: String - ObjectId (optional)
  *       active: Boolean (optional)
  *     }
  *   ]
@@ -28,17 +28,17 @@ childRouter.post('/', async (request, response) => {
   } 
 
   try {
-  // if the request contains an objectId, keep it, otherwise create a new Threshold. 
+  // if the request contains an objectId, keep it, otherwise create a new Try. 
   // uses Promise.all as described here: https://www.youtube.com/shorts/KByYTibYQdY
-  const thresholds = request.body.thresholds ? await Promise.all(
-    request.body.thresholds?.map(async (obj) => {
-      return obj.thresholdId ? obj.thresholdId : await new Threshold({ threshold: obj.threshold }).save()
+  const tries = request.body.tries ? await Promise.all(
+    request.body.tries?.map(async (obj) => {
+      return obj.tryId ? obj.tryId : await new Try({ try: obj.try }).save()
     })
   ) : []
 
   const child = new Child({
     name: request.body.name,
-    thresholds: thresholds
+    tries: tries
   })
   const result = await child.save()
   response.status(201).json(result)
@@ -49,7 +49,7 @@ childRouter.post('/', async (request, response) => {
 })
 
 childRouter.get('/:id', async (request, response) => {
-  const child = await Child.findById(request.params.id).populate('thresholds', {threshold: 1, _id: 1})
+  const child = await Child.findById(request.params.id).populate('tries', {try: 1, _id: 1})
   response.json(child)
 })
 
@@ -70,19 +70,19 @@ childRouter.put('/:id', async (request, response) => {
   response.json(updated)
 })
 
-childRouter.put('/thresholds/:id', async (request, response) => {
+childRouter.put('/tries/:id', async (request, response) => {
   try {
     const body = request.body
 
-    // if the request contains an objectId, keep it, otherwise create a new Threshold. 
+    // if the request contains an objectId, keep it, otherwise create a new Try. 
     // uses Promise.all as described here: https://www.youtube.com/shorts/KByYTibYQdY
-    const thresholds = await Promise.all(
-      body.thresholds.map(async (obj) => {
-        return obj.thresholdId ? obj.thresholdId : await new Threshold({ threshold: obj.threshold }).save()
+    const tries = await Promise.all(
+      body.tries.map(async (obj) => {
+        return obj.tryId ? obj.tryId : await new Try({ try: obj.try }).save()
       })
     ) 
 
-    newChild = {...request.body, thresholds: thresholds}
+    newChild = {...request.body, tries: tries}
     const updated = await Child.findByIdAndUpdate(request.params.id, newChild, { new: true })
 
     response.status(200).json(updated)

@@ -1,6 +1,0 @@
-POST http://localhost:2002/api/food
-Content-Type: application/json
-
-{
-  "name": "broccoli"
-}

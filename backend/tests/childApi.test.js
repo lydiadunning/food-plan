@@ -3,7 +3,7 @@ const childRouter = require('../controllers/children.js')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app.js')
-const { Threshold, ThresholdHintArray } = require('../models/threshold.js')
+const { Try, TryHintArray } = require('../models/try.js')
 const api = supertest(app)
 
 
@@ -17,12 +17,12 @@ const api = supertest(app)
  * doesn't allow update to a profile missing required properties
  * allows update to profile with required properties
  * after a child has introductions, an update to the child's profile does not alter the introduction history
- * a child's thresholds can be changed to add a new systemThreshold
- * a child's thresholds can be changed to remove a systemThreshold
- *  * a child's thresholds can be changed to add a new threshold string
- * a child's thresholds can be changed to remove a threshold string
- * a child's threshold returns a mix of systemThresholds and thresholds correctly and in the expected order
- * a child's thresholds can be re-ordered
+ * a child's tries can be changed to add a new systemTry
+ * a child's tries can be changed to remove a systemTry
+ *  * a child's tries can be changed to add a new try string
+ * a child's tries can be changed to remove a try string
+ * a child's try returns a mix of systemTries and tries correctly and in the expected order
+ * a child's tries can be re-ordered
  * trying to update a profile that doesn't exist won't work
  * trying to delete a profile that doesn't exist works
  */
@@ -63,14 +63,14 @@ describe('Creating a child profile', () => {
     )
   }) 
 
-  test('a new child profile can be added with threshold strings', async () => {
+  test('a new child profile can be added with try strings', async () => {
       
     const newChild = {
       'name': 'Bess Borgington',
-      'thresholds': [
-        { threshold: "alpha" }, 
-        { threshold: "beta" }, 
-        { threshold: "gamma" }
+      'tries': [
+        { try: "alpha" }, 
+        { try: "beta" }, 
+        { try: "gamma" }
       ]
     }
   
@@ -83,35 +83,35 @@ describe('Creating a child profile', () => {
     const childrenFromDB = await Child.find({})
     const children = childrenFromDB.map(child => child.toJSON())
   
-    expect(children[0]).toHaveProperty('thresholds')
-    expect(children[0].thresholds).toHaveLength(3)
+    expect(children[0]).toHaveProperty('tries')
+    expect(children[0].tries).toHaveLength(3)
   })
 })
 
 //may flesh this out later
-describe('With Threshold hints from the database', () => {
-  let recievedThresholds = []
-  let sentThresholds = []
+describe('With Try hints from the database', () => {
+  let recievedTries = []
+  let sentTries = []
   beforeAll(async () => {
     await Child.deleteMany({})
 
-    let thresholdHintArray = await ThresholdHintArray.findOne({})
-    if (!thresholdHintArray) {
-      thresholdHintArray = await api
-      .post('/api/threshold/hints')
+    let tryHintArray = await TryHintArray.findOne({})
+    if (!tryHintArray) {
+      tryHintArray = await api
+      .post('/api/try/hints')
       .send(['one', 'two', 'three'])
     }
 
-    recievedThresholds = thresholdHintArray.thresholds
-    sentThresholds = thresholdHintArray.thresholds.map(x => {
-      return {thresholdId: x}
+    recievedTries = tryHintArray.tries
+    sentTries = tryHintArray.tries.map(x => {
+      return {tryId: x}
     })
   })
 
-  test('a new child profile can use threshold hints', async () => {
+  test('a new child profile can use try hints', async () => {
     const newChild = {
       'name': 'Bess Borgington',
-      'thresholds': sentThresholds
+      'tries': sentTries
     }
   
     await api
@@ -126,13 +126,13 @@ describe('With Threshold hints from the database', () => {
     const childrenNoId = children.map(x => {
       return {
         'name': x.name,
-        'thresholds': x.thresholds
+        'tries': x.tries
       }
     })
     expect(childrenNoId).toContainEqual(
       {
         'name': 'Bess Borgington',
-        'thresholds': recievedThresholds
+        'tries': recievedTries
       }
     )
   }) 
@@ -183,34 +183,34 @@ describe('With child profiles in the database', () => {
     expect(endChildren).toHaveLength(2)
   })
 
-  test('a list of thresholds can be added', async () => {
+  test('a list of tries can be added', async () => {
     const allProfiles = await api.get('/api/child')
     const child = allProfiles.body[0]
-    child.thresholds = [{ threshold: 'taste' }]
+    child.tries = [{ try: 'taste' }]
 
-    const response = await api.put(`/api/child/thresholds/${child._id}`)
+    const response = await api.put(`/api/child/tries/${child._id}`)
       .send(child)
       .expect(200)
     
-    expect(response.body.thresholds).toHaveLength(1)
-    const newThreshold = await Threshold.findById(response.body.thresholds[0])
-    expect(newThreshold).toHaveProperty('threshold', 'taste')
+    expect(response.body.tries).toHaveLength(1)
+    const newTry = await Try.findById(response.body.tries[0])
+    expect(newTry).toHaveProperty('try', 'taste')
   })
 
 
 })
 
-describe('With a child profile with thresholds', () => {
+describe('With a child profile with tries', () => {
   let child = null
-  const thresholdsToAdd = [
-    { threshold: "alpha" }, 
-    { threshold: "beta" }, 
-    { threshold: "gamma" }
+  const triesToAdd = [
+    { try: "alpha" }, 
+    { try: "beta" }, 
+    { try: "gamma" }
   ]
   beforeEach(async () => {
     const newChild = {
       'name': 'Ron Rees',
-      'thresholds': thresholdsToAdd
+      'tries': triesToAdd
     }
   
     const response = await api
@@ -220,44 +220,44 @@ describe('With a child profile with thresholds', () => {
     child = response.body
   })
 
-  test("the child's list of thresholds can be returned in order", async () => {
+  test("the child's list of tries can be returned in order", async () => {
     const response = await api
       .get(`/api/child/${child._id}`)
       .expect(200)
       console.log(response.body)
-      const responseThresholds = response.body.thresholds.map(x => { 
+      const responseTries = response.body.tries.map(x => { 
         return {
-          threshold: x.threshold
+          try: x.try
         }
       })
-      expect(responseThresholds[0]).toEqual(thresholdsToAdd[0])
-      expect(responseThresholds[1]).toEqual(thresholdsToAdd[1])
-      expect(responseThresholds[2]).toEqual(thresholdsToAdd[2])
+      expect(responseTries[0]).toEqual(triesToAdd[0])
+      expect(responseTries[1]).toEqual(triesToAdd[1])
+      expect(responseTries[2]).toEqual(triesToAdd[2])
 
   })
 
-  test('a list of thresholds can be changed', async () => {
-    const childThresholds = child.thresholds.map(x => {
+  test('a list of tries can be changed', async () => {
+    const childTries = child.tries.map(x => {
       return {
-        thresholdId: x._id
+        tryId: x._id
       }
     })
-    childThresholds.push({ threshold: 'touch' })
-    child.thresholds = childThresholds
+    childTries.push({ try: 'touch' })
+    child.tries = childTries
 
-    const response = await api.put(`/api/child/thresholds/${child._id}`)
+    const response = await api.put(`/api/child/tries/${child._id}`)
       .send(child)
       .expect(200)
     
-    expect(response.body.thresholds).toHaveLength(4)
-    const newThreshold = await Threshold.findById(response.body.thresholds[response.body.thresholds.length - 1])
-    expect(newThreshold).toHaveProperty('threshold', 'touch')
+    expect(response.body.tries).toHaveLength(4)
+    const newTry = await Try.findById(response.body.tries[response.body.tries.length - 1])
+    expect(newTry).toHaveProperty('try', 'touch')
   })
 })
 afterAll(async () => {
   await mongoose.connection.close()
 })
 
-// a child's list of thresholds can be retrieved
+// a child's list of tries can be retrieved
 
-// a child's list of thresholds can be updated
+// a child's list of tries can be updated

@@ -5,6 +5,6 @@ Content-Type: application/json
   # "food": "652f88a4fed1ab0acffd9e67",
   "food": "broccoli",
   "description": "in cheese",
-  "thresholdPassed": "652a1dff98921751b5cf3c0e",
+  "try": "652a1dff98921751b5cf3c0e",
   "meal": "Dinner"
 }

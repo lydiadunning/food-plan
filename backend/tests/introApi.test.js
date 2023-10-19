@@ -1,4 +1,4 @@
-const { Threshold } = require('../models/threshold.js')
+const { Try } = require('../models/try.js')
 const Child = require('../models/child.js')
 const Intro = require('../models/intro.js')
 const mongoose = require('mongoose')
@@ -9,18 +9,18 @@ const api = supertest(app)
 
 describe('creating an intro', () => {
   let childId = ''
-  let thresholdId = ''
+  let tryId = ''
 
   beforeAll(async () => {
     await Child.deleteMany({})
 
-    const threshold = new Threshold({ threshold: 'smell' })
-    const savedThreshold = await threshold.save()
-    thresholdId = savedThreshold._id
+    const newTry = new Try({ try: 'smell' })
+    const savedTries = await newTry.save()
+    tryId = savedTries._id
 
     const child = new Child({ 
       'name': 'Child Name', 
-      thresholds: [thresholdId] 
+      tries: [tryId] 
     })
 
     const savedChild = await child.save()
@@ -90,14 +90,14 @@ describe('creating an intro', () => {
     )
   })
 
-  // threshold here not specific to child.
-  test('a new intro can be added with a threshold', async () => {
+  // try here not specific to child.
+  test('a new intro can be added with a try', async () => {
     const date = new Date()
 
     const newIntro = {
       'food': 'broccoli', 
       'description': 'roasted with salt',
-      'thresholdPassed': thresholdId
+      'try': tryId
     }
 
     await api
@@ -116,7 +116,7 @@ describe('creating an intro', () => {
       return {
         'food': x.food,
         'description': x.description,
-        'thresholdPassed': x.thresholdPassed
+        'try': x.try
       }
     })
     expect(introsNoId).toContainEqual(
@@ -128,7 +128,7 @@ describe('creating an intro', () => {
     const newIntro = {
       'food': 'green beans', 
       'description': 'steamed',
-      'threshold': thresholdId
+      'try': tryId
     }
 
     const response = await api
@@ -137,13 +137,13 @@ describe('creating an intro', () => {
       .expect(201)
       .expect('Content-Type', /application\/json/)
       
-    const child = await Child.findById(childId).populate('intros', { food: 1, description: 1, threshold: 1})
+    const child = await Child.findById(childId).populate('intros', { food: 1, description: 1, try: 1})
     
     const introsNoId = child.intros.map(x => {
       return {
         'food': x.food,
         'description': x.description,
-        'threshold': thresholdId
+        'try': tryId
       }
     })
     expect(introsNoId).toContainEqual(

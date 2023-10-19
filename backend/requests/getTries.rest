@@ -1,0 +1,3 @@
+# GET http://localhost:2002/api/try
+
+GET http://localhost:2002/api/try/hints

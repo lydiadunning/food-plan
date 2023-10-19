@@ -10,9 +10,9 @@ const childSchema = new Schema ({
     ref: 'Intro',
     required: false
   }],
-  thresholds: [{
+  tries: [{
     type: 'ObjectId',
-    ref: 'Threshold',
+    ref: 'Try',
     required: false
   }]
 })

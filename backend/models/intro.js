@@ -1,4 +1,4 @@
-const Threshold = require('../models/threshold.js')
+const Try = require('./try.js')
 const { Schema, model } = require('mongoose');
 
 // I think I want to require either a food or a description
@@ -12,9 +12,9 @@ const introSchema = new Schema ({
     type: String,
     required: true
   },
-  thresholdPassed: {
+  try: {
     type: 'ObjectId',
-    ref: 'Threshold',
+    ref: 'Try',
     required: false
   },
   meal: {
