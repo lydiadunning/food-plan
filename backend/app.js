@@ -4,6 +4,7 @@ const config = require('./utils/config')
 const mongoose = require('mongoose')
 const childRouter = require('./controllers/children.js')
 const tryRouter = require('./controllers/tries.js')
+const tryHintRouter = require('./controllers/tryHints.js')
 const introRouter = require('./controllers/intros.js')
 const { log } = require('console')
 // const userRouter = require('./controllers/users')
@@ -32,6 +33,7 @@ app.use(express.json())// what does the json method return?
 app.use('/api/child', childRouter)
 // app.use('/api/user', userRouter)
 app.use('/api/try', tryRouter)
+app.use('/api/try-hint', tryHintRouter)
 app.use('/api/intro', introRouter)
 
 module.exports = app

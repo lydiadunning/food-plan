@@ -159,13 +159,19 @@ describe('With child profiles in the database', () => {
   })
 
   test('a list of child profiles can be returned', async () => {
-    const response = await api.get('/api/child').expect(200)
+    const response = await api
+      .get('/api/child')
+      .expect(200)
+
     expect(response.body)
     expect(response.body[0]).toHaveProperty('name')
   })
 
   test('a specific child profile can be returned', async () => {
-    const response = await api.get(`/api/child/${childId}`).expect(200)
+    const response = await api
+      .get(`/api/child/${childId}`)
+      .expect(200)
+
     expect(response.body)
     expect(response.body).toHaveProperty('name', 'two')
   })
@@ -181,7 +187,8 @@ describe('With child profiles in the database', () => {
     const children = allProfiles.body
     idToDelete = children[0]._id
     
-    const response = await api.delete(`/api/child/${idToDelete}`)
+    const response = await api
+      .delete(`/api/child/${idToDelete}`)
       .expect(204)
 
     const childrenAtEnd = await Child.find({})
@@ -240,7 +247,7 @@ describe('With a child profile with tries', () => {
     const response = await api
       .get(`/api/child/${child._id}/tries`)
       .expect(200)
-      console.log(response.body)
+
       const responseTries = response.body.map(x => { 
         return {
           try: x.try

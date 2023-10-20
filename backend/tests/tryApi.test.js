@@ -37,6 +37,84 @@ const api = supertest(app)
  * trying to delete a profile that doesn't exist works
  */
 
+/**
+ * Try tests
+ */
+
+describe('When Tries are in the database', () => {
+  const tryArray = [
+    { try: 'one', active: true },
+    { try: 'two', active: false },
+  ]
+  let tryIds = []
+  const [activeTry, inactiveTry] = tryIds
+  beforeAll(async () => {
+    await Try.deleteMany({})
+    tries = await Try.insertMany(tryArray)
+    tryIds = tries.map(x => x._id.toString())
+  })
+
+  test('all tries can be retrieved correctly', async () => {
+    const response = await api
+      .get('/api/try')
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+    
+    console.log(response.body)
+
+    expect(response.body).toHaveLength(2)
+    expect(response.body[0]).toHaveProperty('_id')
+    expect(response.body[1]).toHaveProperty('_id')
+    const noIds = response.body.map(x => {
+      return {
+        try: x.try,
+        active: x.active
+      }
+    })
+    expect(noIds).toContainEqual(tryArray[0])
+    expect(noIds).toContainEqual(tryArray[1])
+
+  })
+
+  test('a try can be retrieved by id', async () => {
+    const [activeTry, inactiveTry] = tryIds
+    console.log('tryIds', tryIds)
+    console.log('activeTry', activeTry, `/api/try/${activeTry}`)
+    const response = await api
+      .get(`/api/try/${activeTry}`)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+    
+    console.log(response.body)
+
+    expect(response.body).toHaveProperty('_id')
+    expect(response.body).toHaveProperty('try', 'one')
+    expect(response.body).toHaveProperty('active', true)
+  })
+
+  test('deleting a try marks it inactive', async () => {
+    const [activeTry, inactiveTry] = tryIds
+
+    const response1 = await api
+      .delete(`/api/try/${activeTry}`)
+      .expect(204)
+    
+    const response2 = await api
+      .delete(`/api/try/${inactiveTry}`)
+      .expect(204)
+    
+    const delActiveTry = await Try.findById(activeTry)
+    console.log('delActiveTry', delActiveTry)
+    expect(delActiveTry).toHaveProperty('active', false)
+    const delInactiveTry = await Try.findById(inactiveTry)
+    expect(delInactiveTry).toHaveProperty('active', false)
+  })
+})
+
+/**
+ * Try Hint tests
+ */
+
 describe('When no Try Hints are in the database', () => {
   beforeAll(async () => {
     await Try.deleteMany({})
@@ -45,7 +123,7 @@ describe('When no Try Hints are in the database', () => {
 
   test('an array of new Try Hints can be added', async () => {
     const response = await api
-      .post('/api/try/hints')
+      .post('/api/try-hint')
       .send(['one', 'two', 'three'])
       .expect(201)
       .expect('Content-Type', /application\/json/)
@@ -75,11 +153,14 @@ describe('When TryHintArray is in the database', () => {
     const finalResult = await tryArray.save()
     const allTh = await TryHintArray.find()
   })
+
   test('Try Hints can be retrieved from the database', async () => {
     const response = await api 
-      .get('/api/try/hints')
+      .get('/api/try-hint')
       .expect(200)
       .expect('Content-Type', /application\/json/)
+
+      console.log(response.body)
     expect(response.body).toHaveProperty('_id')
     expect(response.body.tries).toHaveLength(3)
     expect(response.body.tries[1]).toHaveProperty('try', 'two')
@@ -88,7 +169,7 @@ describe('When TryHintArray is in the database', () => {
 
   test('a second TryHintArray cannot be added', async () => {
     await api
-      .post('/api/try/hints')
+      .post('/api/try-hint')
       .send(['four', 'five', 'six'])
       .expect(400)
   

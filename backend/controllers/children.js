@@ -5,7 +5,6 @@ const { Try } = require('../models/try.js')
 childRouter.get('/', async (request, response) => {
   const children = await Child.find({}).populate('tries', {try: 1, _id: 1})
   response.json(children)
-
 })
 
 
@@ -73,7 +72,6 @@ childRouter.put('/:id', async (request, response) => {
 })
 
 childRouter.put('/:childId/tries', async (request, response) => {
-  try {
     const body = request.body
 
     // if the request contains an objectId, keep it, otherwise create a new Try. 
@@ -81,8 +79,13 @@ childRouter.put('/:childId/tries', async (request, response) => {
     const tries = await Promise.all(
       body.tries.map(async (obj) => {
         return obj.tryId ? obj.tryId : await new Try({ try: obj.try }).save()
+      }).catch(error => {
+        console.error(err)
+        response.status(400)
       })
     ) 
+    
+    try { // try/catch may not work in async function
 
     newChild = {...request.body, tries: tries}
     const updated = await Child.findByIdAndUpdate(request.params.childId, newChild, { new: true })

@@ -64,8 +64,10 @@
 | /intro/:childId | GET | yes |
 | /intro/:id | DELETE | |
 | /intro/:id | PUT | |
-| /try | GET | |
-| /try/hints | GET | yes |
-| /try/hints | POST | yes |
-| /try/deactivate/:id | PUT | |
-| /try/hints | DELETE | | 
+| /try | GET | yes |
+| /try/:id | GET | yes |
+| /try/:id | DELETE | yes |
+| /try-hint | GET | yes |
+| /try-hint | POST | yes |
+| /try-hint | DELETE | | 
+
