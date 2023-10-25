@@ -2,38 +2,51 @@
 
 ## childApi.test.js
 
-#### POST: verifies a child profile can be created:
-  * with only a name
-  * with an array of custom tries, added as strings
-  * with an array of custom tries, added as ObjectId strings
+#### POST: verifies a child profile:
+  * can be created with only a name
+  * can be created with an array of custom tries, added as strings
+  * can be created with an array of custom tries, added as ObjectId strings
+  * can be created with an array of try hints
+  * cannot be created with no name
+  * with intros
+    * can add intros
+    * a child that doesn't exist can't add an intro
+    * an intro will default to the current date
+    * an intro can be added with a try
 
 #### GET: verifies child profiles can be returned
   * with only a name in the profile / base case
   * the correct number of profiles is returned
   * a child's tries are returned in order
   * a specific child can be returned
+  * children will not be returned if none in database
+  * response when specific child not in database
+  * response when getting tries for nonexistant child
+  * the child's intros can be returned
+  * response when querying nonexistant child's intros
   
 #### DELETE: verifies a child profile can be deleted
   * the correct profile is deleted
+  * behaves normally when deleting a nonexistant child
 
 #### PUT: verifies a child profile can be changed
-  * a child's name can be changed
+  * a child's name can be changed*
   * an array of tries can be added to an existing child
   * a child's list of tries can be replaced
+  * response when adding tries to nonexistant child
+  * response when updating nonexistant child
+  * cannot update child with invalid data
 
 ## introApi.test.js
 
-#### POST: verifies an intro can be created
-  * correctly
-  * adding the current date
-  * with a try property
-  * and the new intro is added to the child's intros
+#### POST: none
 
 #### GET: verifies intros can be read
   * correctly
-  * for a specific child, in order
+  * a nonexistant intro doesn't cause problems
 
-#### DELETE: none
+#### DELETE: verifies the intro can be deleted
+  * correctly
 
 #### PUT: none
 
@@ -57,16 +70,16 @@
 
 | Route | Request | Covered | Not in DB | Bad Req |
 | ----- | ------ | ----- |----- | --- |
-| /child | GET |  yes | | -
-| /child | POST | yes | - |
-| /child/:id | GET | yes |  | -
-| /child/:id | DELETE | yes | - | -
-| /child/:id | PUT | yes | |
-| /child/:id/tries | GET | yes | | -
-| /child/:id/tries/ | PUT | yes | |
-| /intro/ | GET | yes | | -
-| /intro/:childId | POST | yes | - | 
-| /intro/:childId | GET | yes | | -
+| /child | GET |  yes | yes | -
+| /child | POST | yes | - | yes
+| /child/:id | GET | yes | yes | -
+| /child/:id | DELETE | yes | yes | -
+| /child/:id | PUT | yes | yes | yes
+| /child/:id/tries | GET | yes | yes | -
+| /child/:id/tries/ | PUT | yes | yes |
+| /child/:id/intro/ | POST | yes | yes |
+| /child/:id/intro | GET | yes | yes | -
+| /intro/ | GET | yes | yes | -
 | /intro/:id | DELETE |  | - | -
 | /intro/:id | PUT | | |
 | /try | GET | yes | | -
@@ -77,5 +90,11 @@
 | /try-hint | DELETE | |  | -
 
 Only happy path so far.  
-Add not found in db tests
+To improve error handling:
+Add tests for querying items that aren't in the database  
+Add tests where the request body lacks essential data   
+| child | intro | try |
+|--|--|--|
+| no name | no food | no try
+| | no description | 
 

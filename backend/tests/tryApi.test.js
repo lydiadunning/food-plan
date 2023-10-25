@@ -171,7 +171,7 @@ describe('When TryHintArray is in the database', () => {
     await api
       .post('/api/try-hint')
       .send(['four', 'five', 'six'])
-      .expect(400)
+      .expect(409)
   
     const tryHints = await TryHintArray.findOne({}).populate('tries')
     expect(tryHints.tries[0]).toHaveProperty('try', 'one')

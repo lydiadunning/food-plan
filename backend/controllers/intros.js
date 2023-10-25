@@ -9,21 +9,18 @@ introRouter.get('/', async (request, response) => {
   response.json(intro)
 })
 
-introRouter.get('/:childId', async (request, response) => {
-  const child = await Child.findById(request.params.childId).populate('intros')
 
-  response.json(child.intros)
+
+introRouter.get('/:id', async (request, response) => {
+  const intro = await Intro.findById(request.params.id)
+  if (intro) {
+    response.json(intro)
+  } else {
+    response.status(404).end()
+  }
 })
 
-introRouter.post('/:childId', async (request, response) => {
-  console.log('request.body', request.body)
 
-  const intro = new Intro({...request.body, date: Date.now()})
-  // return 400 error if request body missing vital info
-  const result = await intro.save()
-  await Child.findByIdAndUpdate(request.params.childId, {$push: {'intros': result._id}}, {upsert: true})
-  response.status(201).json(result)
-})
 
 // After fully implementing users, allow a user to remove the link between their profile and a intro, but don't delete the intro until it has no remaining ties to any user. 
 introRouter.delete('/:id', async (request, response) => {
@@ -32,7 +29,6 @@ introRouter.delete('/:id', async (request, response) => {
 })
 
 introRouter.put('/:id', async (request, response) => {
-  console.log('request.body', request.body)
   const body = request.body
   const updated = await Intro.findByIdAndUpdate(request.params.id, body, { new: true })
   response.json(updated)

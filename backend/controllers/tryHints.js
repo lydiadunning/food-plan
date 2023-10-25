@@ -15,7 +15,7 @@ tryHintRouter.post('/', async (request, response) => {
   const tryHintArray = await TryHintArray.findOne()
   if (tryHintArray) {
     // response.statusMessage = "TryHintArray already exists";
-    response.status(400).end()
+    response.status(409).end()
     return // why isn't response....end() not returning?
   }
   try {
