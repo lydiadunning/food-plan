@@ -104,7 +104,7 @@ childRouter.put('/:childId/tries', async (request, response) => {
     try { // try/catch may not work in async function
 
     newChild = {...request.body, tries: tries.map(x => x._id)}
-    const updated = await Child.findByIdAndUpdate(request.params.childId, newChild, { new: true })
+    const updated = await Child.findByIdAndUpdate(request.params.childId, newChild, { new: true }).populate('tries', {try: 1, _id: 1})
     response.status(200).json(updated)
     } catch (err) {
       console.error(err)
