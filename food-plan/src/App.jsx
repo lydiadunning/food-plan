@@ -1,10 +1,26 @@
 import './App.css'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ChildInfo from './components/childInfo';
 
 
 function App() {
   const [children, setChildren] = useState(null)
+
+  useEffect(() => {
+    fetch('http://localhost:2002/api/child')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            `This is an HTTP error: The status is ${response.status}`
+          );
+        }
+        return response.json();
+      })
+      .then((children) => setChildren(children))
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
 
   async function getChildren() {
     const response = await fetch('http://localhost:2002/api/child')
