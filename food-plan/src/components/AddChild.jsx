@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
 import Tries from "./TriesForAddChild"
+import {createChild} from '../childService'
 
 const AddChild = ({ setShowAddChild }) => {
   const [childName, setChildName] = useState('')
@@ -33,6 +34,8 @@ const AddChild = ({ setShowAddChild }) => {
     }
     console.log('save')
     console.log(child)
+    const created = createChild(child)
+    console.log('created', created)
     setShowAddChild(false)
   }
 
