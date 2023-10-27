@@ -1,10 +1,15 @@
 import './App.css'
 import { useState, useEffect } from 'react';
 import ChildInfo from './components/childInfo';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import AddChild from './components/AddChild.jsx'
+
+
 
 
 function App() {
   const [children, setChildren] = useState(null)
+  const [showAddChild, setShowAddChild] = useState(false)
 
   useEffect(() => {
     fetch('http://localhost:2002/api/child')
@@ -39,16 +44,37 @@ function App() {
     setChildren(allChildren)
   }
 
+
+
   const listOfChildren = children?.map(child => <ChildInfo key={ child._id } child={ child } updateChild={ updateChild }/>)
 
 
   return (
     <div className="App">
-      <h1>Children</h1>
-      <button onClick={ getChildren }>Get Children</button>
-      { children ? <ul>{ listOfChildren }</ul> : <p>no children</p>}
+      { !showAddChild &&
+      <>
+        <h1>Children</h1>
+        <button onClick={ getChildren }>Get Children</button>
+        { children ? <ul>{ listOfChildren }</ul> : <p>no children</p>}
+        <button onClick={ () => setShowAddChild(true) }>Add a child</button>
+      </>}
+      {
+        showAddChild &&
+        <AddChild setShowAddChild={setShowAddChild}/>
+      }
     </div>
   );
 }
+
+const queryClient = new QueryClient()
+
+// export default function App() {
+//   return (
+//     <QueryClientProvider client={queryClient}>
+//       <Example />
+//     </QueryClientProvider>
+//   )
+// }
+
 
 export default App

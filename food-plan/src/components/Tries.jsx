@@ -1,13 +1,20 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
 
+// const Tries = ({ tries, saveHandler }) => {
 const Tries = ({ tries, saveHandler }) => {
+
   const [triesInOrder, setTriesInOrder] = useState([...tries])
   const [ newTry, setNewTry ] = useState('')
 
+  console.log('tries executing', tries, triesInOrder, newTry)
+
 
   const removeTryHandler = (id) => {
+
+    saveHandler(triesInOrder.filter(x => x._id !== id))
     setTriesInOrder(triesInOrder.filter(x => x._id !== id))
+
   }
 
   const moveDown = (tryToMove) => {
