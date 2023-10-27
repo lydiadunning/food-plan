@@ -26,6 +26,10 @@ mongoose.connect(config.MONGODB_URI)
 
 
 app.use(cors())// what does the function cors() return?
+app.get('http://localhost:5173', cors(), function (req, res, next) {
+  res.json({msg: 'This is CORS-enabled for a Single Route'})
+})
+
 app.use(express.static('build'))// what does the static method do?
 app.use(express.json())// what does the json method return?
 

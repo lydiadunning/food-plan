@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
 import Tries from "./TriesForAddChild"
-import {createChild} from '../childService'
+import {CreateChild} from '../serverStore/mutations'
 
 const AddChild = ({ setShowAddChild }) => {
   const [childName, setChildName] = useState('')
@@ -34,8 +34,8 @@ const AddChild = ({ setShowAddChild }) => {
     }
     console.log('save')
     console.log(child)
-    const created = createChild(child)
-    console.log('created', created)
+    // const created = CreateChild(child)
+    console.log('pretend it was created')
     setShowAddChild(false)
   }
 

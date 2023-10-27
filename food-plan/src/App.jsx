@@ -1,80 +1,42 @@
 import './App.css'
-import { useState, useEffect } from 'react';
-import ChildInfo from './components/childInfo';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import { useState } from 'react';
 import AddChild from './components/AddChild.jsx'
-
+import { ChildList } from './components/ChildList';
+import { useChildren } from './serverStore/queries';
+// import { UpdateChild } from './serverStore/mutations';
 
 
 
 function App() {
-  const [children, setChildren] = useState(null)
   const [showAddChild, setShowAddChild] = useState(false)
 
-  useEffect(() => {
-    fetch('http://localhost:2002/api/child')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(
-            `This is an HTTP error: The status is ${response.status}`
-          );
-        }
-        return response.json();
-      })
-      .then((children) => setChildren(children))
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }, []);
 
-  async function getChildren() {
-    const response = await fetch('http://localhost:2002/api/child')
-    const children = await response.json();
-    setChildren(children)
-  }
+  // react-query used here. Comments stay until I'm more familiar with using the technology.
+  // using react-query and axios to simplify state management for values retrieved from the server.
+  // gets result of query with useChildren
+  const { isLoading, error, data } = useChildren()
 
-  async function updateChild(child) {
-    const allChildren = children.map(x => {
-      if (x._id === child._id) {
-        return child
-      } else {
-        return x
-      }
-    })
-    setChildren(allChildren)
-  }
+  if (isLoading) return 'Loading...'
 
+  if (error) return 'An error has occurred: ' + error.message
 
-
-  const listOfChildren = children?.map(child => <ChildInfo key={ child._id } child={ child } updateChild={ updateChild }/>)
+  // after getting the data and confirming it has loaded without errors, use the data.
+  const children = data.data
+  // end of react-query behavior
 
 
   return (
     <div className="App">
-      { !showAddChild &&
-      <>
-        <h1>Children</h1>
-        <button onClick={ getChildren }>Get Children</button>
-        { children ? <ul>{ listOfChildren }</ul> : <p>no children</p>}
-        <button onClick={ () => setShowAddChild(true) }>Add a child</button>
-      </>}
-      {
-        showAddChild &&
-        <AddChild setShowAddChild={setShowAddChild}/>
+      { 
+        !showAddChild 
+        ? <ChildList childData={children} setShowAddChild={setShowAddChild}/>
+        : <AddChild setShowAddChild={setShowAddChild}/>
       }
     </div>
   );
 }
 
-const queryClient = new QueryClient()
 
-// export default function App() {
-//   return (
-//     <QueryClientProvider client={queryClient}>
-//       <Example />
-//     </QueryClientProvider>
-//   )
-// }
 
 
 export default App
