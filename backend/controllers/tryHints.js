@@ -11,7 +11,7 @@ tryHintRouter.get('/', async (request, response) => {
 
 // add all try hints, expects an array in the request body 
 tryHintRouter.post('/', async (request, response) => {
-  // return 400 if tryHints already in db
+  // return 409 if tryHints already in db
   const tryHintArray = await TryHintArray.findOne()
   if (tryHintArray) {
     // response.statusMessage = "TryHintArray already exists";

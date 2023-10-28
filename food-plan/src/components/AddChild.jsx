@@ -13,15 +13,6 @@ const AddChild = ({ setShowAddChild }) => {
   console.log('executing AddChild', childName, tries)
   const nameLabel = "What's the child's name?"
 
-  const defineTries = () => { 
-    setTries([
-      { try: 'poke', _id: 1 },
-      { try: 'sniff', _id: 2 },
-      { try: 'nibble', _id: 3 }
-    ])
-    setShowTries(true)
-  }
-
   const acceptHandler = () => {
     setShowTries(false)
     setShowSave(true)
@@ -53,7 +44,7 @@ const AddChild = ({ setShowAddChild }) => {
         (childName && showTries == [] && !showSave) &&
         <>
           <h3>Do you want to record how {childName} responds to foods?</h3>
-          <button onClick={defineTries}>yes</button>
+          <button onClick={() => {setShowTries(true)}}>yes</button>
           <button onClick={() => setShowSave(true)}>no</button>
         </>
       }
@@ -68,7 +59,7 @@ const AddChild = ({ setShowAddChild }) => {
         showSave && 
         <>
           <h3>{childName}</h3>
-          {tries?.map( x => <p>{x.try}</p>)}
+          {tries?.map( x => <p key={x.id}>{x.try}</p>)}
           <button onClick={saveHandler}>Save</button>
         </>
       }

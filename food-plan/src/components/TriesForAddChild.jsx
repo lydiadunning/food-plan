@@ -1,12 +1,37 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import {useTryHints} from '../serverStore/queries'
 
-// const Tries = ({ tries, saveHandler }) => {
+
 const Tries = ({ tries, setTries }) => {
   const [ newTry, setNewTry ] = useState('')
+  const [ keyCounter, setKeyCounter] = useState(1)
 
   console.log('tries executing', tries, newTry)
 
+  const {isLoading, error, data} = useTryHints()
+  
+  useEffect(() => {
+    console.log('in useEffect')
+    console.log('isLoading', isLoading)
+    // console.log('tries.length', tries.length, 'data', data.data)
+    if(tries.length == 0 && data) {
+      console.log(data)
+      const convertedTries = data.data.tries.map(x => {
+        return {
+          id: x._id,
+          try: x.try,
+          tryId: x._id
+        }
+      })
+      setTries(convertedTries)
+    } else if (error) {
+      return {
+        try: 'error: hints not available.',
+        id: 0
+      }
+    }
+  }, [isLoading]) // executes the effect when loading state changes.
 
   const removeTryHandler = (id) => {
     setTries(tries.filter(x => x._id !== id))
@@ -27,18 +52,18 @@ const Tries = ({ tries, setTries }) => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    const tryObject = {try: newTry, _id: Math.random()  * 100}
+    const tryObject = {try: newTry, id: keyCounter}
     console.log('in submit handler')
     setTries([...tries, tryObject])
-    console.log(newTry, tries)
     setNewTry('')
+    setKeyCounter(keyCounter + 1)
   }
 
   return (
     <>
       <ul>
         { tries && tries.map((x, i) => {
-          return <li key={x._id}>{ x.try } { i !== 0 && <button onClick={ () => moveUp(x) }>^</button> } { i !== tries.length - 1 && <button onClick={ () => moveDown(x) }>v</button> } { <button onClick={() => removeTryHandler(x._id)}>x</button> } </li>
+          return <li key={x.id}>{ x.try } { i !== 0 && <button onClick={ () => moveUp(x) }>^</button> } { i !== tries.length - 1 && <button onClick={ () => moveDown(x) }>v</button> } { <button onClick={() => removeTryHandler(x._id)}>x</button> } </li>
           })
         }
       </ul>

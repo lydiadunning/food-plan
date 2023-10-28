@@ -1,4 +1,4 @@
-POST http://localhost:2002/api/try/hints
+POST http://localhost:2002/api/try-hint
 Content-Type: application/json
 
 [
