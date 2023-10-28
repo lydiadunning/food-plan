@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
-import Tries from "./TriesForAddChild"
+import TryMenu from "./tryMenu/TryMenu.jsx"
 import {CreateChild} from '../serverStore/mutations'
 
 const AddChild = ({ setShowAddChild }) => {
@@ -51,7 +51,7 @@ const AddChild = ({ setShowAddChild }) => {
       {
         showTries &&
         <>
-          <Tries tries={tries} setTries={setTries} />
+          <TryMenu tries={tries} setTries={setTries} />
           <button onClick={ acceptHandler }>Accept</button>
         </>
       }
