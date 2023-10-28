@@ -1,9 +1,9 @@
 POST http://localhost:2002/api/child
 Content-Type: application/json
 
-# {
-#   "name": "Patience Bento"
-# }
+{
+  "name": "Patience Bento"
+}
 
 # {
 #   "name": "Erica Zeal",
@@ -12,13 +12,13 @@ Content-Type: application/json
 #     { "try": "touched it" }]
 # }
 
-{
-  "name": "Den Bavidson",
-  "tries": [
-    { "try": "didn't throw it" },
-    { "try": "tasted" }
-  ]
-}
+# {
+#   "name": "Den Bavidson",
+#   "tries": [
+#     { "try": "didn't throw it" },
+#     { "try": "tasted" }
+#   ]
+# }
 
 # {
 #   "name": "Cara Brug",

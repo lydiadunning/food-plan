@@ -10,7 +10,6 @@ const TryList = ({ tries, setTries }) => {
   
   useEffect(() => {
     if(tries.length == 0 && data) {
-      console.log(data)
       const convertedTries = data.data.tries.map(x => {
         return {
           id: x._id,
@@ -39,7 +38,6 @@ const TryList = ({ tries, setTries }) => {
   // consider making removeTryHandler, moveUp, moveDown 
   // methods on the try object
   const removeTryHandler = (id) => {
-    console.log('in removeTryHandler', id, tries.filter(x => x.id !== id))
     setTries(tries.filter(x => x.id !== id))
   }
 
@@ -50,8 +48,6 @@ const TryList = ({ tries, setTries }) => {
           tries[index + 1], 
           tries[index], 
           ...tries.slice(index + 2))
-    console.log('in moveDown', reordered)
-
     setTries(reordered)
   }
 

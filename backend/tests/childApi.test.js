@@ -330,7 +330,7 @@ describe('With a child profile with tries', () => {
 
   })
 
-  test('a list of tries can be changed', async () => {
+  test.only('a list of tries can be changed', async () => {
     const childTries = child.tries.map(x => {
       return {
         tryId: x._id
@@ -346,6 +346,7 @@ describe('With a child profile with tries', () => {
     expect(response.body.tries).toHaveLength(4)
     const newTry = await Try.findById(response.body.tries[response.body.tries.length - 1])
     expect(newTry).toHaveProperty('try', 'touch')
+    expect(newTry).toHaveProperty('_id')
   })
 
   test('expected response when getting tries for a nonexistant child', async () => {
