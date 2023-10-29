@@ -33,9 +33,11 @@ export const useCreateChild = (child) => {
 
 // PUT ---
 
-export const UpdateChild = () => {
+export const useUpdateChild = () => {
+  const queryClient = useQueryClient()
+
   return useMutation(child => {
-    return axios.put(baseUrl.concat(`child/${child._id}`))
+    return axios.put(baseUrl.concat(`child/${child._id}`), child)
   })
 }
 
@@ -47,7 +49,6 @@ export const UpdateChild = () => {
  * @returns mutation object with method mutate
  */
 export const useDeleteChild = (child) => {
-  console.log('delete child')  
     const queryClient = useQueryClient()
   
     // creating a child should add the child to the list of children in data.

@@ -10,9 +10,11 @@ const baseUrl = 'http://localhost:2002/api/'
  * @returns { isLoading, error, data }
  */
 export const useChildren = () => {
-  return useQuery('children', () => 
-    axios.get(baseUrl.concat('child/'))
-  )
+  console.log('returning useQuery')
+  return useQuery('children', () => {
+    console.log('axios query')
+    return axios.get(baseUrl.concat('child/'))
+  })
 }
 
 /**
