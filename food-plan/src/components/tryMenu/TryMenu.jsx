@@ -21,7 +21,7 @@ const TryMenu = ({ tries, setTries }) => {
       <TryList tries={tries} setTries={setTries} />
       <form onSubmit={ submitHandler }>
         <label htmlFor='try'>add a try to the end</label>
-          <input type='text' id='try' name='try' onChange={ (e) => {
+          <input type='text' id='try' name='try' value={newTry} onChange={ (e) => {
             setNewTry(e.target.value)
 
           }} required></input>
