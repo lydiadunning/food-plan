@@ -2,7 +2,7 @@ import { useCreateChild} from '../serverStore/mutations'
 import axios from "axios"
 import { useMutation, useQueryClient } from 'react-query';
 
-export default function SavePage({ childName, tries, setShowAddChild }) {
+export default function SavePage({ childName, tries, closeAddChild }) {
 
   const queryClient = useQueryClient()
 
@@ -16,7 +16,7 @@ export default function SavePage({ childName, tries, setShowAddChild }) {
       tries: tries
     }
     mutation.mutate(child)
-    setShowAddChild(false)
+    closeAddChild()
   }
   const child = {
     name: childName,

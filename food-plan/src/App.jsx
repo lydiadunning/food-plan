@@ -9,6 +9,8 @@ import { useChildren } from './serverStore/queries';
 
 function App() {
   const [showAddChild, setShowAddChild] = useState(false)
+  const [showLogin, setShowLogin] = useState(false)
+
 
 
   // react-query used here. Comments stay until I'm more familiar with using the technology.
@@ -24,13 +26,25 @@ function App() {
   const children = data.data
   // end of react-query behavior
 
+  const closeAddChild = () => {
+    setShowAddChild(false)
+  }
+
+  const openAddChild = () => {
+    setShowAddChild(true)
+  }
 
   return (
     <div className="App">
       { 
-        showAddChild 
-        ? <AddChild setShowAddChild={setShowAddChild}/>
-        : <ChildList childData={children} setShowAddChild={setShowAddChild}/>
+        showLogin
+        ? <Login closeLogin={() => setShowLogin(false)}/>
+        : showAddChild 
+        ? <AddChild closeAddChild={closeAddChild}/>
+        : <>
+            <ChildList childData={children} />
+            <button onClick={openAddChild}>Add a child</button>
+          </>
       }
     </div>
   );

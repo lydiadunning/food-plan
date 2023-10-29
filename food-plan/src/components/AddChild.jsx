@@ -4,7 +4,7 @@ import TryMenu from "./tryMenu/TryMenu.jsx"
 
 import SavePage from './SavePage.jsx'
 
-const AddChild = ({ setShowAddChild }) => {
+const AddChild = ({ closeAddChild }) => {
   const [childName, setChildName] = useState('')
   const [childNameForm, setChildNameForm] = useState('')
   const [tries, setTries] = useState([])
@@ -49,7 +49,7 @@ const AddChild = ({ setShowAddChild }) => {
         <SavePage 
           childName={childName}
           tries={tries}
-          setShowAddChild={setShowAddChild}
+          closeAddChild={closeAddChild}
         />
       }
 

@@ -1,11 +1,10 @@
 import ChildInfo from './childInfo';
 
-export const ChildList = ({ childData, setShowAddChild }) => {
+export const ChildList = ({ childData }) => {
 
   return (
     <>
       <h1>Children</h1>
-      {/* <button onClick={ getChildren }>Get Children</button> */}
       { childData ? <ul>
         { childData?.map(child => 
           <ChildInfo 
@@ -17,7 +16,6 @@ export const ChildList = ({ childData, setShowAddChild }) => {
           />
         )}
       </ul> : <p>no children</p>}
-      <button onClick={ () => setShowAddChild(true) }>Add a child</button>
     </>
   );
 }
