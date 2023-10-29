@@ -40,15 +40,28 @@ export const UpdateChild = () => {
 }
 
 
+// DELETE
 
-
-// mutation.mutate({
-//   id: 5,
-//   name: 'Do the laundry',
-// })
-
-// The query below will be updated with the response from the
-// successful mutation
-// const { status, data, error } = useQuery(['todo', { id: 5 }], fetchTodoById)
-
-
+/**
+ * 
+ * @returns mutation object with method mutate
+ */
+export const useDeleteChild = (child) => {
+  console.log('delete child')  
+    const queryClient = useQueryClient()
+  
+    // creating a child should add the child to the list of children in data.
+  
+    return useMutation(child => {
+      console.log('in delete mutation')
+      return axios.delete(baseUrl.concat('child/', child._id), child,
+        {
+          onSuccess: (data) => {
+            // currently has no visible effect
+            console.log('success')
+            queryClient.invalidateQueries('children')
+          }
+        }
+      )
+    })
+  }

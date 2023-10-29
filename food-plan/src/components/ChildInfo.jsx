@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
+import { useDeleteChild } from '../serverStore/mutations.jsx'
 
 const ChildInfo = ({ child, updateChild }) => {
 
@@ -17,6 +18,7 @@ const ChildInfo = ({ child, updateChild }) => {
     </li>)
   })
 
+  const {error, mutate} = useDeleteChild()
 
 
   return (
@@ -25,6 +27,7 @@ const ChildInfo = ({ child, updateChild }) => {
       <p>{ listEach(child.tries, 'try') }</p>
       {intros && <ul>{intros}</ul>}
       <button>add an introduction</button>
+      <button onClick={ () => mutate(child) }>delete</button>
     </li>
   )
 }
