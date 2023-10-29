@@ -28,9 +28,9 @@ function App() {
   return (
     <div className="App">
       { 
-        !showAddChild 
-        ? <ChildList childData={children} setShowAddChild={setShowAddChild}/>
-        : <AddChild setShowAddChild={setShowAddChild}/>
+        showAddChild 
+        ? <AddChild setShowAddChild={setShowAddChild}/>
+        : <ChildList childData={children} setShowAddChild={setShowAddChild}/>
       }
     </div>
   );

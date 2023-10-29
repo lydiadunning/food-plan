@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
 import TryMenu from "./tryMenu/TryMenu.jsx"
-import {CreateChild} from '../serverStore/mutations'
+
+import SavePage from './SavePage.jsx'
 
 const AddChild = ({ setShowAddChild }) => {
   const [childName, setChildName] = useState('')
@@ -16,18 +17,6 @@ const AddChild = ({ setShowAddChild }) => {
   const acceptHandler = () => {
     setShowTries(false)
     setShowSave(true)
-  }
-
-  const saveHandler = () => {
-    const child = {
-      name: childName,
-      tries: tries
-    }
-    console.log('save')
-    console.log(child)
-    // const created = CreateChild(child)
-    console.log('pretend it was created')
-    setShowAddChild(false)
   }
 
   return (
@@ -57,11 +46,11 @@ const AddChild = ({ setShowAddChild }) => {
       }
       {
         showSave && 
-        <>
-          <h3>{childName}</h3>
-          {tries?.map( x => <p key={x.id}>{x.try}</p>)}
-          <button onClick={saveHandler}>Save</button>
-        </>
+        <SavePage 
+          childName={childName}
+          tries={tries}
+          setShowAddChild={setShowAddChild}
+        />
       }
 
     </div>
