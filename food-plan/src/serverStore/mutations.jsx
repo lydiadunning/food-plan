@@ -31,6 +31,29 @@ export const useCreateChild = (child) => {
   })
 }
 
+/**
+ * 
+ * @returns mutation object with method mutate
+ */
+export const useCreateIntro = (childId) => {
+  // useCreateChild is a model for making a useMutation available.
+  
+    const queryClient = useQueryClient()
+  
+    // creating a child should add the child to the list of children in data.
+  
+    return useMutation(intro => {
+      return axios.post(baseUrl.concat(`${childId}/intro/`), intro,
+        {
+          onSuccess: (data) => {
+            // currently has no visible effect
+            console.log('success')
+          }
+        }
+      )
+    })
+  }
+
 // PUT ---
 
 export const useUpdateChild = () => {

@@ -2,8 +2,10 @@
 import { useState } from "react"
 import { useDeleteChild } from '../serverStore/mutations.jsx'
 
-const ChildInfo = ({ child, updateChild, deleteChild }) => {
+const ChildInfo = ({ child, openAddIntro, deleteChild }) => {
 
+
+  
   function listEach(arr, propertyName) {
     const strings = arr.map(x => x[propertyName])
     return strings.toString()
@@ -17,15 +19,16 @@ const ChildInfo = ({ child, updateChild, deleteChild }) => {
       { x.date && <p>Date: { x.date.toString() }</p>}
     </li>)
   })
-
+  
 
   return (
     <li key={ child._id }>
       <p>{ child.name }</p>
       <p>{ listEach(child.tries, 'try') }</p>
       {intros && <ul>{intros}</ul>}
-      <button>add an introduction</button>
+      <button onClick={ () => openAddIntro(child) }>add an introduction</button>
       <button onClick={ deleteChild }>delete</button>
+      { }
     </li>
   )
 }
