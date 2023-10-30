@@ -77,7 +77,7 @@
 | /child/:id | PUT | yes | yes | yes
 | /child/:id/tries | GET | yes | yes | -
 | /child/:id/tries/ | PUT | yes | yes |
-| /child/:id/intro/ | POST | yes | yes |
+| /child/:id/intro/ | POST | yes | yes | 
 | /child/:id/intro | GET | yes | yes | -
 | /intro/ | GET | yes | yes | -
 | /intro/:id | DELETE |  | - | -

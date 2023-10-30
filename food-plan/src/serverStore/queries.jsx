@@ -25,3 +25,12 @@ export const useTryHints = () => {
     axios.get(baseUrl.concat('try-hint/'))
   )
 }
+
+
+export const useIntro = (introId) => {
+  const introUrl = baseUrl.concat('intro/', introId)
+  console.log('introUrl', introUrl)
+  return useQuery(['intro', introId], () => 
+    axios.get(introUrl)
+  )
+}

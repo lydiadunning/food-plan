@@ -1,7 +1,7 @@
 import ChildInfo from './childInfo';
 import { useDeleteChild, useUpdateChild } from '../serverStore/mutations.jsx'
 
-export const ChildList = ({ childData, openAddIntro }) => {
+export const ChildList = ({ childData, openAddIntro, openChild }) => {
 
   const deleteChild = useDeleteChild()
   const updateChild = useUpdateChild()
@@ -17,6 +17,7 @@ export const ChildList = ({ childData, openAddIntro }) => {
             updateChild={ () => updateChild.mutate(child)}
             deleteChild={ () => deleteChild.mutate(child) }
             openAddIntro={ openAddIntro }
+            openChild={ openChild }
           />
         )}
       </ul> : <p>no children</p>}

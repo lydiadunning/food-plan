@@ -2,6 +2,8 @@ const Child  = require('../models/child.js')
 const childRouter = require('express').Router()
 const { Try } = require('../models/try.js')
 const Intro = require('../models/intro.js')
+const logger = require('../utils/logger')
+
 
 childRouter.get('/', async (request, response) => {
   const children = await Child.find({}).populate('tries', {try: 1, _id: 1})
@@ -130,6 +132,7 @@ childRouter.get('/:childId/intro', async (request, response) => {
 })
 childRouter.post('/:childId/intro', async (request, response) => {
   const child = await Child.findById(request.params.childId)
+  logger.info('child', child)
   if (child) {
     const intro = new Intro({...request.body, date: Date.now()})
     // return 400 error if request body missing vital info
@@ -137,6 +140,7 @@ childRouter.post('/:childId/intro', async (request, response) => {
     await child.updateOne({$push: {'intros': result._id}}, {upsert: true})
     response.status(201).json(result)
   } else {
+    logger.info('child not found')
     response.status(404).end()
   }
 })

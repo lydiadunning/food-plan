@@ -19,15 +19,15 @@ const AddIntro = ({ child, closeAddIntro }) => {
       <h1>Add Intro</h1>
       <form onSubmit={ handleSubmit(onSubmit) }>
         <label htmlFor='food'>food</label>
-        <input {...register('food')} />
+        <input id='food' {...register('food')} />
         <label htmlFor='description'>description</label>
-        <input {...register('description')} />
+        <input id='description' {...register('description')} />
         <label htmlFor='try'>what did { child.name } try?</label>
-        <select {...register('try')}>
+        <select id='try' {...register('try')}>
           { child.tries.map( x => <option key={x._id} value={x._id}>{x.try}</option> ) }
         </select>
         <label htmlFor='meal'>meal</label>
-        <input {...register('meal')}></input>
+        <input id='meal' {...register('meal')}></input>
         <button type='submit'>submit</button>
       </form>
       <button onClick={ closeAddIntro }>Back</button>
