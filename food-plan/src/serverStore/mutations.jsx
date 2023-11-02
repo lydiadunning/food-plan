@@ -45,7 +45,7 @@ export const useCreateIntro = (childId) => {
   }, {
     onSuccess: async (data) => {
       console.log('success')
-      await queryClient.invalidateQueries('intros')
+      await queryClient.invalidateQueries('intro')
     }
   })
 }
