@@ -62,7 +62,7 @@ const TryList = ({ tries, setTries, showTryHints }) => {
       { tries.length > 0 
       ? tries.map((x, i) => {
         return <Try 
-          key={x.id}
+          key={x._id}
           thisTry={x.try} 
           isFirst={i === 0}
           isLast={i === tries.length - 1}

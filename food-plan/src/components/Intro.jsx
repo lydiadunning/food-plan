@@ -1,7 +1,6 @@
 import { useIntro } from '../serverStore/queries.jsx'
 
 const Intro = ({ introId }) => {
-  // intro query
   const { isLoading, error, data } = useIntro(introId)
 
   if (isLoading) return 'Loading...'

@@ -10,7 +10,7 @@ const TryMenu = ({ tries, setTries, showTryHints = false }) => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    const tryObject = {try: newTry, id: keyCounter}
+    const tryObject = {try: newTry, _id: keyCounter}
     setTries([...tries, tryObject])
     setNewTry('')
     setKeyCounter(keyCounter + 1)
