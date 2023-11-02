@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
 import { useDeleteChild, useUpdateChild } from '../serverStore/mutations.jsx'
-import TryMenu from './tryMenu/tryMenu.jsx'
+import TryMenu from './tryMenu/TryMenu.jsx'
 
 import { useForm } from "react-hook-form"
 
@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form"
 const EditChild = ({ child, closeEditChild }) => {
   const [tries, setTries] = useState([...child.tries])
   const [name, setName] = useState(child.name)
-  console.log('child', child.name, child._id)
+  console.log('child', child)
 
   const {register, handleSubmit} = useForm()
 

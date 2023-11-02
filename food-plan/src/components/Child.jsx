@@ -5,7 +5,7 @@ import AllIntros from './AllIntros.jsx'
 
 const Child = ({ child, openAddIntro, closeChild, openEditChild }) => {
   const [ showAllIntros, setShowAllIntros ] = useState(false)
-  console.log('child in Child', child._id)
+  console.log('child in Child', child)
 
 
   const openAllIntros = () => {
@@ -40,7 +40,7 @@ const Child = ({ child, openAddIntro, closeChild, openEditChild }) => {
         onClick={ () => openAddIntro(child) }
       >add an introduction
       </button>
-      <button onClick={ () => openEditChild(child._id) }>Edit</button>
+      <button onClick={ () => openEditChild(child) }>Edit</button>
       {/* <button onClick={ deleteChild }>delete</button> */}
       <button 
         onClick={ closeChild }

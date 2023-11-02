@@ -48,7 +48,6 @@ function App() {
 
   const closeAddIntro = () => {
     setShowAddIntro(false)
-    setChild(null)
   }
 
   const openChild = (child) => {
@@ -67,7 +66,6 @@ function App() {
   }
 
   const closeEditChild = () => {
-    setChild(null)
     setShowEditChild(false)
   }
 
@@ -77,13 +75,13 @@ function App() {
         showLogin
         ? <Login closeLogin={() => setShowLogin(false)}/>
         : showAddIntro 
-        ? <AddIntro child={introChild} closeAddIntro={closeAddIntro} />
+        ? <AddIntro child={child} closeAddIntro={closeAddIntro} />
+        : showEditChild
+        ? <EditChild child={child} closeEditChild={closeEditChild} />
         : showAddChild 
         ? <AddChild closeAddChild={closeAddChild}/>
         : showChild
         ? <Child child={child} openAddIntro={openAddIntro} closeChild={closeChild} openEditChild={openEditChild} />
-        : showEditChild
-        ? <EditChild child={child} closeEditChild={closeEditChild} />
         : <>
             <ChildList childData={children}  openAddIntro={openAddIntro} openChild={openChild} openEditChild={openEditChild}/>
             <button onClick={openAddChild}>Add a child</button>
