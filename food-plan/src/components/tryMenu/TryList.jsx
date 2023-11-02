@@ -4,12 +4,12 @@ import {useTryHints} from '../../serverStore/queries'
 import Try from './Try'
 
 
-const TryList = ({ tries, setTries }) => {
+const TryList = ({ tries, setTries, showTryHints }) => {
 
   const {isLoading, error, data} = useTryHints()
   
   useEffect(() => {
-    if(tries.length == 0 && data) {
+    if(tries.length == 0 && data && showTryHints) {
       const convertedTries = data.data.tries.map(x => {
         return {
           id: x._id,
@@ -23,7 +23,7 @@ const TryList = ({ tries, setTries }) => {
         try: 'error: hints not available.',
         id: 0
       }
-    }
+    } 
   }, [isLoading]) // executes the effect when loading state changes.
   // AFAIK, react-query will cache try hint data after first load
   // so this only triggers once.
@@ -63,7 +63,8 @@ const TryList = ({ tries, setTries }) => {
 
   return (
     <ul>
-      { tries && tries.map((x, i) => {
+      { tries.length > 0 
+      ? tries.map((x, i) => {
         return <Try 
           key={x.id}
           thisTry={x.try} 
@@ -73,7 +74,9 @@ const TryList = ({ tries, setTries }) => {
           moveThisDown={() => moveDown(i)}
           removeThis={() => removeTryHandler(x.id)}
         />
-      })}
+        })
+      : <p>Add a new try</p>
+      }
     </ul>
   )
 }

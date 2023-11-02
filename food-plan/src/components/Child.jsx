@@ -3,13 +3,10 @@ import { useState } from 'react'
 import Intro from "./Intro.jsx"
 import AllIntros from './AllIntros.jsx'
 
-const Child = ({ child, openAddIntro, closeChild }) => {
+const Child = ({ child, openAddIntro, closeChild, openEditChild }) => {
   const [ showAllIntros, setShowAllIntros ] = useState(false)
+  console.log('child in Child', child._id)
 
-  function listEach(arr, propertyName) {
-    const strings = arr.map(x => x[propertyName])
-    return strings.toString()
-  }
 
   const openAllIntros = () => {
     setShowAllIntros(true)
@@ -22,7 +19,6 @@ const Child = ({ child, openAddIntro, closeChild }) => {
   return (
     <>
       <p>{ child.name }</p>
-      <p>{ listEach(child.tries, 'try') }</p>
       {  
         showAllIntros 
         ? 
@@ -31,7 +27,7 @@ const Child = ({ child, openAddIntro, closeChild }) => {
           <button onClick={closeAllIntros}>Close Intros</button> 
         </>
         :
-        child.intros.length > 0
+        child.intros?.length > 0
         ?
         <>
           <Intro introId={ child.intros[0] } /> 
@@ -44,6 +40,7 @@ const Child = ({ child, openAddIntro, closeChild }) => {
         onClick={ () => openAddIntro(child) }
       >add an introduction
       </button>
+      <button onClick={ () => openEditChild(child._id) }>Edit</button>
       {/* <button onClick={ deleteChild }>delete</button> */}
       <button 
         onClick={ closeChild }

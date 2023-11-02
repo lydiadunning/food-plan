@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import TryList from './TryList'
 
 
-const TryMenu = ({ tries, setTries }) => {
+const TryMenu = ({ tries, setTries, showTryHints = false }) => {
   const [ newTry, setNewTry ] = useState('')
   // keycounter prevents duplication of keys in new tries
   const [ keyCounter, setKeyCounter] = useState(1) 
@@ -18,9 +18,10 @@ const TryMenu = ({ tries, setTries }) => {
 
   return (
     <>
-      <TryList tries={tries} setTries={setTries} />
+      <TryList tries={tries} setTries={setTries} showTryHints={showTryHints} />
+
       <form onSubmit={ submitHandler }>
-        <label htmlFor='try'>add a try to the end</label>
+        <label htmlFor='try'>add a try</label>
           <input type='text' id='try' name='try' value={newTry} onChange={ (e) => {
             setNewTry(e.target.value)
 

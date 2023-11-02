@@ -40,7 +40,7 @@ const AddChild = ({ closeAddChild }) => {
       {
         showTries &&
         <>
-          <TryMenu tries={tries} setTries={setTries} />
+          <TryMenu tries={tries} setTries={setTries} showTryHints={true} />
           <button onClick={ acceptHandler }>Accept</button>
         </>
       }

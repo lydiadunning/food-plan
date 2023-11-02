@@ -11,6 +11,19 @@ childRouter.get('/', async (request, response) => {
 })
 
 
+const saveNewTries = async (childTries) => {
+  // if the request contains an objectId, keep it, otherwise create a new Try. 
+  // uses Promise.all as described here: https://www.youtube.com/shorts/KByYTibYQdY
+  const tries = await Promise.all(
+    childTries.map(async (obj) => {
+      return obj.tryId ? obj.tryId : await new Try({ try: obj.try }).save()
+    })
+  ).catch(error => {
+    return Promise.reject(error)
+  }) 
+  return Promise.resolve(tries)
+}
+
 /**
  * request.body: {
  *   name: String
@@ -32,11 +45,11 @@ childRouter.post('/', async (request, response) => {
   try {
   // if the request contains an objectId, keep it, otherwise create a new Try. 
   // uses Promise.all as described here: https://www.youtube.com/shorts/KByYTibYQdY
-  const tries = request.body.tries ? await Promise.all(
-    request.body.tries?.map(async (obj) => {
-      return obj.tryId ? obj.tryId : await new Try({ try: obj.try }).save()
-    })
-  ) : []
+  const tries = request.body.tries 
+  ? await saveNewTries(request.body.tries)
+  : []
+
+  console.log('tries', tries)
 
   const child = new Child({
     name: request.body.name,
@@ -45,7 +58,7 @@ childRouter.post('/', async (request, response) => {
   const result = await child.save()
   response.status(201).json(result)
   } catch (err) {
-    console.error(err)
+    console.error(err.message)
     response.status(404).end()
   }
 })
@@ -70,17 +83,24 @@ childRouter.delete('/', async (request, response) => {
   response.status(204).end()
 })
 
+
+
 childRouter.put('/:id', async (request, response) => {
   const body = request.body
-  try {
-    const updated = await Child.findByIdAndUpdate(request.params.id, body, { new: true })
-    if (updated) {
-      response.json(updated)
-    } else {
-      response.status(404).end()
-    }
-  } catch (e) {
-    console.error(e)
+  const id = request.params.id
+
+  const child = await Child.findById(id)
+  if (!child) {
+    response.status(404).end()
+  } 
+
+  const tries = await saveNewTries(body.tries)
+  try { 
+    const newChild = {...request.body, tries: tries.map(x => x._id)}
+    const updated = await Child.findByIdAndUpdate(id, newChild, { new: true }).populate('tries', {try: 1, _id: 1})
+    response.status(200).json(updated)
+  } catch (err) {
+    console.error(err)
     response.status(400).end()
   }
 })
@@ -93,18 +113,9 @@ childRouter.put('/:childId/tries', async (request, response) => {
       response.status(404).end()
     }
 
-    // if the request contains an objectId, keep it, otherwise create a new Try. 
-    // uses Promise.all as described here: https://www.youtube.com/shorts/KByYTibYQdY
-    const tries = await Promise.all(
-      body.tries.map(async (obj) => {
-        return obj.tryId ? obj.tryId : await new Try({ try: obj.try }).save()
-      })
-    ).catch(error => {
-      console.error(err)
-      response.status(400).end()
-    }) 
     try { // try/catch may not work in async function
-
+    const tries = await saveNewTries(request.body.tries)
+  
     newChild = {...request.body, tries: tries.map(x => x._id)}
     const updated = await Child.findByIdAndUpdate(request.params.childId, newChild, { new: true }).populate('tries', {try: 1, _id: 1})
     response.status(200).json(updated)

@@ -1,7 +1,7 @@
-import ChildInfo from './childInfo';
+import ChildInList from './ChildInList.jsx';
 import { useDeleteChild, useUpdateChild } from '../serverStore/mutations.jsx'
 
-export const ChildList = ({ childData, openAddIntro, openChild }) => {
+export const ChildList = ({ childData, openAddIntro, openChild, openEditChild }) => {
 
   const deleteChild = useDeleteChild()
   const updateChild = useUpdateChild()
@@ -11,13 +11,14 @@ export const ChildList = ({ childData, openAddIntro, openChild }) => {
       <h1>Children</h1>
       { childData ? <ul>
         { childData?.map(child => 
-          <ChildInfo 
+          <ChildInList 
             key={ child._id } 
             child={ child } 
             updateChild={ () => updateChild.mutate(child)}
             deleteChild={ () => deleteChild.mutate(child) }
             openAddIntro={ openAddIntro }
             openChild={ openChild }
+            openEditChild={openEditChild}
           />
         )}
       </ul> : <p>no children</p>}

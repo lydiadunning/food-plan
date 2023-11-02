@@ -13,12 +13,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </QueryClientProvider>
   </React.StrictMode>,
 )
-
-
-// export default function App() {
-//   return (
-//     
-//       <Example />
-//     
-//   )
-// }

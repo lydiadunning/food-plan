@@ -3,6 +3,7 @@ import { useState } from 'react';
 import AddChild from './components/AddChild.jsx'
 import AddIntro from './components/AddIntro.jsx'
 import Child from './components/Child';
+import EditChild from './components/EditChild.jsx'
 import { ChildList } from './components/ChildList';
 import { useChildren } from './serverStore/queries';
 // import { UpdateChild } from './serverStore/mutations';
@@ -15,7 +16,8 @@ function App() {
   const [showLogin, setShowLogin] = useState(false)
   const [showAddIntro, setShowAddIntro] = useState(false)
   const [showChild, setShowChild] = useState(false)
-  const [introChild, setintroChild] = useState(null)
+  const [showEditChild, setShowEditChild] = useState(false)
+
   const [child, setChild] = useState(null)
 
   // react-query used here. Comments stay until I'm more familiar with using the technology.
@@ -40,12 +42,13 @@ function App() {
   }
 
   const openAddIntro = (child) => {
-    setintroChild(child)
+    setChild(child)
     setShowAddIntro(true)
   }
 
   const closeAddIntro = () => {
     setShowAddIntro(false)
+    setChild(null)
   }
 
   const openChild = (child) => {
@@ -55,6 +58,17 @@ function App() {
 
   const closeChild = () => {
     setShowChild(false)
+    setChild(null)
+  }
+
+  const openEditChild = (child) => {
+    setShowEditChild(child)
+    setChild(child)
+  }
+
+  const closeEditChild = () => {
+    setChild(null)
+    setShowEditChild(false)
   }
 
   return (
@@ -67,9 +81,11 @@ function App() {
         : showAddChild 
         ? <AddChild closeAddChild={closeAddChild}/>
         : showChild
-        ? <Child child={child} openAddIntro={openAddIntro} closeChild={closeChild} />
+        ? <Child child={child} openAddIntro={openAddIntro} closeChild={closeChild} openEditChild={openEditChild} />
+        : showEditChild
+        ? <EditChild child={child} closeEditChild={closeEditChild} />
         : <>
-            <ChildList childData={children}  openAddIntro={openAddIntro} openChild={openChild}/>
+            <ChildList childData={children}  openAddIntro={openAddIntro} openChild={openChild} openEditChild={openEditChild}/>
             <button onClick={openAddChild}>Add a child</button>
           </>
       }
