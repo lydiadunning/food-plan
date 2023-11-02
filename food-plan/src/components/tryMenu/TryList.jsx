@@ -32,11 +32,7 @@ const TryList = ({ tries, setTries, showTryHints }) => {
   // if try-hints isn't cached, there is an unneccesary server query
   // the useEffect will trigger, but tries.length won't be 0
   // so it will have no effect.
-  // TODO: maybe move this useEffect into another component, to modify 
-  // tries on the way to this component.
 
-  // consider making removeTryHandler, moveUp, moveDown 
-  // methods on the try object
   const removeTryHandler = (id) => {
     setTries(tries.filter(x => x.id !== id))
   }

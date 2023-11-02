@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form"
 const AddIntro = ({ child, closeAddIntro }) => {
   const {register, handleSubmit} = useForm()
 
-  // this is irritating and inefficient. Is there a better way to get a date into this format?
   const today = new Date().toISOString().substring(0, 10)
   console.log('today', today)
   

@@ -43,13 +43,10 @@ childRouter.post('/', async (request, response) => {
   } 
 
   try {
-  // if the request contains an objectId, keep it, otherwise create a new Try. 
-  // uses Promise.all as described here: https://www.youtube.com/shorts/KByYTibYQdY
   const tries = request.body.tries 
   ? await saveNewTries(request.body.tries)
   : []
 
-  console.log('tries', tries)
 
   const child = new Child({
     name: request.body.name,
