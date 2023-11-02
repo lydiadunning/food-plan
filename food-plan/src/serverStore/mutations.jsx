@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 
 
 const baseUrl = 'http://localhost:2002/api/'
@@ -14,8 +14,6 @@ const childUrl = baseUrl.concat('child/')
  */
 export const useCreateChild = (child) => {
 // useCreateChild is a model for making a useMutation available.
-
-  const queryClient = useQueryClient()
 
   // creating a child should add the child to the list of children in data.
 
@@ -39,7 +37,6 @@ export const useCreateChild = (child) => {
 export const useCreateIntro = (childId) => {
   // useCreateChild is a model for making a useMutation available.
   
-    const queryClient = useQueryClient()
     const url = childUrl.concat(childId, '/intro/')
   
     // creating a child should add the child to the list of children in data.
@@ -60,11 +57,16 @@ export const useCreateIntro = (childId) => {
 
 // PUT ---
 
-export const useUpdateChild = () => {
-  const queryClient = useQueryClient()
+export const useUpdateChild = (childId) => {
 
   return useMutation(child => {
-    return axios.put(childUrl.concat(child._id), child)
+    const childToSend = JSON.stringify(child)
+    return axios.put(childUrl.concat(childId), child, {
+      onSuccess: (data) => {
+        // currently has no visible effect
+        console.log('success')
+      }
+    })
   })
 }
 
@@ -76,9 +78,6 @@ export const useUpdateChild = () => {
  * @returns mutation object with method mutate
  */
 export const useDeleteChild = (child) => {
-    const queryClient = useQueryClient()
-  
-    // creating a child should add the child to the list of children in data.
   
     return useMutation(child => {
       console.log('in delete mutation')
