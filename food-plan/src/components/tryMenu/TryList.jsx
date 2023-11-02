@@ -34,7 +34,7 @@ const TryList = ({ tries, setTries, showTryHints }) => {
   // so it will have no effect.
 
   const removeTryHandler = (id) => {
-    setTries(tries.filter(x => x.id !== id))
+    setTries(tries.filter(x => x._id !== id))
   }
 
   const moveDown = (index) => {
@@ -68,7 +68,7 @@ const TryList = ({ tries, setTries, showTryHints }) => {
           isLast={i === tries.length - 1}
           moveThisUp={() => moveUp(i)}
           moveThisDown={() => moveDown(i)}
-          removeThis={() => removeTryHandler(x.id)}
+          removeThis={() => removeTryHandler(x._id)}
         />
         })
       : <p>Add a new try</p>

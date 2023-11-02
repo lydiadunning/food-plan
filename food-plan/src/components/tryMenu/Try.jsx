@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react"
 
-const TryMenu = ({ thisTry, isFirst, isLast, moveThisUp, moveThisDown, removeThis }) => {
+const Try = ({ thisTry, isFirst, isLast, moveThisUp, moveThisDown, removeThis }) => {
 
   return (
     <li>
@@ -10,4 +10,4 @@ const TryMenu = ({ thisTry, isFirst, isLast, moveThisUp, moveThisDown, removeThi
   )
 }
 
-export default TryMenu
+export default Try
