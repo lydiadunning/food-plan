@@ -74,7 +74,7 @@ export const useUpdateChild = (childId) => {
  * 
  * @returns mutation object with method mutate
  */
-export const useDeleteChild = (child) => {
+export const useDeleteChild = () => {
 
   const queryClient = useQueryClient()
   

@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react"
-import { useDeleteChild } from '../serverStore/mutations.jsx'
+import { DeleteChild } from './Delete.jsx'
 
-const ChildInList = ({ child, openAddIntro, deleteChild, openChild, openEditChild }) => {
+const ChildInList = ({ child, openAddIntro, deleteChild, openChild, openEditChild, closeChild }) => {
 
   console.log('child', child._id)
   
@@ -11,11 +10,6 @@ const ChildInList = ({ child, openAddIntro, deleteChild, openChild, openEditChil
     return strings.toString()
   }
 
- 
-
-  
-  
-
   return (
     <li key={ child._id }>
       <p>{ child.name }</p>
@@ -23,8 +17,8 @@ const ChildInList = ({ child, openAddIntro, deleteChild, openChild, openEditChil
       <p>{ listEach(child.tries, 'try') }</p>
       <button onClick={ () => openAddIntro(child) }>add an introduction</button>
       <button onClick={ () => openEditChild(child) }>Edit</button>
-      <button onClick={ deleteChild }>delete</button>
-      { }
+      <DeleteChild child={child} closeChild={closeChild}/>
+  
     </li>
   )
 }

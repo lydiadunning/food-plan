@@ -83,7 +83,7 @@ function App() {
         : showChild
         ? <Child child={child} openAddIntro={openAddIntro} closeChild={closeChild} openEditChild={openEditChild} />
         : <>
-            <ChildList childData={children}  openAddIntro={openAddIntro} openChild={openChild} openEditChild={openEditChild}/>
+            <ChildList childData={children}  openAddIntro={openAddIntro} openChild={openChild} openEditChild={openEditChild} closeChild={closeChild}/>
             <button onClick={openAddChild}>Add a child</button>
           </>
       }

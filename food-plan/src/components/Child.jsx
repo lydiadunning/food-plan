@@ -2,10 +2,13 @@
 import { useState } from 'react'
 import Intro from "./Intro.jsx"
 import AllIntros from './AllIntros.jsx'
+import { useDeleteChild } from '../serverStore/mutations.jsx'
+import { DeleteChild } from './Delete.jsx'
 
 const Child = ({ child, openAddIntro, closeChild, openEditChild }) => {
   const [ showAllIntros, setShowAllIntros ] = useState(false)
   console.log('child in Child', child)
+
 
 
   const openAllIntros = () => {
@@ -15,6 +18,13 @@ const Child = ({ child, openAddIntro, closeChild, openEditChild }) => {
   const closeAllIntros = () => {
     setShowAllIntros(false)
   }
+
+  const deleteChild = useDeleteChild()
+  const deleteHandler = () => {
+    deleteChild.mutate(child)
+    closeChild()
+  }
+
 
   return (
     <>
@@ -41,7 +51,7 @@ const Child = ({ child, openAddIntro, closeChild, openEditChild }) => {
       >add an introduction
       </button>
       <button onClick={ () => openEditChild(child) }>Edit</button>
-      {/* <button onClick={ deleteChild }>delete</button> */}
+      <DeleteChild child={child} closeChild={closeChild} />
       <button 
         onClick={ closeChild }
       >back to list
