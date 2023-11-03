@@ -4,12 +4,14 @@ import Intro from "./Intro.jsx"
 import AllIntros from './AllIntros.jsx'
 import { useDeleteChild } from '../serverStore/mutations.jsx'
 import { DeleteChild } from './Delete.jsx'
+import EditIntro from './EditIntro.jsx'
 
 const Child = ({ child, openAddIntro, closeChild, openEditChild }) => {
   const [ showAllIntros, setShowAllIntros ] = useState(false)
+  const [ showEditIntro, setShowEditIntro ] = useState(false)
+  const [ introToEdit, setIntroToEdit ] = useState(null)
+
   console.log('child in Child', child)
-
-
 
   const openAllIntros = () => {
     setShowAllIntros(true)
@@ -17,6 +19,15 @@ const Child = ({ child, openAddIntro, closeChild, openEditChild }) => {
 
   const closeAllIntros = () => {
     setShowAllIntros(false)
+  }
+
+  const openEditIntros = (intro) => {
+    setIntroToEdit(intro)
+    setShowEditIntro(true)
+  }
+
+  const closeEditIntro = () => {
+    setShowEditIntro(false)
   }
 
   const deleteChild = useDeleteChild()
@@ -30,17 +41,21 @@ const Child = ({ child, openAddIntro, closeChild, openEditChild }) => {
     <>
       <p>{ child.name }</p>
       {  
+        showEditIntro
+        ?
+        <EditIntro child={child} intro={introToEdit} closeEditIntro={closeEditIntro} />
+        :
         showAllIntros 
         ? 
         <>
-          <AllIntros child={child}/>
+          <AllIntros child={child} openEditIntros={openEditIntros} />
           <button onClick={closeAllIntros}>Close Intros</button> 
         </>
         :
         child.intros?.length > 0
         ?
         <>
-          <Intro introId={ child.intros[0] } /> 
+          <Intro introId={ child.intros[0] } openEditIntros={openEditIntros} /> 
           { child.intros.length > 1 && <button onClick={ openAllIntros }>See All Intros</button> }
         </>
         :

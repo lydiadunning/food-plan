@@ -46,6 +46,8 @@ export const useCreateIntro = (childId) => {
     onSuccess: async (data) => {
       console.log('success')
       await queryClient.invalidateQueries('intro')
+      await queryClient.invalidateQueries('children')
+
     }
   })
 }
@@ -63,6 +65,30 @@ export const useUpdateChild = (childId) => {
     onSuccess: async (data) => {
       console.log('success')
       await queryClient.invalidateQueries('children')
+    }
+  })
+}
+
+/**
+ * 
+ * @returns mutation object with method mutate
+ */
+export const useUpdateIntro = (introId) => {
+  
+  const url = baseUrl.concat('intro/', introId)
+  const queryClient = useQueryClient()
+
+
+  return useMutation(intro => {
+    console.log(url)
+    console.log(intro)
+    return axios.put(url, intro)
+  }, {
+    onSuccess: async (data) => {
+      console.log('success')
+      await queryClient.invalidateQueries('intro')
+      await queryClient.invalidateQueries('children')
+
     }
   })
 }
