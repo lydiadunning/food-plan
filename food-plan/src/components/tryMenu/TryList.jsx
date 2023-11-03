@@ -12,7 +12,7 @@ const TryList = ({ tries, setTries, showTryHints }) => {
     if(tries.length == 0 && data && showTryHints) {
       const convertedTries = data.data.tries.map(x => {
         return {
-          id: x._id,
+          _id: x._id,
           try: x.try,
           tryId: x._id
         }
@@ -21,7 +21,7 @@ const TryList = ({ tries, setTries, showTryHints }) => {
     } else if (error) {
       return {
         try: 'error: hints not available.',
-        id: 0
+        _id: 0
       }
     } 
   }, [isLoading]) // executes the effect when loading state changes.
@@ -32,8 +32,10 @@ const TryList = ({ tries, setTries, showTryHints }) => {
   // if try-hints isn't cached, there is an unneccesary server query
   // the useEffect will trigger, but tries.length won't be 0
   // so it will have no effect.
+  console.log(tries)
 
   const removeTryHandler = (id) => {
+    console.log('in removeTryHandler', id)
     setTries(tries.filter(x => x._id !== id))
   }
 
@@ -60,8 +62,8 @@ const TryList = ({ tries, setTries, showTryHints }) => {
   return (
     <ul>
       { tries.length > 0 
-      ? tries.map((x, i) => {
-        return <Try 
+      ? tries.map((x, i) => 
+        <Try 
           key={x._id}
           thisTry={x.try} 
           isFirst={i === 0}
@@ -70,7 +72,7 @@ const TryList = ({ tries, setTries, showTryHints }) => {
           moveThisDown={() => moveDown(i)}
           removeThis={() => removeTryHandler(x._id)}
         />
-        })
+        )
       : <p>Add a new try</p>
       }
     </ul>

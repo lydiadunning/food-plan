@@ -26,7 +26,7 @@ export default function SavePage({ childName, tries, closeAddChild }) {
   return (
     <>
       <h3>{childName}</h3>
-      {tries?.map( x => <p key={x.id}>{x.try}</p>)}
+      {tries?.map( x => <p key={x._id}>{x.try}</p>)}
       <button onClick={saveHandler}>Save</button>
     </>
   )
