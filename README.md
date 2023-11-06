@@ -31,3 +31,10 @@ PORT= *a 4 digit number*
 * Run the development version of the server with a CLI by entering `npm run dev` in the backend folder.
 * Run the development version of the frontend interface with a CLI by entering `npm run dev` in the second food-plan folder.
 
+## Testing
+
+Go to `/backend/tests` to see unit tests and documentation of testing progress.
+
+### Running Tests
+
+To run tests, navigate to the backend folder in terminal and type `npm run test`. To run a subset of tests, enter `npm run test -- tests/ *filename* `
