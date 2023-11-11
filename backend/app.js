@@ -2,10 +2,10 @@ const express = require('express')
 const cors = require('cors')
 const config = require('./utils/config')
 const mongoose = require('mongoose')
-const childRouter = require('./controllers/children.js')
-const tryRouter = require('./controllers/tries.js')
-const tryHintRouter = require('./controllers/tryHints.js')
-const introRouter = require('./controllers/intros.js')
+const kidRouter = require('./controllers/kids.js')
+const exposureRouter = require('./controllers/outcomes.js')
+const exposureTipRouter = require('./controllers/outcomeTips.js')
+const introRouter = require('./controllers/exposures.js')
 const { log } = require('console')
 // const userRouter = require('./controllers/users')
 const logger = require('./utils/logger')
@@ -40,10 +40,10 @@ app.get('http://localhost:5173', cors(), function (req, res, next) {
 
 
 // app.use the router - to direct requests
-app.use('/api/child', childRouter)
+app.use('/api/kid', kidRouter)
 // app.use('/api/user', userRouter)
-app.use('/api/try', tryRouter)
-app.use('/api/try-hint', tryHintRouter)
+app.use('/api/exposure', exposureRouter)
+app.use('/api/exposure-hint', exposureTipRouter)
 app.use('/api/intro', introRouter)
 
 app.use(unknownEndpoint)

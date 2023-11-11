@@ -31,3 +31,57 @@ PORT= *a 4 digit number*
 * Run the development version of the server with a CLI by entering `npm run dev` in the backend folder.
 * Run the development version of the frontend interface with a CLI by entering `npm run dev` in the second food-plan folder.
 
+## Next Steps in Development
+
+### For Now, Simplify and Edit the Schemas in the Backend. 
+  1. Rename 'try' and 'child'. These are programming terms, which makes them difficult to talk about and causes trouble when naming variables. Reconsider all names currently used in the database.
+    * Child => kid. The simplest synonym.
+  2. Relocate 'intros' into the child model, and modify server endpoints and behavior to accomodate this change.
+  3. Consider relocating 'tries' into the child model. 
+  4. Experiment with file structure.
+  5. Write a list of values to guide design choices. Avoid assumptions and judgement.
+
+try: a menu item describing what a child does when given a food
+Arranged into an order similar to an exposure ladder, included in the app to identify if the child gets stuck at a certain step for more than 15 attempts. Could be something like "sniff", "taste", or "leave on the plate". Saved in an array in a meaningful order chosen by the user. I'm not sure where inactive items will fall in the array.
+
+Tries are only for measuring how a child interacts with the food. Not what it is, or how it was presented.
+
+
+
+Intros => Exposures
+Tries => Outcomes
+Children => Kids
+TryHints => OutcomeTips
+
+### For Later
+* Be more deliberate about HTTP request types. Change single-element-edit server requests to use PATCH rather than PUT.
+
+* Review responses: correct HTTP code? enough information? 
+
+* Improve input validation in endpoints.
+
+* Ensure information sent to frontend is complete and strings are returned in an attractive format.
+
+* On frontend, filter tries by active and inactive, and make sure inactive tries that have been used in an intro are not deleted.
+
+* Allow intros to include more than one try
+
+* Redesign try hints to allow for several groups of tries arranged into an object to address different scenarios. This gives users a few different ways to think about how they can measure progress.
+```
+{
+  baseCase: 'I offered it',
+  behavior: [
+    'left it on the plate',
+    'stayed at the table',
+    'spat into napkin'
+  ],
+  interaction: [
+    'poked',
+    'sniffed',
+    'tasted',
+    'ate'
+  ]
+}
+```
+
+* actually implement users and authentication. Go with JWT.

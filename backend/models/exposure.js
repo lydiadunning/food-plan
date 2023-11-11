@@ -1,8 +1,8 @@
-const Try = require('./try.js')
+const Outcome = require('./outcome.js')
 const { Schema, model } = require('mongoose');
 
 // I think I want to require either a food or a description
-const introSchema = new Schema ({
+const exposureSchema = new Schema ({
   // haven't decided how to cross-reference schemas yet
   food: { 
     type: 'String', 
@@ -12,9 +12,9 @@ const introSchema = new Schema ({
     type: String,
     required: true
   },
-  try: {
+  outcome: {
     type: 'ObjectId',
-    ref: 'Try',
+    ref: 'Outcome',
     required: false
   },
   meal: {
@@ -28,4 +28,4 @@ const introSchema = new Schema ({
   }
 })
 
-module.exports = model('Intro', introSchema)
+module.exports = model('Exposure', exposureSchema)
