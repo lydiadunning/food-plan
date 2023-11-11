@@ -1,5 +1,5 @@
 // allow for creating a user profile
-// each user profile can reference child profiles.
+// each user profile can reference kid profiles.
 
 // operations:
 
@@ -7,7 +7,7 @@
 
 // get a user- sign in
 
-// change a user - add a child
+// change a user - add a kid
 
 // delete a user
 

@@ -1,14 +1,14 @@
-const { Try } = require('../models/try.js')
-const Child = require('../models/child.js')
-const Intro = require('../models/intro.js')
+const { Outcome } = require('../models/outcome.js')
+const Kid = require('../models/kid.js')
+const Exposure = require('../models/exposure.js')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app.js')
 const api = supertest(app)
 
 
-describe('with an intro in the database', () => {
-  const testIntro = {    
+describe('with an exposure in the database', () => {
+  const testExposure = {    
     'food': 'squash',
     'description': 'roasted with salt',
   }
@@ -16,13 +16,13 @@ describe('with an intro in the database', () => {
   let id = ''
 
   beforeAll(async () => {
-    await Intro.deleteMany({})
-    const intro = new Intro(testIntro)
-    let id = await intro.save()
+    await Exposure.deleteMany({})
+    const exposure = new Exposure(testExposure)
+    let id = await exposure.save()
   })
-  test('the intro can be retrieved', async () => {
+  test.only('the exposure can be retrieved', async () => {
     const response = await api
-    .get(`/api/intro`)
+    .get(`/api/exposure`)
     .expect(200)
     
     expect(response.body)
@@ -32,16 +32,16 @@ describe('with an intro in the database', () => {
 
   })
 
-  test('the intro can be deleted', async () => {
+  test('the exposure can be deleted', async () => {
     const response = await api
-      .delete(`/api/intro/`)
+      .delete(`/api/exposure/`)
   })
   
 
   
-  test('getting a nonexistant intro will not cause problems', async () => {
+  test('getting a nonexistant exposure will not cause problems', async () => {
     const response = await api
-    .get(`/api/intro/${idNotInDb}`)
+    .get(`/api/exposure/${idNotInDb}`)
     .expect(404)
   })
 

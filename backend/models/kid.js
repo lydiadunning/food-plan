@@ -1,20 +1,20 @@
 const { Schema, model } = require('mongoose');
 
-const childSchema = new Schema ({
+const kidSchema = new Schema ({
   name: {
     type: String,
     required: true
   },
-  intros: [{ 
+  exposures: [{ 
     type: 'ObjectId', 
-    ref: 'Intro',
+    ref: 'Exposure',
     required: false
   }],
-  tries: [{
+  outcomes: [{
     type: 'ObjectId',
-    ref: 'Try',
+    ref: 'Outcome',
     required: false
   }]
 })
 
-module.exports = model('Child', childSchema)
+module.exports = model('Kid', kidSchema)
