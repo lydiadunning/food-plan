@@ -85,3 +85,5 @@ TryHints => OutcomeTips
 ```
 
 * actually implement users and authentication. Go with JWT.
+
+* use fuzzy searching, maybe incorporate soundex.
