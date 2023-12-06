@@ -1,4 +1,4 @@
-const { Outcome, OutcomeTipArray }  = require('../models/outcome.js')
+const { OutcomeTipArray }  = require('../models/outcomeTipArray.js')
 const tryTipRouter = require('express').Router()
 
 // get all active try hints in OutcomeTipArray

@@ -9,34 +9,28 @@ const kid = require('../models/kid.js')
 const api = supertest(app)
 
 
-// tests
-
-/**
- * Tests to add 
- * 
- * can add a profile with all required properties and no non-required properties
- * doesn't add a profile missing required properties
- * doesn't allow update to a profile missing required properties
- * allows update to profile with required properties
- * after a kid has exposureductions, an update to the kid's profile does not alter the exposureduction history
- * a kid's outcomes can be changed to add a new systemOutcome
- * a kid's outcomes can be changed to remove a systemOutcome
- *  * a kid's outcomes can be changed to add a new outcome string
- * a kid's outcomes can be changed to remove a outcome string
- * a kid's outcome returns a mix of oucomeTips and outcomes correctly and in the expected order
- * a kid's outcomes can be re-ordered
- * trying to update a profile that doesn't exist won't work
- * trying to delete a profile that doesn't exist works
- */
-
+// tests currently not working - written before user functionality
 
 describe('With no existing kids', () => {
+  beforeAll(async () => {
+    await User.deleteMany({})
+
+    const passwordHash = await bcrypt.hash('sekret', 10)
+    const user = new User({ 
+      name: 'Jeff Jefferson', 
+      username: 'root', 
+      passwordHash: passwordHash,
+      email: 'jeff@jeff.com'
+     })
+
+    await user.save()
+  })
 
   beforeEach(async () => {
     await Kid.deleteMany({})
   })
 
-  test('a new kid profile can be added correctly', async () => {
+  test.only('a new kid profile can be added correctly', async () => {
     // const date = new Date()
     const newKid = {
       'name': 'Bess Borgington',
@@ -44,6 +38,7 @@ describe('With no existing kids', () => {
   
     await api
       .post('/api/kid')
+      .user()
       .send(newKid)
       .expect(201)
       .expect('Content-Type', /application\/json/)

@@ -1,0 +1,53 @@
+Outcomes isn't great. Maybe go with something like metric or measurement.
+outcomeOptions
+
+To add kids to the database:
+
+/kid/
+send data about a new kid.
+this data must include a name, can include an optional list of outcomes.
+
+To edit a kid, changing the name and/or outcomes: 
+/kid/:id
+remember to mark removed outcomes as inactive instead of just replacing the array. if the array is missing an item, mark it inactive. if the array has an item that is marked inactive, mark it active. Otherwise, add the new item to the list. Ensure all active list items added by the user stay in order.
+Use patch
+
+To delete a kid:
+/kid/:id
+This removes the kid from the user without deleting the child account's records. Marks date of deletion. Remove child accounts with no connected user account after a reasonable length of time.
+
+To add an exposure to a child account:
+/kid/:id/exposure
+add the exposure to the array of exposures and save the parent
+
+
+for setting and modifying subdocuments:
+parent.children[0].name = 'Matthew';
+await parent.save();
+const doc = parent.children.id(_id); //to query subdocuments by id
+
+
+Routes to Test:
+
+kidRouter.get     '/'
+  returns all kids
+kidRouter.post    '/'
+  create a new kid, with or without outcomes
+kidRouter.get     '/:id'
+  get a specific kid given an id
+  return the name, outcomeOptions, and the most recent exposure.
+kidRouter.delete  '/:id'
+  delete a specific kid
+kidRouter.delete  '/'
+  delete all kids, for development
+kidRouter.patch   '/:id'
+  edit a kid
+kidRouter.get     '/:kidId/outcomes'
+  return a kid's list of outcomes
+kidRouter.get     '/:kidId/exposure'
+  return a kid's history of exposures
+kidRouter.patch    '/:kidId/exposure'
+  add an exposure to a kid. 
+
+
+  Today: add user sign in functionality.

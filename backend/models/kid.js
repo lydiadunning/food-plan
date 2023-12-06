@@ -1,18 +1,18 @@
 const { Schema, model } = require('mongoose');
 
 // outcomeSchema is a subdocument of kidSchema
-const outcomeSchema = new mongoose.Schema({
+const outcomeSchema = new Schema({
   outcome: {
     type: String,
     required: true,
   },
-  active: {
+  isActive: {
     type: Boolean,
     default: true,
     required: true
   }
 })
-const Outcome = mongoose.model('Outcome', outcomeSchema)
+const Outcome = model('Outcome', outcomeSchema)
 
 const kidSchema = new Schema ({
   name: {
@@ -47,7 +47,12 @@ const kidSchema = new Schema ({
   }],
   outcomeOptions: [
     outcomeSchema
-  ]
+  ],
+  users: [{
+    type: 'ObjectId',
+    ref: 'User',
+    required: true
+  }]
 })
 
 module.exports = model('Kid', kidSchema)

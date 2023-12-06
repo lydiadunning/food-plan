@@ -1,4 +1,3 @@
-const Exposure = require('../models/exposure.js')
 const Kid = require('../models/kid.js')
 const exposureRouter = require('express').Router()
 

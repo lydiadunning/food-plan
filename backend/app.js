@@ -1,22 +1,28 @@
 const express = require('express')
+require('express-async-errors')
 const cors = require('cors')
 const config = require('./utils/config')
 const mongoose = require('mongoose')
 const kidRouter = require('./controllers/kids.js')
-const exposureRouter = require('./controllers/outcomes.js')
-const exposureTipRouter = require('./controllers/outcomeTips.js')
-const introRouter = require('./controllers/exposures.js')
-const { log } = require('console')
+const exposureRouter = require('./controllers/exposures.js')
+const outcomeTipRouter = require('./controllers/outcomeTips.js')
 // const userRouter = require('./controllers/users')
 const logger = require('./utils/logger')
-const {  requestLogger,
+const {  
+  requestLogger,
   unknownEndpoint,
-  errorHandler } = require('./utils/middleware.js')
+  errorHandler, 
+  tokenExtractor,
+  userExtractor
+} = require('./utils/middleware.js')
+const userRouter = require('./controllers/users.js')
+const loginRouter = require('./controllers/login.js')
 
 const app = express()
 app.use(express.static('build'))// what does the static method do?
 app.use(express.json())// what does the json method return?
 app.use(requestLogger)
+app.use(tokenExtractor)
 
 mongoose.set('strictQuery', false)
 // review why I'm doing this
@@ -35,18 +41,15 @@ app.get('http://localhost:5173', cors(), function (req, res, next) {
   res.json({msg: 'This is CORS-enabled for a Single Route'})
 })
 
-
-
-
-
 // app.use the router - to direct requests
-app.use('/api/kid', kidRouter)
-// app.use('/api/user', userRouter)
+app.use('/api/kid', userExtractor, kidRouter)
 app.use('/api/exposure', exposureRouter)
-app.use('/api/exposure-hint', exposureTipRouter)
-app.use('/api/intro', introRouter)
+app.use('/api/outcometips', outcomeTipRouter)
+app.use('/api/user', userRouter)
+app.use('/api/login', loginRouter)
 
 app.use(unknownEndpoint)
 app.use(errorHandler)
+
 
 module.exports = app

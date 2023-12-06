@@ -1,28 +1,13 @@
 const Kid  = require('../models/kid.js')
+const user = require('../models/user.js')
 const kidRouter = require('express').Router()
-const { Outcome } = require('../models/outcome.js')
-const Exposure = require('../models/exposure.js')
-const logger = require('../utils/logger.js')
-
+// const logger = require('../utils/logger.js')
+// const { userExtractor } = require('../utils/middleware')
 
 kidRouter.get('/', async (request, response) => {
-  const kids = await Kid.find({}).populate('outcomes', {outcome: 1, _id: 1})
+  const kids = await Kid.find({ users: request.user }).populate('outcomeOptions', {outcome: 1, _id: 1})
   response.json(kids)
 })
-
-
-const saveNewTries = async (kidTries) => {
-  // if the request contains an objectId, keep it, otherwise create a new Outcome. 
-  // uses Promise.all as described here: https://www.youtube.com/shorts/KByYTibYQdY
-  const outcomes = await Promise.all(
-    kidTries.map(async (obj) => {
-      return obj.outcomeId ? obj.outcomeId : await new Outcome({ outcome: obj.outcome }).save()
-    })
-  ).catch(error => {
-    return Promise.reject(error)
-  }) 
-  return Promise.resolve(outcomes)
-}
 
 /**
  * request.body: {
@@ -30,43 +15,48 @@ const saveNewTries = async (kidTries) => {
  *   outcomes: Array [
  *     Objects {
  *       outcome: String (optional)
- *       outcomeId: String - ObjectId (optional)
- *       active: Boolean (optional)
+ *       isActive: Boolean (optional)
  *     }
  *   ]
  * }
  */
 kidRouter.post('/', async (request, response) => {
   // return 400 error if request body missing vital info
+  // name exists, contains characters
+  // outcomes, if it exists, is a list
   if (!request.body.name) {
     response.status(400).end()
   } 
 
   try {
-    const outcomes = request.body.outcomes
-      ? await saveNewTries(request.body.outcomes)
-      : []
+    const user = request.user
 
+    // if outcomes.length > 0, is it made of strings? convert to objects.
+    const outcomeOptions = request.body.outcomeOptions || []
     const kid = new Kid({
       name: request.body.name,
-      outcomes: outcomes
+      outcomeOptions: outcomeOptions,
+      users: [user.id]
     })
     const result = await kid.save()
+ 
+    user.updateOne({$push: {'kids': user.id}}, {upsert: true})
 
     response.status(201).json(result)
+
   } catch (err) {
     console.error(err.message)
     response.status(404).end()
-    // return 
+    // return some explanatory text
   }
 })
 
 kidRouter.get('/:id', async (request, response) => {
-  const kid = await Kid.findById(request.params.id).populate('outcomes', {outcome: 1, _id: 1})
-  if (kid) {
+  const kid = await Kid.findById(request.params.id)//.populate('outcomes', {outcome: 1, _id: 1})
+  if (kid && kid.users.includes(request.user)) {
     response.json(kid)
   } else {
-    response.status(404).end()
+    response.status(404).json({ error: 'child not found'}).end()
   }
 })
 
@@ -81,52 +71,32 @@ kidRouter.delete('/', async (request, response) => {
   response.status(204).end()
 })
 
-
-
-kidRouter.put('/:id', async (request, response) => {
-  const body = request.body
-  const id = request.params.id
-
-  const kid = await Kid.findById(id)
-  if (!kid) {
-    response.status(404).end()
-  } 
-
-  const outcomes = await saveNewTries(body.outcomes)
-  try { 
-    const newKid = {...request.body, outcomes: outcomes.map(x => x._id)}
-    const updated = await Kid.findByIdAndUpdate(id, newKid, { new: true }).populate('outcomes', {outcome: 1, _id: 1})
-    response.status(200).json(updated)
-  } catch (err) {
-    console.error(err)
-    response.status(400).end()
+// patch will accept a request describing any field in the kid model.
+kidRouter.patch('/:id', async (request, response) => {
+  const outcomes = request.body.outcomeOptions || null
+  const name = request.body.name || null
+  const update = {}
+  if (name) {
+    update.name = name
   }
+  if (outcomes) {
+    update.outcomeOptions = outcomeOptions
+  }
+
+  const kid = await Kid.findByIdAndUpdate(request.params.id, update)
+  response.json(kid)
+
+  // simplified this. If it needs more sophistication, this resource
+  // might help
+  // Jonathan Muller's answer:
+  // https://stackoverflow.com/questions/35810951/how-to-change-order-of-array-with-mongodb
+
 })
 
-kidRouter.put('/:kidId/outcomes', async (request, response) => {
-    const body = request.body
-
-    const kid = await Kid.findById(request.params.kidId)
-    if (!kid) {
-      response.status(404).end()
-    }
-
-    try { // try/catch may not work in async function
-    const outcomes = await saveNewTries(request.body.outcomes)
-  
-    newKid = {...request.body, outcomes: outcomes.map(x => x._id)}
-    const updated = await Kid.findByIdAndUpdate(request.params.kidId, newKid, { new: true }).populate('outcomes', {outcome: 1, _id: 1})
-    response.status(200).json(updated)
-    } catch (err) {
-      console.error(err)
-      response.status(400).end()
-    }
-})
-
-kidRouter.get('/:kidId/outcomes', async (request, response) => {
-  const kid = await Kid.findById(request.params.kidId).populate('outcomes', {outcome: 1, _id: 1, active: 1})
+kidRouter.get('/:kidId/outcomeOptions', async (request, response) => {
+  const kid = await Kid.findById(request.params.kidId).populate('outcomeOptions', {outcome: 1, _id: 1, active: 1})
   if (kid) {
-    response.json(kid.outcomes)
+    response.json(kid.outcomeOptions)
   } else {
     response.status(404).end()
   }})
@@ -139,7 +109,8 @@ kidRouter.get('/:kidId/exposure', async (request, response) => {
     response.status(404).end()
   }
 })
-kidRouter.post('/:kidId/exposure', async (request, response) => {
+
+kidRouter.patch('/:kidId/exposure', async (request, response) => {
   const kid = await Kid.findById(request.params.kidId)
   logger.info('kid', kid)
   if (kid) {

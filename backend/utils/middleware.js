@@ -1,7 +1,7 @@
 // const { request } = require('http')
 const logger = require('./logger')
-// const jwt = require('jsonwebtoken')
-// const User = require('../models/user')
+const jwt = require('jsonwebtoken')
+const User = require('../models/user')
 
 const requestLogger = (request, response, next) => {
   logger.info('Method:', request.method)
@@ -11,30 +11,30 @@ const requestLogger = (request, response, next) => {
   next()
 }
 
-// const tokenExtractor = (request, response, next) => {
-//   const authorization = request.get('authorization')
-//   if (authorization && authorization.startsWith('Bearer ')) {
-//     request.token = authorization.replace('Bearer ', '')
-//   } 
-//   next()
-// }
+const tokenExtractor = (request, response, next) => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.startsWith('Bearer ')) {
+    request.token = authorization.replace('Bearer ', '')
+  } 
+  next()
+}
 
-// const userExtractor = async (request, response, next) => {
-//   // set request.user
-//   // eslint-disable-next-line no-undef
-//   const decodedToken = jwt.verify(request.token, process.env.SECRET)
-//   if (!decodedToken.id) {
-//     return response.status(401).json({ error: 'token invalid' })
-//   }
-//   request.user = await User.findById(decodedToken.id)
-//   next()
-// }
+const userExtractor = async (request, response, next) => {
+  // eslint-disable-next-line no-undef
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  if (!decodedToken.id) {
+    return response.status(401).json({ error: 'token invalid' })
+  }
+  request.user = await User.findById(decodedToken.id)
+  next()
+}
 
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
 
 const errorHandler = (error, request, response, next) => {
+  logger.info('in errorHandler')
   logger.error(error.message)
 
   if (error.name === 'CastError') {
@@ -54,8 +54,8 @@ const errorHandler = (error, request, response, next) => {
 
 module.exports = {
   requestLogger,
-  // tokenExtractor,
-  // userExtractor,
+  tokenExtractor,
+  userExtractor,
   unknownEndpoint,
   errorHandler
 }
