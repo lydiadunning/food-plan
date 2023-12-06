@@ -7,12 +7,13 @@ const bcrypt = require('bcryptjs')
 
 userRouter.get('/', async (request, response) => {
   const users = await User.find({})
-  // .populate('blogs', { 
-  //   title: 1, 
-  //   author: 1,
-  //   url: 1,
-  //   likes: 1
-  // })
+  .populate('kids', 
+    // { 
+    //   name: 1, 
+    //   outcomeOptions: 1,// not sure what this will give me
+    //   exposures: 1,
+    // }
+  )
   response.json(users)
 })
 // allow for creating a user profile

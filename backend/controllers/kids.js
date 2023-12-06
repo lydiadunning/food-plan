@@ -1,5 +1,5 @@
 const Kid  = require('../models/kid.js')
-const user = require('../models/user.js')
+const User = require('../models/user.js')
 const kidRouter = require('express').Router()
 // const logger = require('../utils/logger.js')
 // const { userExtractor } = require('../utils/middleware')
@@ -60,15 +60,26 @@ kidRouter.get('/:id', async (request, response) => {
   }
 })
 
-// After fully implementing users, allow a user to remove the link between their profile and a kid, but don't delete the kid until it has no remaining ties to any user. 
+// Should allow a user to remove the link between their profile and a kid, but not delete the kid until it has no remaining ties to any user. Currently doesn't actually delete database record.
 kidRouter.delete('/:id', async (request, response) => {
-  const kid = await Kid.findByIdAndDelete(request.params.id)
+  const kid = await Kid.findByIdAndUpdate(request.params.id, {
+    $pull: {
+      users: request.user
+    }
+  })
+  const user = await User.findByIdAndUpdate(request.user, {
+    $pull: {
+      kids: request.params.id
+    }
+  })
   response.status(204).end()
 })
 
-kidRouter.delete('/', async (request, response) => {
-  const kid = await Kid.deleteMany()
-  response.status(204).end()
+kidRouter.delete('/all', async (request, response) => {
+  if (request.user.isAdmin){
+    const kid = await Kid.deleteMany()
+    response.status(204).end()
+  }
 })
 
 // patch will accept a request describing any field in the kid model.
@@ -93,6 +104,7 @@ kidRouter.patch('/:id', async (request, response) => {
 
 })
 
+// does the app even need this?
 kidRouter.get('/:kidId/outcomeOptions', async (request, response) => {
   const kid = await Kid.findById(request.params.kidId).populate('outcomeOptions', {outcome: 1, _id: 1, active: 1})
   if (kid) {
