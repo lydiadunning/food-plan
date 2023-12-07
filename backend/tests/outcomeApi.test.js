@@ -74,91 +74,33 @@ describe('When Tries are in the database', () => {
     expect(noIds).toContainEqual(outcomeArray[1])
 
   })
-
-  // test('an outcome tip can be retrieved by id', async () => {
-  //   const [activeOutcome, inactiveOutcome] = outcomeIds
-  //   console.log('outcomeIds', outcomeIds)
-  //   console.log('activeOutcome', activeOutcome, `/api/outcome/${activeOutcome}`)
-  //   const response = await api
-  //     .get(`/api/outcometips/${activeOutcome}`)
-  //     .expect(200)
-  //     .expect('Content-Type', /application\/json/)
-    
-  //   console.log(response.body)
-
-  //   expect(response.body).toHaveProperty('_id')
-  //   expect(response.body).toHaveProperty('outcome', 'one')
-  //   expect(response.body).toHaveProperty('active', true)
-  // })
 })
 
 /**
  * Outcome Tip tests
  */
 
-// describe('When no Outcome Tips are in the database', () => {
-//   beforeAll(async () => {
-//     await Outcome.deleteMany({})
-//     await OutcomeTipArray.deleteMany({})
-//   })
+describe('When no Outcome Tips are in the database', () => {
+  beforeAll(async () => {
+    await OutcomeTipArray.deleteMany({})
+  })
 
-//   test('an array of new Outcome Tips can be added', async () => {
-//     const response = await api
-//       .post('/api/outcome-hint')
-//       .send(['one', 'two', 'three'])
-//       .expect(201)
-//       .expect('Content-Type', /application\/json/)
+  test('new Outcome Tips can be added', async () => {
+    const response = await api
+      .post('/api/outcometips')
+      .send({ outcomeTips: [{outcome: 'one'}, {outcome: 'two'}, {outcome: 'three'}] })
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
   
-//     const outcomeArrayFromDb = await OutcomeTipArray.findOne().populate('tries', {outcome: 1, _id: 1})
+    const outcomeArrayFromDb = await OutcomeTipArray.findOne().populate('outcomeTips', {outcome: 1})
 
-//     const outcomeArray = outcomeArrayFromDb.tries
+    const outcomeArray = outcomeArrayFromDb.outcomeTips
 
-//     expect(outcomeArray).toHaveLength(3)
-//     expect(outcomeArray[0]).toHaveProperty('outcome', 'one')
-//   }) 
+    expect(outcomeArray).toHaveLength(3)
+    expect(outcomeArray[0]).toHaveProperty('outcome', 'one')
+  }) 
 
-
-//   // test('deleting outcome hints removes the array and all tries', )
-// })
-// // after these tests, the tries added remain in the database. 
-
-// describe('When OutcomeTipArray is in the database', () => {
-//   beforeAll(async () => {
-//     await OutcomeTipArray.deleteMany({})
-
-//     const newTries = await Outcome.insertMany([{ 'outcome': 'one' }, { 'outcome': 'two' }, { 'outcome': 'three' }])
-//     // add the array to db
-//     const outcomeArray = new OutcomeTipArray({
-//       tries: newTries.map(result => result._id)
-//     })
-//     const finalResult = await outcomeArray.save()
-//     const allTh = await OutcomeTipArray.find()
-//   })
-
-//   test('Outcome Tips can be retrieved from the database', async () => {
-//     const response = await api 
-//       .get('/api/outcome-hint')
-//       .expect(200)
-//       .expect('Content-Type', /application\/json/)
-
-//       console.log(response.body)
-//     expect(response.body).toHaveProperty('_id')
-//     expect(response.body.tries).toHaveLength(3)
-//     expect(response.body.tries[1]).toHaveProperty('outcome', 'two')
-//     expect(response.body.tries[1]).toHaveProperty('_id')
-//   })
-
-//   test('a second OutcomeTipArray cannot be added', async () => {
-//     await api
-//       .post('/api/outcome-hint')
-//       .send(['four', 'five', 'six'])
-//       .expect(409)
-  
-//     const outcomeTips = await OutcomeTipArray.findOne({}).populate('tries')
-//     expect(outcomeTips.tries[0]).toHaveProperty('outcome', 'one')
-//   })
-  
-// })
+})
 
 afterAll(async () => {
   console.log('closing connection')

@@ -11,28 +11,12 @@ outcomeTipRouter.get('/', async (request, response) => {
 
 // add all outcome tips, expects an array in the request body 
 outcomeTipRouter.post('/', async (request, response) => {
-  // return 409 if outcomeTips already in db
-  const outcomeTipArray = await OutcomeTipArray.findOne()
-  if (outcomeTipArray) {
-    // response.statusMessage = "OutcomeTipArray already exists";
-    response.status(409).end()
-    return // why isn't response....end() not returning?
-  }
-  try {
-    // add all tries in the request body to db
-    const result1 = await OutcomeTipArray.insertMany(request.body.map(x => {
-      return { 'outcome': x }
-    }))
-    // add the array to db
-    const outcomeArray = new OutcomeTipArray({
-      tries: result1.map(result => result._id)
-    })
-    const finalResult = await outcomeArray.save()
-    response.status(201).json(finalResult)
-  } catch (exception) {
-    console.error(exception)
-    response.status(400)
-  }
+
+  // add the array to db
+  const outcomeArray = new OutcomeTipArray(request.body)
+  const finalResult = await outcomeArray.save()
+  response.status(201).json(finalResult)
+
 })
 
 // limit to admin access
