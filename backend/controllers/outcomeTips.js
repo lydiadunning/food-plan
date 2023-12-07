@@ -1,33 +1,33 @@
-const { OutcomeTipArray }  = require('../models/outcomeTipArray.js')
-const tryTipRouter = require('express').Router()
+const OutcomeTipArray = require('../models/outcomeTipArray.js')
+const outcomeTipRouter = require('express').Router()
 
-// get all active try hints in OutcomeTipArray
-tryTipRouter.get('/', async (request, response) => {
-  const tries = await OutcomeTipArray.findOne()
-    .populate('tries')
+// get all active outcome tips in OutcomeTipArray
+outcomeTipRouter.get('/', async (request, response) => {
+  const tips = await OutcomeTipArray.findOne()
+    //.populate('outcomeTips')
 
-  response.json(tries)
+  response.json(tips)
 })
 
-// add all try hints, expects an array in the request body 
-tryTipRouter.post('/', async (request, response) => {
-  // return 409 if tryTips already in db
-  const tryTipArray = await OutcomeTipArray.findOne()
-  if (tryTipArray) {
+// add all outcome tips, expects an array in the request body 
+outcomeTipRouter.post('/', async (request, response) => {
+  // return 409 if outcomeTips already in db
+  const outcomeTipArray = await OutcomeTipArray.findOne()
+  if (outcomeTipArray) {
     // response.statusMessage = "OutcomeTipArray already exists";
     response.status(409).end()
     return // why isn't response....end() not returning?
   }
   try {
     // add all tries in the request body to db
-    const result1 = await Outcome.insertMany(request.body.map(x => {
-      return { 'try': x }
+    const result1 = await OutcomeTipArray.insertMany(request.body.map(x => {
+      return { 'outcome': x }
     }))
     // add the array to db
-    const tryArray = new OutcomeTipArray({
+    const outcomeArray = new OutcomeTipArray({
       tries: result1.map(result => result._id)
     })
-    const finalResult = await tryArray.save()
+    const finalResult = await outcomeArray.save()
     response.status(201).json(finalResult)
   } catch (exception) {
     console.error(exception)
@@ -36,9 +36,9 @@ tryTipRouter.post('/', async (request, response) => {
 })
 
 // limit to admin access
-tryTipRouter.delete('/', async (request, response) => {
+outcomeTipRouter.delete('/', async (request, response) => {
   await OutcomeTipArray.deleteMany({})
   response.status(204).end()
 })
 
-module.exports = tryTipRouter
+module.exports = outcomeTipRouter

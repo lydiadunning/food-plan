@@ -2,7 +2,10 @@ const { Schema, model } = require('mongoose');
 
 
 const outcomeTipArraySchema = new Schema ({
-  tipType: String,
+  tipType: { // to differentiate between different lists of tips
+    type: String,
+    required: false
+  },
   outcomeTips: [{
     outcome: {
       type: String,
@@ -13,6 +16,4 @@ const outcomeTipArraySchema = new Schema ({
 
 const OutcomeTipArray = model('OutcomeTipArray', outcomeTipArraySchema)
 
-module.exports = {
-  OutcomeTipArray,
-}
+module.exports = OutcomeTipArray
