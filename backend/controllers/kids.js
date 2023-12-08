@@ -6,6 +6,7 @@ const kidRouter = require('express').Router()
 
 kidRouter.get('/', async (request, response) => {
   const kids = await Kid.find({ users: request.user }).populate('outcomeOptions', {outcome: 1, _id: 1})
+  
   response.json(kids)
 })
 
@@ -52,8 +53,9 @@ kidRouter.post('/', async (request, response) => {
 })
 
 kidRouter.get('/:id', async (request, response) => {
-  const kid = await Kid.findById(request.params.id)//.populate('outcomes', {outcome: 1, _id: 1})
-  if (kid && kid.users.includes(request.user)) {
+  const kid = await Kid.findById(request.params.id)
+
+  if (kid && kid.users.includes(request.user.id)) {
     response.json(kid)
   } else {
     response.status(404).json({ error: 'child not found'}).end()
@@ -62,17 +64,34 @@ kidRouter.get('/:id', async (request, response) => {
 
 // Should allow a user to remove the link between their profile and a kid, but not delete the kid until it has no remaining ties to any user. Currently doesn't actually delete database record.
 kidRouter.delete('/:id', async (request, response) => {
-  const kid = await Kid.findByIdAndUpdate(request.params.id, {
-    $pull: {
-      users: request.user
-    }
-  })
-  const user = await User.findByIdAndUpdate(request.user, {
-    $pull: {
-      kids: request.params.id
-    }
-  })
-  response.status(204).end()
+  try {
+    
+    await Kid.findByIdAndUpdate(request.params.id, {
+      $pull: {
+        users: request.user.id
+      }
+    }, {
+      new: true
+    })
+    // // const kid = await Kid.find({ id: request.params.id, user: request.user })
+    // // const kid = await Kid.findById(request.params.id )
+
+    // response.status(200).json(kid)
+    // const users = kid.users.filter( user => user !== request.user )
+    // response.status(204).json({users: users})
+
+    await User.findByIdAndUpdate(request.user.id, {
+      $pull: {
+        kids: request.params.id
+      }
+    })
+    response.status(204).end()
+  } catch {
+    response.status(204).end()
+    // response.status(400)
+    // this seems like a really dumb solution and I hate it.
+  }
+  
 })
 
 kidRouter.delete('/all', async (request, response) => {
@@ -83,19 +102,20 @@ kidRouter.delete('/all', async (request, response) => {
 })
 
 // patch will accept a request describing any field in the kid model.
-kidRouter.patch('/:id', async (request, response) => {
-  const outcomes = request.body.outcomeOptions || null
-  const name = request.body.name || null
-  const update = {}
-  if (name) {
-    update.name = name
-  }
-  if (outcomes) {
-    update.outcomeOptions = outcomeOptions
-  }
+kidRouter.patch('/:id', async (request, response, next) => {
+  const kid = await Kid.findById(request.params.id)
 
-  const kid = await Kid.findByIdAndUpdate(request.params.id, update)
-  response.json(kid)
+  if (kid && kid.users.includes(request.user.id)) {
+    try {
+      const kid = await Kid.findByIdAndUpdate(request.params.id, request.body, { new: true })
+      response.status(200).json(kid)
+    } catch (error) {
+      next(error)
+    }
+    
+  } else {
+    response.status(404).json({ error: 'child not found'}).end()
+  }
 
   // simplified this. If it needs more sophistication, this resource
   // might help

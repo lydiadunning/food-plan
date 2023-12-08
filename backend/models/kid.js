@@ -51,7 +51,7 @@ const kidSchema = new Schema ({
   users: [{
     type: 'ObjectId',
     ref: 'User',
-    required: true
+    required: false
   }]
 })
 

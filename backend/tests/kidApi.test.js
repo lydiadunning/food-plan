@@ -137,7 +137,7 @@ describe('With no existing kids', () => {
     expect(kids[0].outcomeOptions).toHaveLength(3)
   })
 
-  test.only('a kid query returns an empty array', async () => {
+  test('a kid query returns an empty array', async () => {
     const response = await api
       .get('/api/kid')
       .set('Authorization', `Bearer ${token}`)
@@ -147,182 +147,178 @@ describe('With no existing kids', () => {
 
 })
 
-//may flesh this out later
-describe('With Outcome hints from the database', () => {
-  let recievedOutcomes = []
-  let sentOutcomes = []
-  beforeAll(async () => {
+
+describe('With kid profiles in the database', () => {
+  let kidId = ''
+  const idNotInDb = '65336ffee3700a6cd0040889'
+  let token = ''
+  let userId = null
+  beforeEach(async () => {
+    await User.deleteMany({})
     await Kid.deleteMany({})
 
-    let outcomeTipArray = await OutcomeTipArray.findOne({})
-    if (!outcomeTipArray) {
-      outcomeTipArray = await api
-      .post('/api/outcome/hints')
-      .send(['one', 'two', 'three'])
-    }
+    const passwordHash = await bcrypt.hash('sekret', 10)
+    const user = new User({ 
+      name: 'Jeff Jefferson', 
+      username: 'root', 
+      passwordHash: passwordHash,
+      email: 'jeff@jeff.com'
+     })
 
-    recievedOutcomes = outcomeTipArray.outcomes
-    sentOutcomes = outcomeTipArray.outcomes.map(x => {
-      return {outcomeId: x}
-    })
+    const createdUser = await user.save()
+    userId = createdUser._id
+
+    const kids = [
+      {
+        'name': 'one',
+        'users': [createdUser.id]
+      },
+      {
+        'name': 'two',
+        'users': [createdUser.id]
+      },
+      {
+        'name': 'three',
+        'users': [createdUser.id]
+      }
+    ]
+    const kidObjects = await Kid.insertMany(kids)
+    const kidIds = kidObjects.map(kidObj => kidObj.id)
+    kidId = kidIds[1]
+
+    console.log('kidIds', kidIds)
+    user.kids = kidIds
+    await user.save()
+
+    const returningUser = {
+      username: 'root',
+      password: 'sekret',
+    }
+      
+    const result = await api
+      .post('/api/login')
+      .send(returningUser)
+
+    token = result.body.token
+    console.log('token', token)
   })
 
-  test('a new kid profile can use outcome hints', async () => {
-    const newKid = {
-      'name': 'Bess Borgington',
-      'outcomes': sentOutcomes
-    }
-  
-    await api
-      .post('/api/kid')
+  test('a list of kid profiles can be returned', async () => {
+    const kidsInDB = await Kid.find()
+    console.log(kidsInDB)
+    const response = await api
+      .get('/api/kid')
       .set('Authorization', `Bearer ${token}`)
-      .send(newKid)
-      .expect(201)
-      .expect('Content-Type', /application\/json/)
-      
-    const kidsFromDB = await Kid.find({})
-    const kids = kidsFromDB.map(kid => kid.toJSON())
+      .expect(200)
+
+    expect(response.body)
+    expect(response.body[0]).toHaveProperty('name')
+  })
+
+  test('a specific kid profile can be returned', async () => {
+    const response = await api
+      .get(`/api/kid/${kidId}`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200)
+
+    expect(response.body)
+    expect(response.body).toHaveProperty('name', 'two')
+  })
+
   
-    const kidsNoId = kids.map(x => {
-      return {
-        'name': x.name,
-        'outcomes': x.outcomes
-      }
-    })
-    expect(kidsNoId).toContainEqual(
-      {
-        'name': 'Bess Borgington',
-        'outcomes': recievedOutcomes
-      }
-    )
-  }) 
+  test('getting a nonexistant kid profile will not cause a problem', async () => {
+    // test fails- currently returns unauthorized, not sure why
+    const response = await api
+      .get(`/api/kid/${idNotInDb}`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(404)
+  })
+
+  test('the expected number of kid profiles is returned', async () => {
+    const response = await api
+      .get('/api/kid')
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200)
+    console.log(response.body)
+    expect(response.body).toHaveLength(3)
+  })
+
+  test('updating a nonexistant kid will not cause a problem', async () => {
+    const newName = { 'name': '2' }
+    const response = await api
+      .put(`/api/kid/${idNotInDb}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send(newName)
+      .expect(404)
+  })
+
+
+  test("behaves normally when deleting a nonexistant kid", async () => {
+    
+    const response = await api
+      .delete(`/api/kid/${idNotInDb}`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(204)
+
+    const kidsAtEnd = await Kid.find({})
+    expect(kidsAtEnd).toHaveLength(3)
+  })
+
+  test('a list of outcomes can be added', async () => {
+
+    const response = await api
+      .patch(`/api/kid/${kidId}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({outcomeOptions: [{ outcome: 'taste' }]})
+      .expect(200)
+    
+    expect(response.body.outcomeOptions).toHaveLength(1)
+    expect(response.body.outcomeOptions[0].outcome).toEqual('taste')
+  })
+
+  test('a kid profile can be updated', async () => {
+    const newName = { 'name': '2' }
+    const response = await api
+      .patch(`/api/kid/${kidId}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send(newName)
+      .expect(200)
+
+    expect(response.body)
+    expect(response.body).toHaveProperty('name', '2')
+  })
+
+  test('a kid profile cannot be updated with invalid data', async () => {
+    const change = { outcomeOptions: 'not supposed to be a string' }
+
+    console.log(Array.isArray(change.outcomeOptions))
+    const response = await api
+      .patch(`/api/kid/${kidId}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send(change)
+      .expect(400)
+  })
+
+  // this tests that the user and kid accounts do not reference each other after deletion.
+  test('the correct profile can be deleted', async () => {
+  
+    const response = await api
+      .delete(`/api/kid/${kidId}`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(204)
+
+      const user = await User.findOne({})
+
+      expect(user.kids).toHaveLength(2)
+      expect(user.kids).not.toContain(userId)
+      
+      const kids = await Kid.find({ users: userId })
+      expect(kids).not.toContain(kidId)
+      expect(kids).toHaveLength(2)
+
+  })
 
 })
- 
-
-// describe('With kid profiles in the database', () => {
-//   let kidId = ''
-//   const idNotInDb = '65336ffee3700a6cd0040889'
-
-//   beforeEach(async () => {
-//     await Kid.deleteMany({})
-//     const kids = [
-//       {
-//         'name': 'one'
-//       },
-//       {
-//         'name': 'two'
-//       },
-//       {
-//         'name': 'three'
-//       }
-//     ]
-//     const kidObjects = await Kid.insertMany(kids)
-//     kidId = kidObjects[1]._id
-//   })
-
-//   test('a list of kid profiles can be returned', async () => {
-//     const response = await api
-//       .get('/api/kid')
-//       .expect(200)
-
-//     expect(response.body)
-//     expect(response.body[0]).toHaveProperty('name')
-//   })
-
-//   test('a specific kid profile can be returned', async () => {
-//     const response = await api
-//       .get(`/api/kid/${kidId}`)
-//       .expect(200)
-
-//     expect(response.body)
-//     expect(response.body).toHaveProperty('name', 'two')
-//   })
-
-  
-//   test('getting a nonexistant kid profile will not cause a problem', async () => {
-//     const response = await api
-//       .get(`/api/kid/${idNotInDb}`)
-//       .expect(404)
-//   })
-
-//   test('the expected number of kid profiles is returned', async () => {
-//     const response = await api.get('/api/kid').expect(200)
-//     console.log(response.body)
-//     expect(response.body).toHaveLength(3)
-//   })
-
-//   test('updating a nonexistant kid will not cause a problem', async () => {
-//     const newName = { 'name': '2' }
-//     const response = await api
-//       .put(`/api/kid/${idNotInDb}`)
-//       .send(newName)
-//       .expect(404)
-//   })
-
-//   test('the correct profile can be deleted', async () => {
-//     const allProfiles = await api.get('/api/kid')
-//     const kids = allProfiles.body
-//     idToDelete = kids[0]._id
-    
-//     const response = await api
-//       .delete(`/api/kid/${idToDelete}`)
-//       .expect(204)
-
-//     const kidsAtEnd = await Kid.find({})
-//     const endKids = kidsAtEnd.map(kid => kid.toJSON())
-//     expect(endKids).not.toContain(kids[0])
-//     expect(endKids).toHaveLength(2)
-//   })
-
-//   test("behaves normally when deleting a nonexistant kid", async () => {
-    
-//     const response = await api
-//       .delete(`/api/kid/${idNotInDb}`)
-//       .expect(204)
-
-//     const kidsAtEnd = await Kid.find({})
-//     expect(kidsAtEnd).toHaveLength(3)
-//   })
-
-//   test('a list of outcomes can be added', async () => {
-//     const kidInDb = await Kid.findOne()
-//     const kid = {     
-//       _id: kidInDb._id,
-//       name: kidInDb.name,
-//       exposures: [],
-//       outcomes: [{ outcome: 'taste' }],
-//       __v: kidInDb.__v
-//     }
-
-//     const response = await api.put(`/api/kid/${kid._id}/outcomes`)
-//       .send(kid)
-//       .expect(200)
-    
-//     expect(response.body.outcomes).toHaveLength(1)
-//     const newOutcome = await Outcome.findById(response.body.outcomes[0])
-//     expect(newOutcome).toHaveProperty('outcome', 'taste')
-//   })
-
-//   test('a kid profile can be updated', async () => {
-//     const newName = { 'name': '2' }
-//     const response = await api
-//       .put(`/api/kid/${kidId}`)
-//       .send(newName)
-//       .expect(200)
-//     expect(response.body)
-//     expect(response.body).toHaveProperty('name', '2')
-//   })
-
-//   test('a kid profile cannot be updated with invalid data', async () => {
-//     const exposures = { exposures: 'not supposed to be a string' }
-//     const response = await api
-//       .put(`/api/kid/${kidId}`)
-//       .send(exposures)
-//       .expect(400)
-//   })
-
-// })
 
 // describe('With a kid profile with outcomes', () => {
 //   let kid = null

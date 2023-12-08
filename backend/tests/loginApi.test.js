@@ -363,7 +363,8 @@ describe('With 2 users, one with a kid in their profile', () => {
 
     token2 = result2.body.token
 
-    console.log('tokens', token1, token2)
+    console.log('user1', user1)
+    console.log('kid', kid)
   }, 20000)
 
   test('the other user cannot retrieve the kid', async () => {
@@ -373,6 +374,17 @@ describe('With 2 users, one with a kid in their profile', () => {
       .expect(200)
 
       expect(response.body).toHaveLength(0)
+  }, 20000)
+
+  test('the user with a kid can retrieve the kid by id', async () => {
+    const response = await api
+      .get(`/api/kid/${kidId}`)
+      .set('Authorization', `Bearer ${token1}`)
+      .expect(200)
+
+      console.log(response.body)
+      expect(response.body).toHaveProperty('name')
+      expect(response.body.name).toEqual('Mary Jefferson')
   }, 20000)
 
   test('the other user cannot retrieve the kid by id', async () => {

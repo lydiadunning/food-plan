@@ -1,5 +1,6 @@
-POST http://localhost:2002/api/child
+POST http://localhost:2002/api/kid
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkJlbnRvYXN0IiwiaWQiOiI2NTZhM2YyYTI0NzY1YzhlYmMyMGU5YzgiLCJpYXQiOjE3MDE5ODgwOTN9.Hi4QAV2wW6Re085btphwGgeXvj93sXLhNaRdfWy0SLc
 
 {
   "name": "Patience Bento"

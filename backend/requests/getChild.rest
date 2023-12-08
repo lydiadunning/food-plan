@@ -1,1 +1,1 @@
-GET http://localhost:2002/api/child
+GET http://localhost:2002/api/kid
