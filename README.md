@@ -4,6 +4,12 @@
 
 A web app for parents to use to track foods that have been offered to a child, built with flexibility to support families with different needs.
 
+## Current Working Branch
+
+This app's backend is being refactored with different variable names and endpoints and a simplified data model, as well as user authentication. 
+See the most recent branch: [New Names](https://github.com/lydiadunning/food-plan/tree/NewNames).
+Note that most endpoint tests will pass in that branch, but the front end hasn't been updated yet.
+
 ## What Problem Does it Solve
 
 When raising a picky kid you're supposed to offer new foods over and over again. 
