@@ -30,9 +30,13 @@ const kidSchema = new Schema ({
       type: String,
       required: false
     },
+    // outcomes: [{
+    //   type: 'ObjectId',
+    //   ref: 'Outcome',
+    //   required: false
+    // }],
     outcomes: [{
-      type: 'ObjectId',
-      ref: 'Outcome',
+      type: String,
       required: false
     }],
     meal: {

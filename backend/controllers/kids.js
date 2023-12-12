@@ -142,14 +142,23 @@ kidRouter.get('/:kidId/exposure', async (request, response) => {
   }
 })
 
+// kidRouter.get('/:kidId/exposure/:id', async (request, response) => {
+//   const exposure = await Exposure.findById(request.params.id)
+//   if (exposure && exposure.) {
+//     response.json(kid.exposures)
+//   } else {
+//     response.status(404).end()
+//   }
+// })
+
+
 kidRouter.patch('/:kidId/exposure', async (request, response) => {
   const kid = await Kid.findById(request.params.kidId)
-  logger.info('kid', kid)
   if (kid) {
-    const exposure = new Exposure({...request.body, date: Date.now()})
+    const exposure = {...request.body, date: Date.now()}
     // return 400 error if request body missing vital info
-    const result = await exposure.save()
-    await kid.updateOne({$push: {'exposures': result._id}}, {upsert: true})
+    kid.exposures.push(exposure)
+    const result = await kid.save()
     response.status(201).json(result)
   } else {
     logger.info('kid not found')
