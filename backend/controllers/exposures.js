@@ -3,8 +3,7 @@ const exposureRouter = require('express').Router()
 
 
 exposureRouter.get('/', async (request, response) => {
-  const exposure = await Exposure.find({})
-
+  
   response.json(exposure)
 })
 
