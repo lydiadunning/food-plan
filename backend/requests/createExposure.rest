@@ -1,4 +1,4 @@
-POST http://localhost:2002/api/child/65396c23644eb7ed4ae01d65/intro/
+POST http://localhost:2002/api/kid/65396c23644eb7ed4ae01d65/exposure/
 Content-Type: application/json
 
 {

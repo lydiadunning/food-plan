@@ -1,5 +1,5 @@
 # All Tests
-
+ - tests have changed. This may not be accurate -
 ## kidApi.test.js
 
 #### POST: verifies a kid profile:
