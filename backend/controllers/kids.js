@@ -171,11 +171,13 @@ kidRouter.get('/:kidId/exposure/:id', async (request, response) => {
 kidRouter.patch('/:kidId/exposure/:id', async (request, response) => {
   const kid = await Kid.findById(request.params.kidId)
   const exposureIndex = kid.exposures.findIndex(exposure => exposure.id === request.params.id)
-  Object.keys(request.body).forEach( key => {
-    kid.exposures[exposureIndex][key] = request.body[key]
-  })
-  await kid.save()
+  
   if (exposureIndex >= 0) {
+    Object.keys(request.body).forEach( key => {
+      kid.exposures[exposureIndex][key] = request.body[key]
+    })
+    await kid.save()
+  
     response.json(kid.exposures[exposureIndex])
   } else {
     response.status(404).end()

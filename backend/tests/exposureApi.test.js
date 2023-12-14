@@ -222,6 +222,13 @@ describe('With two exposures in the database', () => {
     expect(date).toEqual(dbExposure.date.toJSON())
 
   })
+  test('getting a nonexistant exposure resolves gracefully', async () => {
+    const idNotInDb = '65336ffee3700a6cd0040889'
+    const response = await api
+      .get(`/api/kid/${kidId}/exposure/${idNotInDb}`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(404)
+  })
   test('an exposure can be changed and returns the updated data', async () => {
     const testExposure = {    
       'food': 'squash',
@@ -265,6 +272,19 @@ describe('With two exposures in the database', () => {
     expect(meal).toEqual(dbExposure.meal)
     expect(date).toEqual(dbExposure.date)
 
+  })
+  test('changing a nonexistant exposure resolves gracefully', async () => {
+    const idNotInDb = '65336ffee3700a6cd0040889'
+    const testExposure = {    
+      'food': 'Parsley',
+      'description': 'leaf',
+      'outcomes': ['sniffed']
+    }
+    const response = await api
+      .patch(`/api/kid/${kidId}/exposure/${idNotInDb}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send(testExposure)
+      .expect(404)
   })
   test('an exposure can be deleted', async () => {
     const response = await api
