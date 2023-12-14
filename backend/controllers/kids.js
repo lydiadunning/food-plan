@@ -142,28 +142,52 @@ kidRouter.get('/:kidId/exposure', async (request, response) => {
   }
 })
 
-// kidRouter.get('/:kidId/exposure/:id', async (request, response) => {
-//   const exposure = await Exposure.findById(request.params.id)
-//   if (exposure && exposure.) {
-//     response.json(kid.exposures)
-//   } else {
-//     response.status(404).end()
-//   }
-// })
-
-
 kidRouter.patch('/:kidId/exposure', async (request, response) => {
   const kid = await Kid.findById(request.params.kidId)
   if (kid) {
-    const exposure = {...request.body, date: Date.now()}
+    const date = new Date()
+    const exposure = {...request.body, date: date}
     // return 400 error if request body missing vital info
     kid.exposures.push(exposure)
     const result = await kid.save()
-    response.status(201).json(result)
+    response.status(201).json(exposure)
   } else {
     logger.info('kid not found')
     response.status(404).end()
   }
 })
+
+kidRouter.get('/:kidId/exposure/:id', async (request, response) => {
+  const kid = await Kid.findById(request.params.kidId)
+  const exposure = kid.exposures.find(exposure => exposure.id === request.params.id)
+
+  if (exposure) {
+    response.json(exposure)
+  } else {
+    response.status(404).end()
+  }
+})
+
+kidRouter.patch('/:kidId/exposure/:id', async (request, response) => {
+  const kid = await Kid.findById(request.params.kidId)
+  const exposureIndex = kid.exposures.findIndex(exposure => exposure.id === request.params.id)
+  Object.keys(request.body).forEach( key => {
+    kid.exposures[exposureIndex][key] = request.body[key]
+  })
+  await kid.save()
+  if (exposureIndex >= 0) {
+    response.json(kid.exposures[exposureIndex])
+  } else {
+    response.status(404).end()
+  }
+})
+
+kidRouter.delete('/:kidId/exposure/:id', async (request, response) => {
+  const kid = await Kid.findById(request.params.kidId)
+  kid.exposures = kid.exposures.filter(exposure => exposure.id !== request.params.id)
+  await kid.save()
+  response.status(204).end()
+})
+
 
 module.exports = kidRouter

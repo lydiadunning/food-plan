@@ -11,7 +11,7 @@ describe('With kid profiles in the database', () => {
   let kidId = ''
   let token = ''
   let userId = null
-  beforeAll(async () => {
+  beforeEach(async () => {
     await User.deleteMany({})
     await Kid.deleteMany({})
 
@@ -53,7 +53,7 @@ describe('With kid profiles in the database', () => {
   })
   test('a new exposure with only required data can be added to a kid profile', async () => {
     const exposure = {
-      food: 'Beans',
+      food: 'Olives',
     }
 
     const response = await api
@@ -66,7 +66,7 @@ describe('With kid profiles in the database', () => {
     const kid = await Kid.findById(kidId)
     console.log(kid.exposures)
     expect(kid.exposures[0]).toHaveProperty('food')
-    expect(kid.exposures[0].food).toEqual('Beans')
+    expect(kid.exposures[0].food).toEqual('Olives')
   })
   test('a new exposure can be added to a kid profile', async () => {
     const exposure = {
@@ -123,9 +123,12 @@ describe('With kid profiles in the database', () => {
       .send(exposure)
       .expect(201)
 
+    const kid = await Kid.findById(kidId)
+    expect(kid.exposures[0]).toHaveProperty('date')
+    console.log(kid.exposures[0].date)
     const dateToday = new Date().toJSON()
-    const apiDate = response.body.exposures[0].date
-    const dateLength = 19
+    const apiDate = response.body.date
+    const dateLength = 10
     expect(apiDate.slice(0, dateLength)).toEqual(dateToday.slice(0, dateLength))
   })
   test('an exposure that is not in the db cannot be retrieved', async () => {
@@ -137,14 +140,14 @@ describe('With kid profiles in the database', () => {
   })
 })
 
-describe('With an exposure in the database', () => {
+describe('With two exposures in the database', () => {
   let kidId = ''
   let token = ''
   let userId = null
   const idNotInDb = '65336ffee3700a6cd0040889'
   let exposureId = null
   let dbExposure = null
-  beforeEach(async () => {
+  beforeAll(async () => {
     await User.deleteMany({})
     await Kid.deleteMany({})
 
@@ -171,10 +174,19 @@ describe('With an exposure in the database', () => {
           'tasted'
         ],
         meal: 'snack'
-      }]
+      },{
+        food: 'Beef',
+        description: 'Stew',
+        outcomes: [
+          'ate',
+        ],
+        meal: 'dinner'
+      },
+    ]
     }
-    const kidObject = await new Kid(kid)
-    const savedKid = kidObject.save()
+    const kidObject = new Kid(kid)
+    const savedKid = await kidObject.save()
+    console.log({savedKid})
     kidId = savedKid.id
     dbExposure = savedKid.exposures[0]
     exposureId = savedKid.exposures[0].id
@@ -195,68 +207,73 @@ describe('With an exposure in the database', () => {
 
     token = result.body.token
   })
-  test('the exposure is returned when querying the kid profile', async () => {
-    
-  })
-  test.only('the exposure is returned correctly when queried', async () => {
+  test('an exposure is returned correctly when queried', async () => {
     const response = await api
-      .get(`/api/kid/${kidId}/exposure/${kidId}`)
+      .get(`/api/kid/${kidId}/exposure/${exposureId}`)
       .set('Authorization', `Bearer ${token}`)
       .expect(200)
-    const {food, description, outcomes, meal, date} = request.body[0]
+
+    const {food, description, outcomes, meal, date} = response.body
     expect(food).toEqual(dbExposure.food)
     expect(description).toEqual(dbExposure.description)
     expect(outcomes[0]).toEqual(dbExposure.outcomes[0])
     expect(outcomes[1]).toEqual(dbExposure.outcomes[1])
     expect(meal).toEqual(dbExposure.meal)
-    expect(date).toEqual(dbExposure.date)
+    expect(date).toEqual(dbExposure.date.toJSON())
 
   })
-  test('the exposure can be changed and returns the updated data', async () => {
+  test('an exposure can be changed and returns the updated data', async () => {
     const testExposure = {    
       'food': 'squash',
       'description': 'roasted with salt',
     }
     const response = await api
-      .patch(`/api/kid/${kidId}/exposure/${kidId}`)
+      .patch(`/api/kid/${kidId}/exposure/${exposureId}`)
       .set('Authorization', `Bearer ${token}`)
+      .send(testExposure)
       .expect(200)
 
-    const {food, description, outcomes, meal, date} = request.body[0]
+      console.log(response.body)
+    const {food, description, outcomes, meal, date} = response.body
     expect(food).toEqual(testExposure.food)
     expect(description).toEqual(testExposure.description)
     expect(outcomes[0]).toEqual(dbExposure.outcomes[0])
     expect(outcomes[1]).toEqual(dbExposure.outcomes[1])
     expect(meal).toEqual(dbExposure.meal)
-    expect(date).toEqual(dbExposure.date)
+    expect(date).toEqual(dbExposure.date.toJSON())
 
-  })
-  test('the exposure can be changed in the db', async () => {
+  }, 10000)
+  test('an exposure can be changed in the db', async () => {
     const testExposure = {    
       'food': 'Peas',
       'description': 'frozen',
-      'outcomes': 'sniffed'
+      'outcomes': ['sniffed']
     }
     const response = await api
-      .patch(`/api/kid/${kidId}/exposure/${kidId}`)
+      .patch(`/api/kid/${kidId}/exposure/${exposureId}`)
       .set('Authorization', `Bearer ${token}`)
+      .send(testExposure)
       .expect(200)
       
-    const kid = await Kid.findOne().populate(exposures)
+    const kid = await Kid.findOne()
     const {food, description, outcomes, meal, date} = kid.exposures[0]
+    console.log({food, description, outcomes, meal, date})
     expect(food).toEqual(testExposure.food)
-    expect(description).toEqual(test.Exposure.description)
-    expect(outcomes[0]).toEqual(test.Exposure.outcomes[0])
-    expect(outcomes[1]).not.toExist()
+    expect(description).toEqual(testExposure.description)
+    expect(outcomes).toHaveLength(1)
+    expect(outcomes[0]).toEqual(testExposure.outcomes[0])
     expect(meal).toEqual(dbExposure.meal)
     expect(date).toEqual(dbExposure.date)
 
   })
-  test('the exposure can be deleted', async () => {
+  test('an exposure can be deleted', async () => {
     const response = await api
-      .delete(`/api/kid/${kidId}/exposure/${kidId}`)
+      .delete(`/api/kid/${kidId}/exposure/${exposureId}`)
       .set('Authorization', `Bearer ${token}`)
-      .expect(200)
+      .expect(204)
+
+    const kid = await Kid.findOne()
+    expect(kid.exposures).toHaveLength(1)
   })
 })
 
