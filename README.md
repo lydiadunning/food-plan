@@ -34,10 +34,12 @@ PORT= *a 4 digit number*
 ## Next Steps in Development
 
 ### Now
-* Update tests to reflect data model changes.
+* Update queries in the frontend code.
+* Rethink structure of queries in frontend code.
+* Update terms and variable names in frontend code.
+* Add user authentication to frontend code
 
 ### Next
-* Update queries in the frontend code.
 * Ensure all endpoints used for current frontend functionality are present and work as expected.
 * Add UseReduce in frontend to streamline tracking what the user sees and how they got there.
 

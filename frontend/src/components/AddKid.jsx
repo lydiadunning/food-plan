@@ -1,18 +1,18 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
-import TryMenu from "./tryMenu/TryMenu.jsx"
+import TryMenu from "./outcomeMenu/OutcomeMenu.jsx"
 
 import SavePage from './SavePage.jsx'
 
-const AddChild = ({ closeAddChild }) => {
-  const [childName, setChildName] = useState('')
-  const [childNameForm, setChildNameForm] = useState('')
+const AddKid = ({ closeAddKid }) => {
+  const [kidName, setKidName] = useState('')
+  const [kidNameForm, setKidNameForm] = useState('')
   const [tries, setTries] = useState([])
   const [showTries, setShowTries] = useState(false)
   const [showSave, setShowSave] = useState(false)
 
-  console.log('executing AddChild', childName, tries)
-  const nameLabel = "What's the child's name?"
+  console.log('executing AddKid', kidName, tries)
+  const nameLabel = "What's the kid's name?"
 
   const acceptHandler = () => {
     setShowTries(false)
@@ -22,17 +22,17 @@ const AddChild = ({ closeAddChild }) => {
   return (
     <div>
       {
-        !childName &&
-        <form onSubmit={() => setChildName(childNameForm)}>
+        !kidName &&
+        <form onSubmit={() => setKidName(kidNameForm)}>
           <label>{nameLabel}</label>
-          <input onChange={(e) => setChildNameForm(e.target.value)} required></input>
+          <input onChange={(e) => setKidNameForm(e.target.value)} required></input>
           <button type='submit'>Continue</button>
         </form>
       }
       {
-        (childName && showTries == [] && !showSave) &&
+        (kidName && showTries == [] && !showSave) &&
         <>
-          <h3>Do you want to record how {childName} responds to foods?</h3>
+          <h3>Do you want to record how {kidName} responds to foods?</h3>
           <button onClick={() => {setShowTries(true)}}>yes</button>
           <button onClick={() => setShowSave(true)}>no</button>
         </>
@@ -47,9 +47,9 @@ const AddChild = ({ closeAddChild }) => {
       {
         showSave && 
         <SavePage 
-          childName={childName}
+          kidName={kidName}
           tries={tries}
-          closeAddChild={closeAddChild}
+          closeAddKid={closeAddKid}
         />
       }
 
@@ -57,4 +57,4 @@ const AddChild = ({ closeAddChild }) => {
   )
 }
 
-export default AddChild
+export default AddKid

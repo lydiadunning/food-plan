@@ -1,21 +1,21 @@
-import { useCreateIntro } from "../serverStore/mutations"
+import { useCreateExposure } from "../serverStore/mutations"
 import { useForm } from "react-hook-form"
 
-const AddIntro = ({ child, closeAddIntro }) => {
+const AddExposure = ({ kid, closeAddExposure }) => {
   const {register, handleSubmit} = useForm()
 
   const today = new Date().toISOString().substring(0, 10)
   console.log('today', today)
   
-  const createIntro = useCreateIntro(child._id)
+  const createExposure = useCreateExposure(kid._id)
 
   const onSubmit = (data) => {
-    createIntro.mutate(data)
+    createExposure.mutate(data)
     console.log('data', data)
-    closeAddIntro()
+    closeAddExposure()
   }
 
-  console.log('child.tries', child.tries)
+  console.log('kid.outcomeOptions', kid.outcomeOptions)
 
   return (
     <>
@@ -25,9 +25,9 @@ const AddIntro = ({ child, closeAddIntro }) => {
         <input id='food' type='text' required {...register('food')} />
         <label htmlFor='description'>description</label>
         <input id='description' type='text' required {...register('description')} />
-        <label htmlFor='try'>what did { child.name } try?</label>
-        <select id='try' {...register('try')}>
-          { child.tries.map( x => <option key={x._id} value={x._id}>{x.try}</option> ) }
+        <label htmlFor='outcomeOption'>what did { kid.name } do?</label>
+        <select id='outcomeOption' {...register('outcomeOption')}>
+          { kid.outcomeOptions.map( x => <option key={x._id} value={x._id}>{x.outcomeOption}</option> ) }
         </select>
         <label htmlFor='meal'>meal</label>
         <input id='meal' type='text' {...register('meal')}></input>
@@ -35,9 +35,9 @@ const AddIntro = ({ child, closeAddIntro }) => {
         <input id='date' type='date' defaultValue={today} {...register("date", { valueAsDate: true })} />
         <button type='submit'>submit</button>
       </form>
-      <button onClick={ closeAddIntro }>Back</button>
+      <button onClick={ closeAddExposure }>Back</button>
     </>
   )
 }
 
-export default AddIntro
+export default AddExposure

@@ -1,17 +1,17 @@
-import { useDeleteChild } from "../serverStore/mutations"
+import { useDeleteKid } from "../serverStore/mutations"
 import { useState } from "react"
 
-export const DeleteChild = ({ child, closeChild }) => {
+export const DeleteKid = ({ kid, closeKid }) => {
   const [showConfirm, setShowConfirm] = useState(false)
 
   const deleteHandler = () => {
     setShowConfirm(true)
   }
 
-  const deleteChild = useDeleteChild()
+  const deleteKid = useDeleteKid()
   const confirmDelete = () => {
-    deleteChild.mutate(child)
-    closeChild()
+    deleteKid.mutate(kid)
+    closeKid()
   }
 
   const cancelDelete = () => {
@@ -22,7 +22,7 @@ export const DeleteChild = ({ child, closeChild }) => {
     <>
     {
       showConfirm ? <>
-        <p>Do you want to delete {child.name}? All records for that child will be lost.</p>
+        <p>Do you want to delete {kid.name}? All records for that kid will be lost.</p>
         <button onClick={ confirmDelete }>Confirm</button>
         <button onClick={ cancelDelete }>Cancel</button>
       </>

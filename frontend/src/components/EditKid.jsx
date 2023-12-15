@@ -1,30 +1,30 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
-import { useDeleteChild, useUpdateChild } from '../serverStore/mutations.jsx'
-import TryMenu from './tryMenu/TryMenu.jsx'
+import { useUpdateKid } from '../serverStore/mutations.jsx'
+import TryMenu from './outcomeMenu/OutcomeMenu.jsx'
 
 import { useForm } from "react-hook-form"
 
 
-const EditChild = ({ child, closeEditChild }) => {
-  const [tries, setTries] = useState([...child.tries])
-  const [name, setName] = useState(child.name)
-  console.log('child', child)
+const EditKid = ({ kid, closeEditKid }) => {
+  const [tries, setTries] = useState([...kid.tries])
+  const [name, setName] = useState(kid.name)
+  console.log('kid', kid)
 
   const {register, handleSubmit} = useForm()
 
-  const updateChild = useUpdateChild(child._id)
+  const updateKid = useUpdateKid(kid._id)
   
   const onNameUpdate = (data) => {
     setName(data.name)
   }
 
   const update = () => {
-    updateChild.mutate({
+    updateKid.mutate({
       'name': name,
       'tries': tries
     })
-    closeEditChild()
+    closeEditKid()
   }
 
   return (
@@ -38,10 +38,10 @@ const EditChild = ({ child, closeEditChild }) => {
       </form>
       <TryMenu tries={tries} setTries={setTries} />
       <button onClick={ update }>Save Changes</button>
-      {/* <button onClick={ deleteChild }>delete</button> */}
-      <button onClick={ closeEditChild }>Back</button>
+      {/* <button onClick={ deleteKid }>delete</button> */}
+      <button onClick={ closeEditKid }>Back</button>
     </>
   )
 }
 
-export default EditChild
+export default EditKid

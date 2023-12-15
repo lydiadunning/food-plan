@@ -4,7 +4,6 @@ const cors = require('cors')
 const config = require('./utils/config')
 const mongoose = require('mongoose')
 const kidRouter = require('./controllers/kids.js')
-const exposureRouter = require('./controllers/exposures.js')
 const outcomeTipRouter = require('./controllers/outcomeTips.js')
 // const userRouter = require('./controllers/users')
 const logger = require('./utils/logger')
@@ -43,7 +42,6 @@ app.get('http://localhost:5173', cors(), function (req, res, next) {
 
 // app.use the router - to direct requests
 app.use('/api/kid', userExtractor, kidRouter)
-app.use('/api/exposure', exposureRouter)
 app.use('/api/outcometips', outcomeTipRouter)
 app.use('/api/user', userRouter)
 app.use('/api/login', loginRouter)
