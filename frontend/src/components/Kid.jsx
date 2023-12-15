@@ -1,33 +1,33 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
-import Intro from "./Exposure.jsx"
-import AllIntros from './AllExposures.jsx'
+import Exposure from "./Exposure.jsx"
+import AllExposures from './AllExposures.jsx'
 import { useDeleteKid } from '../serverStore/mutations.jsx'
 import { DeleteKid } from './Delete.jsx'
-import EditIntro from './EditExposure.jsx'
+import EditExposure from './EditExposure.jsx'
 
-const Kid = ({ kid, openAddIntro, closeKid, openEditKid }) => {
-  const [ showAllIntros, setShowAllIntros ] = useState(false)
-  const [ showEditIntro, setShowEditIntro ] = useState(false)
-  const [ exposureToEdit, setIntroToEdit ] = useState(null)
+const Kid = ({ kid, openAddExposure, closeKid, openEditKid }) => {
+  const [ showAllExposures, setShowAllExposures ] = useState(false)
+  const [ showEditExposure, setShowEditExposure ] = useState(false)
+  const [ exposureToEdit, setExposureToEdit ] = useState(null)
 
   console.log('kid in Kid', kid)
 
-  const openAllIntros = () => {
-    setShowAllIntros(true)
+  const openAllExposures = () => {
+    setShowAllExposures(true)
   }
 
-  const closeAllIntros = () => {
-    setShowAllIntros(false)
+  const closeAllExposures = () => {
+    setShowAllExposures(false)
   }
 
-  const openEditIntros = (exposure) => {
-    setIntroToEdit(exposure)
-    setShowEditIntro(true)
+  const openEditExposures = (exposure) => {
+    setExposureToEdit(exposure)
+    setShowEditExposure(true)
   }
 
-  const closeEditIntro = () => {
-    setShowEditIntro(false)
+  const closeEditExposure = () => {
+    setShowEditExposure(false)
   }
 
   const deleteKid = useDeleteKid()
@@ -41,28 +41,28 @@ const Kid = ({ kid, openAddIntro, closeKid, openEditKid }) => {
     <>
       <p>{ kid.name }</p>
       {  
-        showEditIntro
+        showEditExposure
         ?
-        <EditIntro kid={kid} exposure={exposureToEdit} closeEditIntro={closeEditIntro} />
+        <EditExposure kid={kid} exposure={exposureToEdit} closeEditExposure={closeEditExposure} />
         :
-        showAllIntros 
+        showAllExposures 
         ? 
         <>
-          <AllIntros kid={kid} openEditIntros={openEditIntros} />
-          <button onClick={closeAllIntros}>Close Intros</button> 
+          <AllExposures kid={kid} openEditExposures={openEditExposures} />
+          <button onClick={closeAllExposures}>Close Exposures</button> 
         </>
         :
         kid.exposures?.length > 0
         ?
         <>
-          <Intro exposureId={ kid.exposures[0] } openEditIntros={openEditIntros} /> 
-          { kid.exposures.length > 1 && <button onClick={ openAllIntros }>See All Intros</button> }
+          <Exposure exposureId={ kid.exposures[0] } openEditExposures={openEditExposures} /> 
+          { kid.exposures.length > 1 && <button onClick={ openAllExposures }>See All Exposures</button> }
         </>
         :
         <></>
       } 
       <button 
-        onClick={ () => openAddIntro(kid) }
+        onClick={ () => openAddExposure(kid) }
       >add an exposureduction
       </button>
       <button onClick={ () => openEditKid(kid) }>Edit</button>

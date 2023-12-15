@@ -1,10 +1,11 @@
 import './App.css'
 import { useState } from 'react';
 import AddKid from './components/AddKid.jsx'
-import AddIntro from './components/AddExposure.jsx'
+import AddExposure from './components/AddExposure.jsx'
 import Kid from './components/Kid';
 import EditKid from './components/EditKid.jsx'
 import { KidList } from './components/KidList';
+import { Login } from './components/Login.jsx'
 import { useKids } from './serverStore/queries';
 // import { UpdateKid } from './serverStore/mutations';
 
@@ -13,8 +14,8 @@ import { useKids } from './serverStore/queries';
 function App() {
   // too much. consolidate.
   const [showAddKid, setShowAddKid] = useState(false)
-  const [showLogin, setShowLogin] = useState(false)
-  const [showAddIntro, setShowAddIntro] = useState(false)
+  const [showLogin, setShowLogin] = useState(true)
+  const [showAddExposure, setShowAddExposure] = useState(false)
   const [showKid, setShowKid] = useState(false)
   const [showEditKid, setShowEditKid] = useState(false)
 
@@ -41,13 +42,13 @@ function App() {
     setShowAddKid(true)
   }
 
-  const openAddIntro = (kid) => {
+  const openAddExposure = (kid) => {
     setKid(kid)
-    setShowAddIntro(true)
+    setShowAddExposure(true)
   }
 
-  const closeAddIntro = () => {
-    setShowAddIntro(false)
+  const closeAddExposure = () => {
+    setShowAddExposure(false)
   }
 
   const openKid = (kid) => {
@@ -74,16 +75,16 @@ function App() {
       { 
         showLogin
         ? <Login closeLogin={() => setShowLogin(false)}/>
-        : showAddIntro 
-        ? <AddIntro kid={kid} closeAddIntro={closeAddIntro} />
+        : showAddExposure 
+        ? <AddExposure kid={kid} closeAddExposure={closeAddExposure} />
         : showEditKid
         ? <EditKid kid={kid} closeEditKid={closeEditKid} />
         : showAddKid 
         ? <AddKid closeAddKid={closeAddKid}/>
         : showKid
-        ? <Kid kid={kid} openAddIntro={openAddIntro} closeKid={closeKid} openEditKid={openEditKid} />
+        ? <Kid kid={kid} openAddExposure={openAddExposure} closeKid={closeKid} openEditKid={openEditKid} />
         : <>
-            <KidList kidData={kids}  openAddIntro={openAddIntro} openKid={openKid} openEditKid={openEditKid} closeKid={closeKid}/>
+            <KidList kidData={kids}  openAddExposure={openAddExposure} openKid={openKid} openEditKid={openEditKid} closeKid={closeKid}/>
             <button onClick={openAddKid}>Add a kid</button>
           </>
       }

@@ -1,21 +1,21 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
-import TryMenu from "./outcomeMenu/OutcomeMenu.jsx"
+import OutcomeMenu from "./outcomeMenu/OutcomeMenu.jsx"
 
 import SavePage from './SavePage.jsx'
 
 const AddKid = ({ closeAddKid }) => {
   const [kidName, setKidName] = useState('')
   const [kidNameForm, setKidNameForm] = useState('')
-  const [tries, setTries] = useState([])
-  const [showTries, setShowTries] = useState(false)
+  const [outcomes, setOutcomes] = useState([])
+  const [showOutcomes, setShowOutcomes] = useState(false)
   const [showSave, setShowSave] = useState(false)
 
-  console.log('executing AddKid', kidName, tries)
+  console.log('executing AddKid', kidName, outcomes)
   const nameLabel = "What's the kid's name?"
 
   const acceptHandler = () => {
-    setShowTries(false)
+    setShowOutcomes(false)
     setShowSave(true)
   }
 
@@ -30,17 +30,17 @@ const AddKid = ({ closeAddKid }) => {
         </form>
       }
       {
-        (kidName && showTries == [] && !showSave) &&
+        (kidName && showOutcomes == [] && !showSave) &&
         <>
           <h3>Do you want to record how {kidName} responds to foods?</h3>
-          <button onClick={() => {setShowTries(true)}}>yes</button>
+          <button onClick={() => {setShowOutcomes(true)}}>yes</button>
           <button onClick={() => setShowSave(true)}>no</button>
         </>
       }
       {
-        showTries &&
+        showOutcomes &&
         <>
-          <TryMenu tries={tries} setTries={setTries} showTryHints={true} />
+          <OutcomeMenu outcomes={outcomes} setOutcomes={setOutcomes} showOutcomeHints={true} />
           <button onClick={ acceptHandler }>Accept</button>
         </>
       }
@@ -48,7 +48,7 @@ const AddKid = ({ closeAddKid }) => {
         showSave && 
         <SavePage 
           kidName={kidName}
-          tries={tries}
+          outcomes={outcomes}
           closeAddKid={closeAddKid}
         />
       }

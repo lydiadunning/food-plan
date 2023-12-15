@@ -1,23 +1,23 @@
-import { useIntro } from '../serverStore/queries.jsx'
+import { useExposure } from '../serverStore/queries.jsx'
 
-const Intro = ({ introId, openEditIntros }) => {
-  const { isLoading, error, data } = useIntro(introId)
+const Exposure = ({ exposureId, openEditExposures }) => {
+  const { isLoading, error, data } = useExposure(exposureId)
 
   if (isLoading) return 'Loading...'
   if (error) return 'An error has occurred: ' + error.message
 
-  const intro = data.data
+  const exposure = data.data
 
   return (
     <section>
-      <p>Food: { intro.food }</p>
-      <p>Description: { intro.description }</p>
-      { intro.try && <p>Tried: { intro.try }</p> }
-      { intro.meal && <p>Meal: { intro.meal }</p> }
-      { intro.date && <p>Date: { intro.date.toString() }</p>}
-      <button onClick={ () => openEditIntros(intro) }>Edit Intro</button>
+      <p>Food: { exposure.food }</p>
+      <p>Description: { exposure.description }</p>
+      { exposure.outcome && <p>Tried: { exposure.outcome }</p> }
+      { exposure.meal && <p>Meal: { exposure.meal }</p> }
+      { exposure.date && <p>Date: { exposure.date.toString() }</p>}
+      <button onClick={ () => openEditExposures(exposure) }>Edit Exposure</button>
     </section>
   )
 }
 
-export default Intro
+export default Exposure

@@ -1,36 +1,36 @@
-import { useUpdateIntro } from "../serverStore/mutations"
+import { useUpdateExposure } from "../serverStore/mutations"
 import { useForm } from "react-hook-form"
 
-const EditIntro = ({ kid, exposure, closeEditIntro }) => {
+const EditExposure = ({ kid, exposure, closeEditExposure }) => {
     const {register, handleSubmit} = useForm({
     defaultValues: {
       food: exposure.food,
       description: exposure.description,
-      try: exposure.try,
+      outcome: exposure.outcome,
       meal: exposure.meal,
       date: exposure.date.slice(0, 10)
     }
   })
   
-  const updateIntro = useUpdateIntro(exposure._id)
+  const updateExposure = useUpdateExposure(exposure._id)
 
   const onSubmit = (data) => {
-    updateIntro.mutate(data)
+    updateExposure.mutate(data)
     console.log('data', data)
-    closeEditIntro()
+    closeEditExposure()
   }
 
   return (
     <>
-      <h1>Edit Intro</h1>
+      <h1>Edit Exposure</h1>
       <form onSubmit={ handleSubmit(onSubmit) }>
         <label htmlFor='food'>food</label>
         <input id='food' type='text' required {...register('food')} />
         <label htmlFor='description'>description</label>
         <input id='description' type='text' required {...register('description')} />
-        <label htmlFor='try'>what did { kid.name } try?</label>
-        <select id='try' {...register('try')}>
-          { kid.tries.map( x => <option key={x._id} value={x._id}>{x.try}</option> ) }
+        <label htmlFor='outcome'>what did { kid.name } try?</label>
+        <select id='outcome' {...register('outcome')}>
+          { kid.outcomes.map( x => <option key={x._id} value={x._id}>{x.outcome}</option> ) }
         </select>
         <label htmlFor='meal'>meal</label>
         <input id='meal' type='text' {...register('meal')}></input>
@@ -38,9 +38,9 @@ const EditIntro = ({ kid, exposure, closeEditIntro }) => {
         <input id='date' type='date' {...register("date", { valueAsDate: true })} />
         <button type='submit'>submit</button>
       </form>
-      <button onClick={ closeEditIntro }>Back</button>
+      <button onClick={ closeEditExposure }>Back</button>
     </>
   )
 }
 
-export default EditIntro
+export default EditExposure

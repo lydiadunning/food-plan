@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
 import { useUpdateKid } from '../serverStore/mutations.jsx'
-import TryMenu from './outcomeMenu/OutcomeMenu.jsx'
+import OutcomeMenu from './outcomeMenu/OutcomeMenu.jsx'
 
 import { useForm } from "react-hook-form"
 
 
 const EditKid = ({ kid, closeEditKid }) => {
-  const [tries, setTries] = useState([...kid.tries])
+  const [outcomes, setOutcomes] = useState([...kid.outcomes])
   const [name, setName] = useState(kid.name)
   console.log('kid', kid)
 
@@ -22,7 +22,7 @@ const EditKid = ({ kid, closeEditKid }) => {
   const update = () => {
     updateKid.mutate({
       'name': name,
-      'tries': tries
+      'outcomes': outcomes
     })
     closeEditKid()
   }
@@ -36,7 +36,7 @@ const EditKid = ({ kid, closeEditKid }) => {
         </label>
         <button type='submit'>replace</button>
       </form>
-      <TryMenu tries={tries} setTries={setTries} />
+      <OutcomeMenu outcomes={outcomes} setOutcomes={setOutcomes} />
       <button onClick={ update }>Save Changes</button>
       {/* <button onClick={ deleteKid }>delete</button> */}
       <button onClick={ closeEditKid }>Back</button>
