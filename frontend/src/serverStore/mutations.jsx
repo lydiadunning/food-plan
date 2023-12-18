@@ -1,12 +1,45 @@
 import axios from "axios"
+import { useState } from "react";
 import { useMutation, useQueryClient } from 'react-query';
 
+let config = {
+  headers: { Authorization: '' }
+}
 
 const baseUrl = 'http://localhost:2002/api/'
 const kidUrl = baseUrl.concat('kid/')
+const userUrl = baseUrl.concat('user/')
+const loginUrl = baseUrl.concat('login/')
 
 
 // POST ---
+
+/**
+ * 
+ * @returns mutation object with method mutate
+ */
+export const useCreateAccount = () => {
+  // useCreateAccount is a model for making a useMutation available.
+  const queryClient = useQueryClient()
+  
+  return useMutation(user => {
+    return axios.post(userUrl, user)
+  })
+}
+
+export const useLoginAccount = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation(credentials => {
+    return axios.post(loginUrl, credentials)
+  }, {
+    onSuccess: async(data) => {
+      console.log('login successful')
+      config.headers.Authorization = data.token
+    }
+  })
+}
+
 
 /**
  * 
@@ -19,7 +52,7 @@ export const useCreateKid = () => {
   // creating a kid should add the kid to the list of kids in data.
 
   return useMutation(kid => {
-    return axios.post(kidUrl, kid)
+    return axios.post(kidUrl, kid, config)
   }, {
     onSuccess: async (data) => {
       console.log('success')
@@ -41,7 +74,7 @@ export const useCreateExposure = (kidId) => {
   return useMutation(exposure => {
     console.log(url)
     console.log(exposure)
-    return axios.post(url, exposure)
+    return axios.post(url, exposure, config)
   }, {
     onSuccess: async (data) => {
       console.log('success')
@@ -60,7 +93,7 @@ export const useUpdateKid = (kidId) => {
 
   return useMutation(kid => {
     const kidToSend = JSON.stringify(kid)
-    return axios.put(kidUrl.concat(kidId), kidToSend)
+    return axios.put(kidUrl.concat(kidId), kidToSend, config)
   }, {
     onSuccess: async (data) => {
       console.log('success')
@@ -82,7 +115,7 @@ export const useUpdateExposure = (exposureId) => {
   return useMutation(exposure => {
     console.log(url)
     console.log(exposure)
-    return axios.put(url, exposure)
+    return axios.put(url, exposure, config)
   }, {
     onSuccess: async (data) => {
       console.log('success')
@@ -106,7 +139,7 @@ export const useDeleteKid = () => {
   
   return useMutation (kid => {
     console.log('in delete mutation')
-    return axios.delete(kidUrl.concat(kid._id))
+    return axios.delete(kidUrl.concat(kid._id), config)
   }, {
     onSuccess: async (data, variables, context) => {
       console.log('success')

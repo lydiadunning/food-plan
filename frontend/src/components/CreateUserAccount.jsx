@@ -8,7 +8,7 @@ const CreateUserAccount = () => {
   const createAccount = useCreateAccount()
 
   const onSubmit = (data) => {
-    createAccount(data)
+    createAccount.mutate(data)
     console.log('data', data)
   }
 

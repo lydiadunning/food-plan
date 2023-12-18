@@ -19,12 +19,14 @@ function App() {
   const [showKid, setShowKid] = useState(false)
   const [showEditKid, setShowEditKid] = useState(false)
 
+  const [user, setUser] = useState({ id: ''})
   const [kid, setKid] = useState(null)
 
   // react-query used here. Comments stay until I'm more familiar with using the technology.
   // using react-query and axios to simplify state management for values retrieved from the server.
   // gets result of query with useKids
-  const { isLoading, error, data } = useKids()
+  // delay loading kids until after a user is signed in.
+  const { isLoading, error, data } = useKids(user.id)
 
   if (isLoading) return 'Loading...'
 

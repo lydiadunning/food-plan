@@ -1,17 +1,24 @@
 import { useState } from 'react'
 import { useForm } from "react-hook-form"
 import CreateUserAccount from './CreateUserAccount'
+import { useLoginAccount } from '../serverStore/mutations'
 
 
 export function Login({ closeLogin }) {
-const { register, handleSubmit } = useForm()
-const { showCreateAccount, setShowCreateAccount } = useState(false)
+  const [ showCreateAccount, setShowCreateAccount ] = useState(false)
 
-const onSubmit = (data) => {
-  //login
-  console.log('data', data)
-  closeLogin()
-}
+  const { register, handleSubmit } = useForm()
+
+
+  const loginAccount = useLoginAccount()
+
+  const onSubmit = (data) => {
+    //login
+    loginAccount.mutate(data)
+    console.log('data', data)
+
+    closeLogin()
+  }
 
   return (
     <>
@@ -21,6 +28,7 @@ const onSubmit = (data) => {
         <input id='username' type='text' required {...register('username')}></input>
         <label>password: </label>
         <input id='password' type='text' required {...register('password')}></input>
+        <button type='submit'>submit</button>
       </form>
       <button onClick={ () => setShowCreateAccount(!showCreateAccount)}>{showCreateAccount ? 'close create account' : 'create account'}</button>
       { showCreateAccount && <CreateUserAccount/> }

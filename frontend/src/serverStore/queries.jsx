@@ -9,9 +9,10 @@ const baseUrl = 'http://localhost:2002/api/'
 /**
  * @returns { isLoading, error, data }
  */
-export const useKids = () => {
+export const useKids = (userId) => {
   console.log('returning useQuery')
   return useQuery('kids', () => {
+    if (!userId) return []
     console.log('axios query')
     return axios.get(baseUrl.concat('kid/'))
   })
@@ -34,3 +35,4 @@ export const useExposure = (exposureId) => {
     axios.get(exposureUrl)
   )
 }
+
