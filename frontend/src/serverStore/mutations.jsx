@@ -24,6 +24,7 @@ export const useCreateAccount = () => {
   })
 }
 
+// not currently using this
 export const useLoginAccount = () => {
   const queryClient = useQueryClient()
 
@@ -34,6 +35,9 @@ export const useLoginAccount = () => {
       console.log('login successful')
       console.log(data)
       handleLogin(data.data)
+    },
+    onError: (data) => {
+      console.log(data)
     }
   })
 }
