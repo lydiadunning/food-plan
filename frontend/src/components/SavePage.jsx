@@ -21,7 +21,7 @@ export default function SavePage({ kidName, outcomeOptions, closeAddKid }) {
   return (
     <>
       <h3>{kidName}</h3>
-      {outcomeOptions?.map( x => <p key={x._id}>{x.try}</p>)}
+      {outcomeOptions?.map( x => <p key={x._id}>{x.outcome}</p>)}
       <button onClick={saveHandler}>Save</button>
     </>
   )
