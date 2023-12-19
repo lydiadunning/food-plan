@@ -1,0 +1,13 @@
+POST http://localhost:2002/api/outcometips
+Content-Type: application/json
+  
+  {"outcomeTips": [{
+    "outcome": "touch"
+  }, {
+    "outcome": "smell"
+  }, {
+    "outcome": "taste"
+  }, {
+    "outcome": "eat"
+  }
+  ]}

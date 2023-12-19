@@ -108,6 +108,7 @@ kidRouter.patch('/:id', async (request, response, next) => {
   if (kid && kid.users.includes(request.user.id)) {
     try {
       const kid = await Kid.findByIdAndUpdate(request.params.id, request.body, { new: true })
+
       response.status(200).json(kid)
     } catch (error) {
       next(error)

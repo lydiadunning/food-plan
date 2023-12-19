@@ -12,10 +12,12 @@ const CreateUserAccount = () => {
     console.log('data', data)
   }
 
+  console.log({handleSubmit})
+
   return (
     <>
       <h1>Create a new user account </h1>
-      <form onSubmit={ handleSubmit(onSubmit) }>
+      <form onSubmit={ () => handleSubmit(onSubmit) }>
         <label htmlFor='username'>username</label>
         <input id='username' type='text' required {...register('username')} />
         <label htmlFor='name'>name</label>
@@ -26,7 +28,6 @@ const CreateUserAccount = () => {
         <input id='password' type='text' {...register('password')}></input>
         <button type='submit'>submit</button>
       </form>
-      <button onClick={ createAccount }>Back</button>
     </>
   )
 }

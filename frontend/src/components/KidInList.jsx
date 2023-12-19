@@ -3,7 +3,7 @@ import { DeleteKid } from './Delete.jsx'
 
 const KidInList = ({ kid, openAddExposure, deleteKid, openKid, openEditKid, closeKid }) => {
 
-  console.log('kid', kid._id)
+  console.log('kid', kid, kid.outcomeOptions)
   
   function listEach(arr, propertyName) {
     const strings = arr.map(x => x[propertyName])

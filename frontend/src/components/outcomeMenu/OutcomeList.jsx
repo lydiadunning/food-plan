@@ -8,13 +8,15 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
 
   const {isLoading, error, data} = useOutcomeTips()
   
+  console.log({outcomes})
+
   useEffect(() => {
     if(outcomes.length == 0 && data && showOutcomeHints) {
-      const convertedOutcomes = data.data.outcomes.map(x => {
+      console.log(data)
+      const convertedOutcomes = data.data.outcomeTips.map(x => {
         return {
           _id: x._id,
           outcome: x.outcome,
-          outcomeId: x._id
         }
       })
       setOutcomes(convertedOutcomes)

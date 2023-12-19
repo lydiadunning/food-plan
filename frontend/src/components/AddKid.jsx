@@ -48,7 +48,7 @@ const AddKid = ({ closeAddKid }) => {
         showSave && 
         <SavePage 
           kidName={kidName}
-          outcomes={outcomes}
+          outcomeOptions={outcomes}
           closeAddKid={closeAddKid}
         />
       }

@@ -56,7 +56,7 @@ export const useCreateKid = () => {
 
   return useMutation(kid => {
     const config = getUserConfig()
-    console.log({config})
+    console.log({config}, {kid})
     return axios.post(kidUrl, kid, config)
   }, {
     onSuccess: async (data) => {
@@ -77,8 +77,8 @@ export const useCreateExposure = (kidId) => {
 
 
   return useMutation(exposure => {
-    console.log(url)
-    console.log(exposure)
+    console.log({url})
+    console.log({exposure})
     return axios.post(url, exposure, config)
   }, {
     onSuccess: async (data) => {
@@ -97,11 +97,14 @@ export const useUpdateKid = (kidId) => {
   const queryClient = useQueryClient()
 
   return useMutation(kid => {
-    const kidToSend = JSON.stringify(kid)
-    return axios.put(kidUrl.concat(kidId), kidToSend, config)
+    
+    console.log(kidUrl.concat(kidId), kid)
+    console.log({kid})
+    return axios.patch(kidUrl.concat(kidId), kid, config)
   }, {
     onSuccess: async (data) => {
       console.log('success')
+      console.log(data.data)
       await queryClient.invalidateQueries('kids')
     }
   })
@@ -119,8 +122,8 @@ export const useUpdateExposure = (kidId, exposureId) => {
 
 
   return useMutation(exposure => {
-    console.log(url)
-    console.log(exposure)
+    console.log({url})
+    console.log({exposure})
     return axios.put(url, exposure, config)
   }, {
     onSuccess: async (data) => {

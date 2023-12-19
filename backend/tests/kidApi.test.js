@@ -288,6 +288,22 @@ describe('With kid profiles in the database', () => {
     expect(response.body).toHaveProperty('name', '2')
   })
 
+  test.only('a kid profile can be updated with both fields', async () => {
+    const changes = { name: 'new', outcomeOptions: [{outcome: 'uno'}, {outcome: 'dos'}, {outcome: 'tres'}] }
+    const changeString = JSON.stringify(changes)
+    const response = await api
+      .patch(`/api/kid/${kidId}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send(changeString)
+      .expect(200)
+    
+      console.log(response.body)
+
+    expect(response.body)
+    expect(response.body).toHaveProperty('name', 'new')
+    expect(response.body.outcomeOptions).toHaveLength(3)
+  })
+
   test('a kid profile cannot be updated with invalid data', async () => {
     const change = { outcomeOptions: 'not supposed to be a string' }
 

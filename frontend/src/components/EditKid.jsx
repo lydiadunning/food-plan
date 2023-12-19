@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form"
 
 
 const EditKid = ({ kid, closeEditKid }) => {
-  const [outcomes, setOutcomes] = useState([...kid.outcomes])
+  const [outcomes, setOutcomes] = useState([...kid.outcomeOptions])
   const [name, setName] = useState(kid.name)
   console.log('kid', kid)
 
@@ -20,9 +20,12 @@ const EditKid = ({ kid, closeEditKid }) => {
   }
 
   const update = () => {
+    console.log({kid})
     updateKid.mutate({
       'name': name,
-      'outcomes': outcomes
+      outcomeOptions: outcomes.map(option => {
+        return {outcome: option.outcome}
+      })
     })
     closeEditKid()
   }

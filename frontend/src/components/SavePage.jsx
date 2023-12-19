@@ -1,15 +1,19 @@
 import { useCreateKid} from '../serverStore/mutations'
 
-export default function SavePage({ kidName, tries, closeAddKid }) {
+export default function SavePage({ kidName, outcomeOptions, closeAddKid }) {
 
   const mutation = useCreateKid()
 
   const saveHandler = (e) => {
     e.preventDefault()
+    console.log({outcomeOptions})
     const kid = {
       name: kidName,
-      tries: tries
+      outcomeOptions: outcomeOptions.map(option => {
+        return {outcome: option.outcome}
+      })
     }
+    console.log({kid})
     mutation.mutate(kid)
     closeAddKid()
   }
@@ -17,7 +21,7 @@ export default function SavePage({ kidName, tries, closeAddKid }) {
   return (
     <>
       <h3>{kidName}</h3>
-      {tries?.map( x => <p key={x._id}>{x.try}</p>)}
+      {outcomeOptions?.map( x => <p key={x._id}>{x.try}</p>)}
       <button onClick={saveHandler}>Save</button>
     </>
   )
