@@ -9,12 +9,16 @@ const baseUrl = 'http://localhost:2002/api/'
 /**
  * @returns { isLoading, error, data }
  */
-export const useKids = (userId) => {
+export const useKids = (user) => {
+  let config = {
+    headers: { Authorization: user.token }
+  }
   console.log('returning useQuery')
   return useQuery('kids', () => {
-    if (!userId) return []
+    console.log('kid query')
+    if (!user) return []
     console.log('axios query')
-    return axios.get(baseUrl.concat('kid/'))
+    return axios.get(baseUrl.concat('kid/'), config)
   })
 }
 
@@ -28,8 +32,11 @@ export const useOutcomeTips = () => {
 }
 
 
-export const useExposure = (exposureId) => {
-  const exposureUrl = baseUrl.concat('exposure/', exposureId)
+export const useExposure = (user, kidId, exposureId) => {
+  let config = {
+    headers: { Authorization: user.token }
+  }
+  const exposureUrl = baseUrl.concat('kid', kidId, 'exposure/', exposureId)
   console.log('exposureUrl', exposureUrl)
   return useQuery(['exposure', exposureId], () => 
     axios.get(exposureUrl)

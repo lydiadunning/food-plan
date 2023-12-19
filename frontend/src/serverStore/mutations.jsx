@@ -8,9 +8,9 @@ let config = {
 
 const baseUrl = 'http://localhost:2002/api/'
 const kidUrl = baseUrl.concat('kid/')
+
 const userUrl = baseUrl.concat('user/')
 const loginUrl = baseUrl.concat('login/')
-
 
 // POST ---
 
@@ -106,9 +106,9 @@ export const useUpdateKid = (kidId) => {
  * 
  * @returns mutation object with method mutate
  */
-export const useUpdateExposure = (exposureId) => {
+export const useUpdateExposure = (kidId, exposureId) => {
   
-  const url = baseUrl.concat('exposure/', exposureId)
+  const url = baseUrl.concat(kidId, '/exposure/', exposureId, '/')
   const queryClient = useQueryClient()
 
 
@@ -139,7 +139,7 @@ export const useDeleteKid = () => {
   
   return useMutation (kid => {
     console.log('in delete mutation')
-    return axios.delete(kidUrl.concat(kid._id), config)
+    return axios.delete(kidUrl.concat(kid.id), config)
   }, {
     onSuccess: async (data, variables, context) => {
       console.log('success')

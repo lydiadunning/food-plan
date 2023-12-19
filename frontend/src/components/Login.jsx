@@ -14,9 +14,9 @@ export function Login({ closeLogin }) {
 
   const onSubmit = (data) => {
     //login
-    loginAccount.mutate(data)
+    const response = loginAccount.mutate(data)
     console.log('data', data)
-
+    console.log(response)
     closeLogin()
   }
 
