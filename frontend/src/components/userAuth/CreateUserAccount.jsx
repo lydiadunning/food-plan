@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-import { useCreateAccount } from "../serverStore/mutations"
+import { useCreateAccount } from "../../serverStore/mutations"
 
 const CreateUserAccount = () => {
   const {register, handleSubmit} = useForm()

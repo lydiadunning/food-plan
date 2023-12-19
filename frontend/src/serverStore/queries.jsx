@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useQuery } from 'react-query';
+import { getUserConfig } from "../components/userAuth/userHooks";
 
 const baseUrl = 'http://localhost:2002/api/'
 
@@ -9,14 +10,12 @@ const baseUrl = 'http://localhost:2002/api/'
 /**
  * @returns { isLoading, error, data }
  */
-export const useKids = (user) => {
-  let config = {
-    headers: { Authorization: user.token }
-  }
+export const useKids = () => {
+  const config = getUserConfig()
   console.log('returning useQuery')
   return useQuery('kids', () => {
     console.log('kid query')
-    if (!user) return []
+    if (!config) return []
     console.log('axios query')
     return axios.get(baseUrl.concat('kid/'), config)
   })
@@ -32,14 +31,12 @@ export const useOutcomeTips = () => {
 }
 
 
-export const useExposure = (user, kidId, exposureId) => {
-  let config = {
-    headers: { Authorization: user.token }
-  }
+export const useExposure = (kidId, exposureId) => {
+  const config = getUserConfig()
   const exposureUrl = baseUrl.concat('kid', kidId, 'exposure/', exposureId)
   console.log('exposureUrl', exposureUrl)
   return useQuery(['exposure', exposureId], () => 
-    axios.get(exposureUrl)
+    axios.get(exposureUrl, config)
   )
 }
 

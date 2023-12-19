@@ -63,7 +63,7 @@ const Kid = ({ kid, openAddExposure, closeKid, openEditKid }) => {
       } 
       <button 
         onClick={ () => openAddExposure(kid) }
-      >add an exposureduction
+      >add an introduction
       </button>
       <button onClick={ () => openEditKid(kid) }>Edit</button>
       <DeleteKid kid={kid} closeKid={closeKid} />

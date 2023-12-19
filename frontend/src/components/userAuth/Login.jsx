@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useForm } from "react-hook-form"
 import CreateUserAccount from './CreateUserAccount'
-import { useLoginAccount } from '../serverStore/mutations'
+import { useLoginAccount } from '../../serverStore/mutations'
+import { handleLogin } from './userHooks'
 
 
 export function Login({ closeLogin }) {
@@ -14,9 +15,11 @@ export function Login({ closeLogin }) {
 
   const onSubmit = (data) => {
     //login
-    const response = loginAccount.mutate(data)
     console.log('data', data)
-    console.log(response)
+
+    loginAccount.mutate(data)
+    
+    console.log(loginAccount)
     closeLogin()
   }
 

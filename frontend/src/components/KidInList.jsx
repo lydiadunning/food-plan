@@ -14,7 +14,7 @@ const KidInList = ({ kid, openAddExposure, deleteKid, openKid, openEditKid, clos
     <li key={ kid._id }>
       <p>{ kid.name }</p>
       <button onClick={ () => openKid(kid) }>More Info</button>
-      <p>{ listEach(kid.tries, 'try') }</p>
+      <p>{ listEach(kid.outcomeOptions, 'outcome') }</p>
       <button onClick={ () => openAddExposure(kid) }>add an introduction</button>
       <button onClick={ () => openEditKid(kid) }>Edit</button>
       <DeleteKid kid={kid} closeKid={closeKid}/>

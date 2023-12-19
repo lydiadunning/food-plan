@@ -1,10 +1,7 @@
 import axios from "axios"
 import { useState } from "react";
 import { useMutation, useQueryClient } from 'react-query';
-
-let config = {
-  headers: { Authorization: '' }
-}
+import { getUserConfig, handleLogin } from "../components/userAuth/userHooks";
 
 const baseUrl = 'http://localhost:2002/api/'
 const kidUrl = baseUrl.concat('kid/')
@@ -35,7 +32,8 @@ export const useLoginAccount = () => {
   }, {
     onSuccess: async(data) => {
       console.log('login successful')
-      config.headers.Authorization = data.token
+      console.log(data)
+      handleLogin(data.data)
     }
   })
 }
@@ -50,8 +48,11 @@ export const useCreateKid = () => {
   const queryClient = useQueryClient()
 
   // creating a kid should add the kid to the list of kids in data.
+  
 
   return useMutation(kid => {
+    const config = getUserConfig()
+    console.log({config})
     return axios.post(kidUrl, kid, config)
   }, {
     onSuccess: async (data) => {
@@ -66,7 +67,7 @@ export const useCreateKid = () => {
  * @returns mutation object with method mutate
  */
 export const useCreateExposure = (kidId) => {
-  
+  const config = getUserConfig()
   const url = kidUrl.concat(kidId, '/exposure/')
   const queryClient = useQueryClient()
 
@@ -88,7 +89,7 @@ export const useCreateExposure = (kidId) => {
 // PUT ---
 
 export const useUpdateKid = (kidId) => {
-
+  const config = getUserConfig()
   const queryClient = useQueryClient()
 
   return useMutation(kid => {
@@ -108,6 +109,7 @@ export const useUpdateKid = (kidId) => {
  */
 export const useUpdateExposure = (kidId, exposureId) => {
   
+  const config = getUserConfig()
   const url = baseUrl.concat(kidId, '/exposure/', exposureId, '/')
   const queryClient = useQueryClient()
 
@@ -134,7 +136,7 @@ export const useUpdateExposure = (kidId, exposureId) => {
  * @returns mutation object with method mutate
  */
 export const useDeleteKid = () => {
-
+  const config = getUserConfig()
   const queryClient = useQueryClient()
   
   return useMutation (kid => {
