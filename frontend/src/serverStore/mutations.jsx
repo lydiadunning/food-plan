@@ -118,7 +118,7 @@ export const useUpdateKid = (kidId) => {
 export const useUpdateExposure = (kidId, exposureId) => {
   
   const config = getUserConfig()
-  const url = baseUrl.concat(kidId, '/exposure/', exposureId, '/')
+  const url = kidUrl.concat(kidId, '/exposure/', exposureId, '/')
   const queryClient = useQueryClient()
 
 
@@ -131,7 +131,6 @@ export const useUpdateExposure = (kidId, exposureId) => {
       console.log('success')
       await queryClient.invalidateQueries('exposure')
       await queryClient.invalidateQueries('kids')
-
     }
   })
 }

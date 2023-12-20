@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
 import { useUpdateKid } from '../serverStore/mutations.jsx'
-import OutcomeMenu from './outcomeMenu/OutcomeMenu.jsx'
+import OutcomeMenu from './outcomeOptionMenu/OutcomeMenu.jsx'
 
 import { useForm } from "react-hook-form"
 

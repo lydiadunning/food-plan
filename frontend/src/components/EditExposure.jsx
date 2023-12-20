@@ -12,7 +12,7 @@ const EditExposure = ({ kid, exposure, closeEditExposure }) => {
     }
   })
   
-  const updateExposure = useUpdateExposure(exposure._id)
+  const updateExposure = useUpdateExposure(kid._id, exposure._id)
 
   const onSubmit = (data) => {
     updateExposure.mutate(data)
@@ -29,9 +29,9 @@ const EditExposure = ({ kid, exposure, closeEditExposure }) => {
         <label htmlFor='description'>description</label>
         <input id='description' type='text' required {...register('description')} />
         <label htmlFor='outcome'>what did { kid.name } try?</label>
-        <select id='outcome' {...register('outcome')}>
-          { kid.outcomes.map( x => <option key={x._id} value={x._id}>{x.outcome}</option> ) }
-        </select>
+        {/* <select id='outcome' {...register('outcome')}> */}
+          {/* { kid.outcomes.map( x => <option key={x._id} value={x._id}>{x.outcome}</option> ) } */}
+        {/* </select> */}
         <label htmlFor='meal'>meal</label>
         <input id='meal' type='text' {...register('meal')}></input>
         <label htmlFor='date'>date</label>

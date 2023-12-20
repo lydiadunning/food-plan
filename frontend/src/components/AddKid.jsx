@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
-import OutcomeMenu from "./outcomeMenu/OutcomeMenu.jsx"
+import OutcomeMenu from "./outcomeOptionMenu/OutcomeMenu.jsx"
 
 import SavePage from './SavePage.jsx'
 
