@@ -2,7 +2,7 @@ import KidInList from './KidInList.jsx';
 import { useDeleteKid, useUpdateKid } from '../serverStore/mutations.jsx'
 
 
-export const KidList = ({ kidData, openAddIntro, openKid, openEditKid, closeKid }) => {
+export const KidList = ({ kidData, openAddExposure, openKid, openEditKid, closeKid }) => {
 
   const deleteKid = useDeleteKid()
   const updateKid = useUpdateKid()
@@ -17,7 +17,7 @@ export const KidList = ({ kidData, openAddIntro, openKid, openEditKid, closeKid 
             kid={ kid } 
             updateKid={ () => updateKid.mutate(kid)}
             deleteKid={ () => deleteKid.mutate(kid) }
-            openAddIntro={ openAddIntro }
+            openAddExposure={ openAddExposure }
             openKid={ openKid }
             openEditKid={openEditKid}
             closeKid={closeKid}

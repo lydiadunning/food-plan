@@ -10,8 +10,10 @@ const AddExposure = ({ kid, closeAddExposure }) => {
   const createExposure = useCreateExposure(kid._id)
 
   const onSubmit = (data) => {
+    console.log('AddExposure onSubmit', {data})
+
     createExposure.mutate(data)
-    console.log('data', data)
+    
     closeAddExposure()
   }
 
@@ -20,7 +22,7 @@ const AddExposure = ({ kid, closeAddExposure }) => {
   return (
     <>
       <h1>Add Intro</h1>
-      <form onSubmit={ handleSubmit(onSubmit) }>
+      <form onSubmit={ () => handleSubmit(onSubmit) }>
         <label htmlFor='food'>food</label>
         <input id='food' type='text' required {...register('food')} />
         <label htmlFor='description'>description</label>

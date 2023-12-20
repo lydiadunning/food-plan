@@ -79,7 +79,8 @@ export const useCreateExposure = (kidId) => {
   return useMutation(exposure => {
     console.log({url})
     console.log({exposure})
-    return axios.post(url, exposure, config)
+    console.log({kidId})
+    return axios.patch(url, exposure, config)
   }, {
     onSuccess: async (data) => {
       console.log('success')
@@ -124,7 +125,7 @@ export const useUpdateExposure = (kidId, exposureId) => {
   return useMutation(exposure => {
     console.log({url})
     console.log({exposure})
-    return axios.put(url, exposure, config)
+    return axios.patch(url, exposure, config)
   }, {
     onSuccess: async (data) => {
       console.log('success')

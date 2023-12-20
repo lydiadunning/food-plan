@@ -52,15 +52,19 @@ const Kid = ({ kid, openAddExposure, closeKid, openEditKid }) => {
           <button onClick={closeAllExposures}>Close Exposures</button> 
         </>
         :
-        kid.exposures?.length > 0
-        ?
-        <>
-          <Exposure exposureId={ kid.exposures[0] } openEditExposures={openEditExposures} /> 
-          { kid.exposures.length > 1 && <button onClick={ openAllExposures }>See All Exposures</button> }
-        </>
-        :
+        // kid.exposures?.length > 0
+        // ?
+        // <>
+        //   <Exposure exposureId={ kid.exposures[0] } openEditExposures={openEditExposures} /> 
+        //   { kid.exposures.length > 1 && <button onClick={ openAllExposures }>See All Exposures</button> }
+        // </>
+        // :
         <></>
       } 
+      <button 
+        onClick={ openAllExposures }
+      >show all exposures
+      </button>
       <button 
         onClick={ () => openAddExposure(kid) }
       >add an introduction
