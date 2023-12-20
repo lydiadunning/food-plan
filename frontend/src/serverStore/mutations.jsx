@@ -147,8 +147,8 @@ export const useDeleteKid = () => {
   const queryClient = useQueryClient()
   
   return useMutation (kid => {
-    console.log('in delete mutation')
-    return axios.delete(kidUrl.concat(kid.id), config)
+    console.log('in delete mutation', kidUrl.concat(kid._id))
+    return axios.delete(kidUrl.concat(kid._id), config)
   }, {
     onSuccess: async (data, variables, context) => {
       console.log('success')

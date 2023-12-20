@@ -10,6 +10,7 @@ export const DeleteKid = ({ kid, closeKid }) => {
 
   const deleteKid = useDeleteKid()
   const confirmDelete = () => {
+    console.log('delete confirmed')
     deleteKid.mutate(kid)
     closeKid()
   }
