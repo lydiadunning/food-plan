@@ -8,7 +8,7 @@ import { KidList } from './components/KidList';
 import { Login } from './components/userAuth/Login.jsx'
 import { useKids } from './serverStore/queries';
 // import { UpdateKid } from './serverStore/mutations';
-// import { checkForLogin } from './components/userAuth/userHooks.jsx';
+import { checkForLogin } from './components/userAuth/userHooks.jsx';
 
 
 function App() {
@@ -22,10 +22,13 @@ function App() {
   const [user, setUser] = useState({ id: ''})
   const [kid, setKid] = useState(null)
 
-  // useEffect( () => {
-  //   const user = checkForLogin()
-  //   if (user) setUser(user)
-  // }, [])
+  useEffect( () => {
+    const user = checkForLogin()
+    if (user) {
+      setUser(user)
+      setShowLogin(false)
+    }
+  }, [])
 
   // react-query used here. Comments stay until I'm more familiar with using the technology.
   // using react-query and axios to simplify state management for values retrieved from the server.
