@@ -1,5 +1,5 @@
 import './App.css'
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import AddKid from './components/AddKid.jsx'
 import AddExposure from './components/AddExposure.jsx'
 import Kid from './components/Kid';
@@ -9,6 +9,12 @@ import { Login } from './components/userAuth/Login.jsx'
 import { useKids } from './serverStore/queries';
 // import { UpdateKid } from './serverStore/mutations';
 import { checkForLogin } from './components/userAuth/userHooks.jsx';
+import { 
+  historyReducer, 
+  handleGoTo,
+  handleBack,
+  handleGoBackTo, 
+} from './history/useHistory.jsx'
 
 
 function App() {
@@ -22,6 +28,8 @@ function App() {
   const [user, setUser] = useState({ id: ''})
   const [kid, setKid] = useState(null)
 
+  const [history, dispatch] = useReducer(historyReducer, [])
+
   useEffect( () => {
     const user = checkForLogin()
     if (user) {
@@ -29,6 +37,8 @@ function App() {
       setShowLogin(false)
     }
   }, [])
+
+  const current = history.current
 
   // react-query used here. Comments stay until I'm more familiar with using the technology.
   // using react-query and axios to simplify state management for values retrieved from the server.
@@ -43,6 +53,8 @@ function App() {
   // after getting the data and confirming it has loaded without errors, use the data.
   const kids = data.data
   // end of react-query behavior
+
+
 
   const closeAddKid = () => {
     setShowAddKid(false)

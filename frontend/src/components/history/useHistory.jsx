@@ -51,3 +51,10 @@ function historyReducer(state, action) {
     }
   }
 }
+
+export default {
+  handleGoTo,
+  handleBack,
+  handleGoBackTo,
+  historyReducer
+}
