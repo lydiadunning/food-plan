@@ -1,8 +1,0 @@
-POST http://localhost:2002/api/try-hint
-Content-Type: application/json
-
-[
-  "one",
-  "two",
-  "three"
-]
