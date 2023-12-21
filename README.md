@@ -29,19 +29,16 @@ TEST_MONGODB_URI= *a MongoDB URI linking to a separate collection for testing*
 PORT= *a 4 digit number*
 ```
 * Run the development version of the server with a CLI by entering `npm run dev` in the backend folder.
-* Run the development version of the frontend interface with a CLI by entering `npm run dev` in the second food-plan folder.
+* Run the development version of the frontend interface with a CLI by entering `npm run dev` in the frontend folder.
 
 ## Next Steps in Development
 
 ### Now
-* Update queries in the frontend code.
-* Rethink structure of queries in frontend code.
-* Update terms and variable names in frontend code.
-* Add user authentication to frontend code
+* Add UseReducer in frontend to streamline tracking what the user sees and how they got there.
 
 ### Next
 * Ensure all endpoints used for current frontend functionality are present and work as expected.
-* Add UseReduce in frontend to streamline tracking what the user sees and how they got there.
+* Add an outcome menu for exposures, allowing users to select more than one outcome.
 
 ### For Later
 * Review responses: correct HTTP code? enough information? 
