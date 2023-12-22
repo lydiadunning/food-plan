@@ -4,7 +4,7 @@ import OutcomeMenu from "./outcomeOptionMenu/OutcomeMenu.jsx"
 
 import SavePage from './SavePage.jsx'
 
-const AddKid = ({ closeAddKid }) => {
+const AddKid = ({ handleGoBack }) => {
   const [kidName, setKidName] = useState('')
   const [kidNameForm, setKidNameForm] = useState('')
   const [outcomes, setOutcomes] = useState([])
@@ -49,7 +49,7 @@ const AddKid = ({ closeAddKid }) => {
         <SavePage 
           kidName={kidName}
           outcomeOptions={outcomes}
-          closeAddKid={closeAddKid}
+          handleGoBack={handleGoBack}
         />
       }
 

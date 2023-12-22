@@ -6,7 +6,7 @@ import { useDeleteKid } from '../serverStore/mutations.jsx'
 import { DeleteKid } from './Delete.jsx'
 import EditExposure from './EditExposure.jsx'
 
-const Kid = ({ kid, openAddExposure, closeKid, openEditKid }) => {
+const Kid = ({ kid, handleGoToKid, handleGoBack }) => {
   const [ showAllExposures, setShowAllExposures ] = useState(false)
   const [ showEditExposure, setShowEditExposure ] = useState(false)
   const [ exposureToEdit, setExposureToEdit ] = useState(null)
@@ -33,7 +33,7 @@ const Kid = ({ kid, openAddExposure, closeKid, openEditKid }) => {
   const deleteKid = useDeleteKid()
   const deleteHandler = () => {
     deleteKid.mutate(kid)
-    closeKid()
+    handleGoBack()
   }
 
 
@@ -66,13 +66,13 @@ const Kid = ({ kid, openAddExposure, closeKid, openEditKid }) => {
       >show all exposures
       </button>
       <button 
-        onClick={ () => openAddExposure(kid) }
+        onClick={ () => handleGoToKid('addExposure', kid) }
       >add an introduction
       </button>
-      <button onClick={ () => openEditKid(kid) }>Edit</button>
-      <DeleteKid kid={kid} closeKid={closeKid} />
+      <button onClick={ () => handleGoToKid('editKid', kid) }>Edit</button>
+      <DeleteKid kid={kid} closeKid={handleGoBack} />
       <button 
-        onClick={ closeKid }
+        onClick={ handleGoBack }
       >back to list
       </button>
     </>

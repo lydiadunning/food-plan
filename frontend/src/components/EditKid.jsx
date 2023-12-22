@@ -6,7 +6,7 @@ import OutcomeMenu from './outcomeOptionMenu/OutcomeMenu.jsx'
 import { useForm } from "react-hook-form"
 
 
-const EditKid = ({ kid, closeEditKid }) => {
+const EditKid = ({ kid, handleGoBack }) => {
   const [outcomes, setOutcomes] = useState([...kid.outcomeOptions])
   const [name, setName] = useState(kid.name)
   console.log('kid', kid)
@@ -27,7 +27,7 @@ const EditKid = ({ kid, closeEditKid }) => {
         return {outcome: option.outcome}
       })
     })
-    closeEditKid()
+    handleGoBack()
   }
 
   return (
@@ -42,7 +42,7 @@ const EditKid = ({ kid, closeEditKid }) => {
       <OutcomeMenu outcomes={outcomes} setOutcomes={setOutcomes} />
       <button onClick={ update }>Save Changes</button>
       {/* <button onClick={ deleteKid }>delete</button> */}
-      <button onClick={ closeEditKid }>Back</button>
+      <button onClick={ handleGoBack }>Back</button>
     </>
   )
 }

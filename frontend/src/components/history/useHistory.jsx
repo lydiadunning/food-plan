@@ -1,30 +1,9 @@
-// useReducer
+import { createContext, useReducer, useContext } from "react";
 
-
-function handleGoTo(target) {
-  dispatch({
-    type: 'goto',
-    target: target
-  });
-}
-
-function handleBack() {
-  dispatch({
-    type: 'back',
-  });
-}
-
-function handleGoBackTo(target) {
-  dispatch({
-    type: 'gobackto',
-    target: target,
-  });
-}
-
-
-// reducer
-function historyReducer(state, action) {
+export function historyReducer(state, action) {
   const lastKnown = state.current
+
+  console.log('in historyReducer')
 
   switch (action.type) {
     case 'goto': {
@@ -33,7 +12,7 @@ function historyReducer(state, action) {
         history: [...state.history, lastKnown]
       }
     }
-    case 'back': {
+    case 'goback': {
       return {
         current: state.history[state.history.length - 1],
         history: state.history.slice(0, state.history.length - 1)
@@ -52,9 +31,36 @@ function historyReducer(state, action) {
   }
 }
 
-export default {
-  handleGoTo,
-  handleBack,
-  handleGoBackTo,
-  historyReducer
+
+
+
+const HistoryContext = createContext()
+
+export const HistoryContextProvider = (props) => {
+  const startingHistory = {
+    current: 'kidList',
+    history: []
+  }
+  console.log('in HistoryContextProvider')
+  const [history, historyDispatch] = useReducer(historyReducer, startingHistory)
+
+  return (
+    <HistoryContext.Provider value={[history, historyDispatch] }>
+      {props.children}
+    </HistoryContext.Provider>
+  )
 }
+
+export const useHistory = () => {
+  const historyAndDispatch = useContext(HistoryContext)
+  console.log(historyAndDispatch)
+  return historyAndDispatch[0]
+}
+
+export const useHistoryDispatch = () => {
+  const historyAndDispatch = useContext(HistoryContext)
+  console.log(historyAndDispatch)
+  return historyAndDispatch[1]
+}
+
+export default HistoryContext

@@ -10,11 +10,12 @@ import { useKids } from './serverStore/queries';
 // import { UpdateKid } from './serverStore/mutations';
 import { checkForLogin } from './components/userAuth/userHooks.jsx';
 import { 
-  historyReducer, 
-  handleGoTo,
-  handleBack,
-  handleGoBackTo, 
-} from './history/useHistory.jsx'
+  useHistory,
+  useHistoryDispatch,
+  HistoryContextProvider, 
+} from './components/history/useHistory.jsx'
+import CurrentView from './CurrentView.jsx';
+
 
 
 function App() {
@@ -28,17 +29,47 @@ function App() {
   const [user, setUser] = useState({ id: ''})
   const [kid, setKid] = useState(null)
 
-  const [history, dispatch] = useReducer(historyReducer, [])
+  const dispatch = useHistoryDispatch()
+  const history = useHistory()
+
+  function handleGoTo(target) {
+    dispatch({
+      type: 'goto',
+      target: target
+    });
+  }
+
+  function handleGoBack() {
+    dispatch({
+      type: 'goback',
+    });
+  }
+
+  function handleGoBackTo(target) {
+    dispatch({
+      type: 'gobackto',
+      target: target,
+    });
+  }
+
+  const handleHistory = {
+    handleGoTo,
+    handleGoBack,
+    handleGoBackTo
+  }
+
+  const current = history.current
 
   useEffect( () => {
     const user = checkForLogin()
     if (user) {
       setUser(user)
       setShowLogin(false)
+      handleGoTo('kidList')
+    } else {
+      handleGoTo('login')
     }
   }, [])
-
-  const current = history.current
 
   // react-query used here. Comments stay until I'm more familiar with using the technology.
   // using react-query and axios to simplify state management for values retrieved from the server.
@@ -92,11 +123,15 @@ function App() {
     setShowEditKid(false)
   }
 
+ 
+
   
 
   return (
     <div className="App">
-      { 
+      <CurrentView current={current} kid={kid} setKid={setKid} setUser={setUser} kids={kids} handleHistory={handleHistory} />
+      
+      {/* { 
         showLogin
         ? <Login setUser={setUser} closeLogin={() => setShowLogin(false)}/>
         : showAddExposure 
@@ -111,7 +146,7 @@ function App() {
             <KidList kidData={kids}  openAddExposure={openAddExposure} openKid={openKid} openEditKid={openEditKid} closeKid={closeKid}/>
             <button onClick={openAddKid}>Add a kid</button>
           </>
-      }
+      } */}
     </div>
   );
 }

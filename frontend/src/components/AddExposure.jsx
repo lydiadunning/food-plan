@@ -1,7 +1,7 @@
 import { useCreateExposure } from "../serverStore/mutations"
 import { useForm } from "react-hook-form"
 
-const AddExposure = ({ kid, closeAddExposure }) => {
+const AddExposure = ({ kid, handleGoBack }) => {
   const {register, handleSubmit} = useForm()
 
   const today = new Date().toISOString().substring(0, 10)
@@ -14,7 +14,7 @@ const AddExposure = ({ kid, closeAddExposure }) => {
 
     createExposure.mutate(data)
     
-    closeAddExposure()
+    handleGoBack()
   }
 
   console.log('kid.outcomeOptions', kid.outcomeOptions)
@@ -37,7 +37,7 @@ const AddExposure = ({ kid, closeAddExposure }) => {
         <input id='date' type='date' defaultValue={today} {...register("date", { valueAsDate: true })} />
         <button type='submit'>submit</button>
       </form>
-      <button onClick={ closeAddExposure }>Back</button>
+      <button onClick={ handleGoBack }>Back</button>
     </>
   )
 }
