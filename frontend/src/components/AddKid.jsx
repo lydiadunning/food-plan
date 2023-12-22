@@ -40,7 +40,7 @@ const AddKid = ({ handleGoBack }) => {
       {
         showOutcomes &&
         <>
-          <OutcomeMenu outcomes={outcomes} setOutcomes={setOutcomes} showOutcomeHints={true} />
+          <OutcomeMenu outcomes={outcomes} setOutcomes={ setOutcomes } showOutcomeHints={ true } />
           <button onClick={ acceptHandler }>Accept</button>
         </>
       }
@@ -52,7 +52,7 @@ const AddKid = ({ handleGoBack }) => {
           handleGoBack={handleGoBack}
         />
       }
-
+      <button onClick={ handleGoBack }>Cancel</button>
     </div>
   )
 }
