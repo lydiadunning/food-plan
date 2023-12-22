@@ -20,7 +20,6 @@ export const KidList = ({ kidData, handleGoToKid, handleGoTo, handleGoBack }) =>
             openAddExposure={ () => handleGoToKid('addExposure', kid) }
             openKid={ () => handleGoToKid('kid', kid) }
             openEditKid={ () => handleGoToKid('editKid', kid)}
-            closeKid={handleGoBack}
           />
         )}
       </ul> : <p>no children</p>}
