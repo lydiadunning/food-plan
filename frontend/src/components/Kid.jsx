@@ -61,10 +61,10 @@ const Kid = ({ kid, handleGoToKid, handleGoBack }) => {
         // :
         <></>
       } 
-      <button 
+      {!showAllExposures && <button 
         onClick={ openAllExposures }
       >show all exposures
-      </button>
+      </button>}
       <button 
         onClick={ () => handleGoToKid('addExposure', kid) }
       >add an introduction
