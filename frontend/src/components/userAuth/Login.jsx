@@ -6,7 +6,7 @@ import { handleLogin } from './userHooks'
 import Error from '../Error'
 
 
-export function Login({ handleGoBack, handleGoTo }) {
+export function Login({ handleGoTo }) {
   const [ showCreateAccount, setShowCreateAccount ] = useState(false)
   const [ errorMessage, setErrorMessage ] = useState(null)
 
@@ -43,8 +43,6 @@ export function Login({ handleGoBack, handleGoTo }) {
       {errorMessage && <Error message={errorMessage}/>}
       <button onClick={ () => setShowCreateAccount(!showCreateAccount)}>{showCreateAccount ? 'close create account' : 'create account'}</button>
       { showCreateAccount && <CreateUserAccount/> }
-      <button onClick={ handleGoBack }>Back</button>
-
     </>
   )
 }

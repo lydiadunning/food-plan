@@ -21,7 +21,7 @@ const CurrentView = ({ current, kid, setKid, setUser, kids, handleHistory }) => 
 
   switch (current) {
     case 'login':
-      return <Login setUser={setUser} handleGoBack={handleGoBack} handleGoTo={handleGoTo} />;
+      return <Login setUser={setUser} handleGoTo={handleGoTo} />;
     case 'addExposure':
       return <AddExposure kid={kid} handleGoBack={handleGoBack} />;
     case 'editKid':

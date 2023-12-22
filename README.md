@@ -34,11 +34,15 @@ PORT= *a 4 digit number*
 ## Next Steps in Development
 
 ### Now
-* Add UseReducer in frontend to streamline tracking what the user sees and how they got there.
+* Find and fix bugs caused by radically restructuring app
+  * List and check all state changes
+* Add components nested in views that aren't on the App page to currentView component switch
+
 
 ### Next
 * Ensure all endpoints used for current frontend functionality are present and work as expected.
 * Add an outcome menu for exposures, allowing users to select more than one outcome.
+* Make the Date look better
 
 ### For Later
 * Review responses: correct HTTP code? enough information? 
