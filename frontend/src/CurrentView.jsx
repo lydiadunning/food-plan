@@ -4,10 +4,7 @@ import Kid from './components/Kid';
 import EditKid from './components/EditKid.jsx'
 import { KidList } from './components/KidList';
 import { Login } from './components/userAuth/Login.jsx'
-// import { 
-//   handleGoTo,
-//   handleGoBack,
-// } from './components/history/useHistory.jsx'
+
 
 const CurrentView = ({ current, kid, setKid, setUser, kids, handleHistory }) => {
   console.log('in CurrentView', current)
@@ -32,8 +29,6 @@ const CurrentView = ({ current, kid, setKid, setUser, kids, handleHistory }) => 
       return <Kid kid={kid} handleGoToKid={handleGoToKid} handleGoBack={handleGoBack}/>;
     case 'kidList':
       return <KidList kidData={kids} handleGoTo={handleGoTo} handleGoToKid={handleGoToKid} handleGoBack={handleGoBack}/>;
-    // case 'saveKid': 
-    //   return 
     default:
       throw Error(`Lost in the sauce, current: ${current}`);
   }

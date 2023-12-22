@@ -2,7 +2,7 @@ import { useCreateKid} from '../serverStore/mutations'
 
 export default function SavePage({ kidName, outcomeOptions, handleGoBack }) {
 
-  const mutation = useCreateKid()
+  const createKid = useCreateKid()
 
   const saveHandler = (e) => {
     e.preventDefault()
@@ -14,7 +14,7 @@ export default function SavePage({ kidName, outcomeOptions, handleGoBack }) {
       })
     }
     console.log({kid})
-    mutation.mutate(kid)
+    createKid.mutate(kid)
     handleGoBack()
   }
   
