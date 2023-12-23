@@ -47,20 +47,18 @@ To run tests, navigate to the backend folder in terminal and type `npm run test`
 ## Next Steps in Development
 
 ### Now
-* Fix up data inputs and outputs, esp. exposures
-  * Add an outcome menu for exposures, allowing users to select more than one outcome.
-  * Make the Date look better
 
 ### Next
 * Ensure all endpoints used for current frontend functionality are present and work as expected.
 * Add components nested in views that aren't on the App page to currentView component switch
+* Ensure login functionality works properly
+  * Test edgecases and improve error prevention
+* Make sure deleting or editing one kid doesn't remove other kids.
 
 ### For Later
 * Review responses: correct HTTP code? enough information? 
 
 * Improve input validation in endpoints.
-
-* Ensure information sent to frontend is complete and strings are returned in an attractive format.
 
 * On frontend, filter outcomes by active and inactive, and make sure inactive outcomes that have been used in an exposure are not deleted.
 

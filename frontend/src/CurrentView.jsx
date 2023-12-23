@@ -9,7 +9,7 @@ import { Login } from './components/userAuth/Login.jsx'
 const CurrentView = ({ current, kid, setKid, setUser, kids, handleHistory }) => {
   console.log('in CurrentView', current)
 
-  const {handleGoTo, handleGoBack, handleGoBackTo} = handleHistory
+  const { handleGoTo, handleGoBack } = handleHistory
 
   const handleGoToKid = (target, kid) => {
     setKid(kid)

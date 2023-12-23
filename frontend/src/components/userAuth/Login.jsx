@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useForm } from "react-hook-form"
 import CreateUserAccount from './CreateUserAccount'
-import { useLoginAccount } from '../../serverStore/mutations'
+// import { useLoginAccount } from '../../serverStore/mutations'
 import { handleLogin } from './userHooks'
 import Error from '../Error'
 
@@ -14,7 +14,7 @@ export function Login({ handleGoTo }) {
 
 // commenting out serverStore mutation solutions until I decide they're better than the approach I'm implementing here.
 // one advantage is consistency with how other data is handled
-// disadvantage is that increased abstraction makes deciding how to solve the problem at hand more nebulous.
+// disadvantage is that increased abstraction makes the jwt login process more nebulous.
   // const loginAccount = useLoginAccount()
 
   const onSubmit = async (data) => {

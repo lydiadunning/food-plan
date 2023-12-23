@@ -5,14 +5,10 @@ const AddExposure = ({ kid, handleGoBack }) => {
   const {register, handleSubmit} = useForm()
 
   const today = new Date().toISOString().substring(0, 10)
-  
-  console.log('addExposure', 'kid', kid, kid._id)
-  
+    
   const createExposure = useCreateExposure(kid._id)
 
   const submit = (data) => {
-    console.log('AddExposure onSubmit', {data})
-
     createExposure.mutate(data)
     
     handleGoBack()

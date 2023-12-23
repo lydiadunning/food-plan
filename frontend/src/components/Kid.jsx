@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
-import Exposure from "./Exposure.jsx"
+// import Exposure from "./Exposure.jsx"
 import AllExposures from './AllExposures.jsx'
-import { useDeleteKid } from '../serverStore/mutations.jsx'
-import { DeleteKid } from './Delete.jsx'
+import { DeleteKid } from './DeleteKid.jsx'
 import EditExposure from './EditExposure.jsx'
 
 const Kid = ({ kid, handleGoToKid, handleGoBack }) => {
@@ -30,13 +29,6 @@ const Kid = ({ kid, handleGoToKid, handleGoBack }) => {
     setShowEditExposure(false)
   }
 
-  const deleteKid = useDeleteKid()
-  const deleteHandler = () => {
-    deleteKid.mutate(kid)
-    handleGoBack()
-  }
-
-
   return (
     <>
       <p>{ kid.name }</p>
@@ -48,23 +40,13 @@ const Kid = ({ kid, handleGoToKid, handleGoBack }) => {
         showAllExposures 
         ? 
         <>
-          <AllExposures kid={kid} openEditExposures={openEditExposures} />
+          <AllExposures exposures={kid.exposures} openEditExposures={openEditExposures} />
           <button onClick={closeAllExposures}>Close Exposures</button> 
         </>
         :
-        // kid.exposures?.length > 0
-        // ?
-        // <>
-        //   <Exposure exposureId={ kid.exposures[0] } openEditExposures={openEditExposures} /> 
-        //   { kid.exposures.length > 1 && <button onClick={ openAllExposures }>See All Exposures</button> }
-        // </>
-        // :
-        <></>
+        <button onClick={ openAllExposures } >show all exposures</button>
+        // show most recent exposure
       } 
-      {!showAllExposures && <button 
-        onClick={ openAllExposures }
-      >show all exposures
-      </button>}
       <button 
         onClick={ () => handleGoToKid('addExposure', kid) }
       >add an introduction

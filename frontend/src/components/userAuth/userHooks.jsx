@@ -23,6 +23,8 @@ export const handleLogin = async (credentials) => {
   try {
     const loggedInUser = await axios.post('http://localhost:2002/api/login/', credentials)
     browserLogin(loggedInUser.data)
+    // const userData = JSON.stringify(loggedInUser.data)
+    // window.localStorage.setItem('foodUser', JSON.stringify(userData))
     return true
   } catch (error) {
     console.error(error)

@@ -1,4 +1,4 @@
-const Exposure = ({ kidId, exposure, openEditExposures }) => {
+const Exposure = ({ exposure, openEditExposures }) => {
 
   const date = new Date(exposure.date) || null
 

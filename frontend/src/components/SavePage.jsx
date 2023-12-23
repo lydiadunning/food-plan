@@ -6,14 +6,12 @@ export default function SavePage({ kidName, outcomeOptions, handleGoBack }) {
 
   const saveHandler = (e) => {
     e.preventDefault()
-    console.log({outcomeOptions})
     const kid = {
       name: kidName,
       outcomeOptions: outcomeOptions.map(option => {
         return {outcome: option.outcome}
       })
     }
-    console.log({kid})
     createKid.mutate(kid)
     handleGoBack()
   }
