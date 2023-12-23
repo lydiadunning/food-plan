@@ -34,15 +34,13 @@ PORT= *a 4 digit number*
 ## Next Steps in Development
 
 ### Now
-* Find and fix bugs caused by radically restructuring app
-  * List and check all state changes
-* Add components nested in views that aren't on the App page to currentView component switch
-
+* Fix up data inputs and outputs, esp. exposures
+  * Add an outcome menu for exposures, allowing users to select more than one outcome.
+  * Make the Date look better
 
 ### Next
 * Ensure all endpoints used for current frontend functionality are present and work as expected.
-* Add an outcome menu for exposures, allowing users to select more than one outcome.
-* Make the Date look better
+* Add components nested in views that aren't on the App page to currentView component switch
 
 ### For Later
 * Review responses: correct HTTP code? enough information? 
