@@ -18,7 +18,7 @@ const AddExposure = ({ kid, handleGoBack }) => {
     handleGoBack()
   }
 
-  console.log('kid.outcomeOptions', kid.outcomeOptions)
+  const formArray = kid.outcomeOptions.map(option => <label key={option._id} htmlFor={option.outcome}>{ option.outcome } <input type='checkbox' name='outcome' value={option.outcome} {...register('outcomes')}/></label>)
 
   return (
     <>
@@ -28,10 +28,9 @@ const AddExposure = ({ kid, handleGoBack }) => {
         <input id='food' type='text' required {...register('food')} />
         <label htmlFor='description'>description</label>
         <input id='description' type='text' required {...register('description')} />
-        <label htmlFor='outcomeOption'>what did { kid.name } do?</label>
-        {/* <select id='outcomeOption' {...register('outcomeOption')}>
-          { kid.outcomeOptions.map( x => <option key={x._id} value={x._id}>{x.outcomeOption}</option> ) }
-        </select> */}
+        <legend>what did { kid.name } do?</legend>
+        {formArray}
+        <br/>
         <label htmlFor='meal'>meal</label>
         <input id='meal' type='text' {...register('meal')}></input>
         <label htmlFor='date'>date</label>
