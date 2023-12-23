@@ -2,7 +2,7 @@ import KidInList from './KidInList.jsx';
 import { useDeleteKid, useUpdateKid } from '../serverStore/mutations.jsx'
 
 
-export const KidList = ({ kidData, openAddExposure, openKid, openEditKid, closeKid }) => {
+export const KidList = ({ kidData, handleGoToKid, handleGoTo, handleGoBack }) => {
 
   const deleteKid = useDeleteKid()
   const updateKid = useUpdateKid()
@@ -17,13 +17,13 @@ export const KidList = ({ kidData, openAddExposure, openKid, openEditKid, closeK
             kid={ kid } 
             updateKid={ () => updateKid.mutate(kid)}
             deleteKid={ () => deleteKid.mutate(kid) }
-            openAddExposure={ openAddExposure }
-            openKid={ openKid }
-            openEditKid={openEditKid}
-            closeKid={closeKid}
+            openAddExposure={ () => handleGoToKid('addExposure', kid) }
+            openKid={ () => handleGoToKid('kid', kid) }
+            openEditKid={ () => handleGoToKid('editKid', kid)}
           />
         )}
       </ul> : <p>no children</p>}
+      <button onClick={() => handleGoTo('addKid')}>Add a kid</button>
     </>
   );
 }

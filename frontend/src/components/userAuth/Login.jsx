@@ -6,7 +6,7 @@ import { handleLogin } from './userHooks'
 import Error from '../Error'
 
 
-export function Login({ closeLogin }) {
+export function Login({ handleGoTo }) {
   const [ showCreateAccount, setShowCreateAccount ] = useState(false)
   const [ errorMessage, setErrorMessage ] = useState(null)
 
@@ -23,7 +23,7 @@ export function Login({ closeLogin }) {
     const isLoggedIn = await handleLogin(data)
     // const something = loginAccount.mutate(data)
     if (isLoggedIn) {
-      closeLogin()
+      handleGoTo('kidList')
     } else {
       // display an error message saying the login credentials weren't accepted/ the user doesn't exist
       setErrorMessage('Login unsuccessful')
@@ -43,8 +43,6 @@ export function Login({ closeLogin }) {
       {errorMessage && <Error message={errorMessage}/>}
       <button onClick={ () => setShowCreateAccount(!showCreateAccount)}>{showCreateAccount ? 'close create account' : 'create account'}</button>
       { showCreateAccount && <CreateUserAccount/> }
-      <button onClick={ closeLogin }>Back</button>
-
     </>
   )
 }

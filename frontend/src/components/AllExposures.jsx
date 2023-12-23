@@ -1,5 +1,4 @@
 import Exposure from './Exposure.jsx'
-import { useExposures } from '../serverStore/queries.jsx'
 
 const AllExposures = ({ kid, openEditExposures }) => {
   console.log('kid.exposures', kid.exposures)

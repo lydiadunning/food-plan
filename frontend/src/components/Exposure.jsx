@@ -1,13 +1,4 @@
-import { useExposure } from '../serverStore/queries.jsx'
-
 const Exposure = ({ kidId, exposure, openEditExposures }) => {
-  // const { isLoading, error, data } = useExposure(kidId, exposure.id)
-  // console.log({kidId}, {exposureId: exposure.id})
-
-  // if (isLoading) return 'Loading...'
-  // if (error) return 'An error has occurred: ' + error.message
-
-  // const exposure = data.data
 
   return (
     <section>
