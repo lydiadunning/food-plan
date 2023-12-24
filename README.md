@@ -4,12 +4,6 @@
 
 A web app for parents to use to track foods that have been offered to a child, built with flexibility to support families with different needs.
 
-## Current Working Branch
-
-This app's backend is being refactored with different variable names and endpoints and a simplified data model, as well as user authentication. 
-See the most recent branch: [New Names](https://github.com/lydiadunning/food-plan/tree/NewNames).
-Note that most endpoint tests will pass in that branch, but the front end hasn't been updated yet.
-
 ## What Problem Does it Solve
 
 When raising a picky kid you're supposed to offer new foods over and over again. 
@@ -62,24 +56,7 @@ To run tests, navigate to the backend folder in terminal and type `npm run test`
 
 * On frontend, filter outcomes by active and inactive, and make sure inactive outcomes that have been used in an exposure are not deleted.
 
-* Redesign outcome options to allow for several groups of outcome options arranged into an object to address different scenarios. This gives users a few different ways to think about how they can measure progress.
-```
-{
-  baseCase: 'I offered it',
-  behavior: [
-    'left it on the plate',
-    'stayed at the table',
-    'spat into napkin'
-  ],
-  interaction: [
-    'poked',
-    'sniffed',
-    'tasted',
-    'ate'
-  ]
-}
-```
-
 * use fuzzy searching, maybe incorporate soundex. Find some solution to repeating words with different capitalization, pluralization, or spelling.
 
 * list values and goals to guide the design process.
+
