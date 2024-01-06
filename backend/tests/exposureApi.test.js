@@ -318,7 +318,7 @@ describe('With two exposures in the database', () => {
 //     expect(response.body)
 //     expect(response.body[0]).toHaveProperty('food', 'squash')
 //     expect(response.body[0]).toHaveProperty('description', 'roasted with salt')
-//     expect(response.body[0]).toHaveProperty('_id')
+//     expect(response.body[0]).toHaveProperty('id')
 
 //   })
 

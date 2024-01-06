@@ -9,7 +9,7 @@ const KidInList = ({ kid, openAddExposure, openKid, openEditKid }) => {
   }
 
   return (
-    <li key={ kid._id }>
+    <li key={ kid.id }>
       <p>{ kid.name }</p>
       <button onClick={ () => openKid(kid) }>More Info</button>
       <p>{ listEach(kid.outcomeOptions, 'outcome') }</p>

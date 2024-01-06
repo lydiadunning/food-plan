@@ -63,8 +63,8 @@ describe('When Tries are in the database', () => {
     const tips = response.body.outcomeTips
 
     expect(tips).toHaveLength(2)
-    expect(tips[0]).toHaveProperty('_id')
-    expect(tips[1]).toHaveProperty('_id')
+    expect(tips[0]).toHaveProperty('id')
+    expect(tips[1]).toHaveProperty('id')
     const noIds = tips.map(x => {
       return {
         outcome: x.outcome,

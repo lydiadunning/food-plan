@@ -174,7 +174,7 @@ describe('When a user has a kid in their profile', () => {
 
     const createdUser = await user.save()
     token = createdUser.token
-    userId = createdUser._id
+    userId = createdUser.id
 
 
     const kid = new Kid({
@@ -316,7 +316,7 @@ describe('With 2 users, one with a kid in their profile', () => {
 
     const createdUser1 = await user1.save()
     token1 = createdUser1.token
-    user1Id = createdUser1._id
+    user1Id = createdUser1.id
 
     const user2 = new User({ 
       name: 'Mary Maryson', 
@@ -327,7 +327,7 @@ describe('With 2 users, one with a kid in their profile', () => {
 
     const createdUser2 = await user2.save()
     token2 = createdUser2.token
-    user2Id = createdUser2._id
+    user2Id = createdUser2.id
 
 
     const kid = new Kid({
@@ -336,7 +336,7 @@ describe('With 2 users, one with a kid in their profile', () => {
     })
 
     const createdKid = await kid.save()
-    kidId = createdKid._id
+    kidId = createdKid.id
 
     user1.kids = [createdKid]
     await user1.save()

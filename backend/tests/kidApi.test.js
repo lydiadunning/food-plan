@@ -44,7 +44,7 @@ describe('With no existing kids', () => {
     const createdUser = await user.save()
     token = createdUser.token
     console.log('firstToken', token)
-    userId = createdUser._id
+    userId = createdUser.id
 
 
     const returningUser = {
@@ -166,7 +166,7 @@ describe('With kid profiles in the database', () => {
      })
 
     const createdUser = await user.save()
-    userId = createdUser._id
+    userId = createdUser.id
 
     const kids = [
       {
@@ -361,7 +361,7 @@ describe('With kid profiles in the database', () => {
 
 //   test("the kid's list of outcomes can be returned in order", async () => {
 //     const response = await api
-//       .get(`/api/kid/${kid._id}/outcomes`)
+//       .get(`/api/kid/${kid.id}/outcomes`)
 //       .expect(200)
 
 //       const responseOutcomes = response.body.map(x => { 
@@ -378,20 +378,20 @@ describe('With kid profiles in the database', () => {
 //   test('a list of outcomes can be changed', async () => {
 //     const kidOutcomes = kid.outcomes.map(x => {
 //       return {
-//         outcomeId: x._id
+//         outcomeId: x.id
 //       }
 //     })
 //     kidOutcomes.push({ outcome: 'touch' })
 //     kid.outcomes = kidOutcomes
 
-//     const response = await api.put(`/api/kid/${kid._id}/outcomes`)
+//     const response = await api.put(`/api/kid/${kid.id}/outcomes`)
 //       .send(kid)
 //       .expect(200)
     
 //     expect(response.body.outcomes).toHaveLength(4)
 //     const newOutcome = await Outcome.findById(response.body.outcomes[response.body.outcomes.length - 1])
 //     expect(newOutcome).toHaveProperty('outcome', 'touch')
-//     expect(newOutcome).toHaveProperty('_id')
+//     expect(newOutcome).toHaveProperty('id')
 //   })
 
 //   test('expected response when getting outcomes for a nonexistant kid', async () => {
@@ -426,7 +426,7 @@ describe('With kid profiles in the database', () => {
 
 //     const newOutcome = new Outcome({ outcome: 'smell' })
 //     const savedOutcomes = await newOutcome.save()
-//     outcomeId = savedOutcomes._id
+//     outcomeId = savedOutcomes.id
 //     testExposures[0].outcome = outcomeId
 //     testExposures[1].outcome = outcomeId
 
@@ -438,7 +438,7 @@ describe('With kid profiles in the database', () => {
 //     })
 
 //     const savedKid = await kid.save()
-//     kidId = savedKid._id    
+//     kidId = savedKid.id    
 
 //     console.log('kid created')
 
@@ -506,7 +506,7 @@ describe('With kid profiles in the database', () => {
 
 //     const newOutcome = new Outcome({ outcome: 'smell' })
 //     const savedOutcomes = await newOutcome.save()
-//     outcomeId = savedOutcomes._id
+//     outcomeId = savedOutcomes.id
 
 //     const kid = new Kid({ 
 //       'name': 'Kid Name', 
@@ -514,7 +514,7 @@ describe('With kid profiles in the database', () => {
 //     })
 
 //     const savedKid = await kid.save()
-//     kidId = savedKid._id    
+//     kidId = savedKid.id    
 //   })
 
 //   beforeEach(async () => {

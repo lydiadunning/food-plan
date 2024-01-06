@@ -13,7 +13,8 @@ const EditKid = ({ kid, handleGoBack }) => {
 
   const {register, handleSubmit} = useForm()
 
-  const updateKid = useUpdateKid(kid._id)
+  const updateKid = useUpdateKid(kid.id)
+  console.log(kid.id)
   
   const onNameUpdate = (data) => {
     setName(data.name)
