@@ -15,11 +15,35 @@ const outcomeSchema = new Schema({
 const Outcome = model('Outcome', outcomeSchema)
 
 outcomeSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-    delete returnedObject.__v
+  transform: formatJSONData(document, returnedObject)
+})
+
+const exposureSchema = new Schema({
+  food: { 
+    type: String, 
+    required: true
+  },
+  description: {
+    type: String,
+    required: false
+  },
+  outcomes: [{
+    type: String,
+    required: false
+  }],
+  meal: {
+    type: String,
+    required: false
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+    required: true
   }
+})
+
+exposureSchema.set('toJSON', {
+  transform: formatJSONData(document, returnedObject)
 })
 
 const kidSchema = new Schema ({
@@ -28,35 +52,9 @@ const kidSchema = new Schema ({
     required: true
   },
 
-  exposures: [{
-    // haven't decided how to cross-reference schemas yet
-    food: { 
-      type: String, 
-      required: true
-    },
-    description: {
-      type: String,
-      required: false
-    },
-    // outcomes: [{
-    //   type: 'ObjectId',
-    //   ref: 'Outcome',
-    //   required: false
-    // }],
-    outcomes: [{
-      type: String,
-      required: false
-    }],
-    meal: {
-      type: String,
-      required: false
-    },
-    date: {
-      type: Date,
-      default: Date.now,
-      required: true
-    }
-  }],
+  exposures: [
+    exposureSchema
+  ],
   outcomeOptions: [
     outcomeSchema
   ],
@@ -68,11 +66,13 @@ const kidSchema = new Schema ({
 })
 
 kidSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
+  transform: formatJSONData(document, returnedObject)
+})
+
+function formatJSONData (document, returnedObject) {
+  returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
     delete returnedObject.__v
-  }
-})
+}
 
 module.exports = model('Kid', kidSchema)
