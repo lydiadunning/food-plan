@@ -95,10 +95,10 @@ export const useCreateExposure = (kidId) => {
 export const useUpdateKid = (kidId) => {
   const config = getUserConfig()
   const queryClient = useQueryClient()
+  console.log(kidId)
 
   return useMutation(kid => {
-    
-    console.log(kidUrl.concat(kidId), kid)
+    console.log(kidUrl.concat(kidId), kid, kidId)
     console.log({kid})
     return axios.patch(kidUrl.concat(kidId), kid, config)
   }, {

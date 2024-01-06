@@ -40,7 +40,7 @@ const Kid = ({ kid, handleGoToKid, handleGoBack }) => {
         showAllExposures 
         ? 
         <>
-          <AllExposures exposures={kid.exposures} openEditExposures={openEditExposures} />
+          <AllExposures kid={kid} openEditExposures={openEditExposures} />
           <button onClick={closeAllExposures}>Close Exposures</button> 
         </>
         :

@@ -6,7 +6,7 @@ const AddExposure = ({ kid, handleGoBack }) => {
 
   const today = new Date().toISOString().substring(0, 10)
     
-  const createExposure = useCreateExposure(kid._id)
+  const createExposure = useCreateExposure(kid.id)
 
   const submit = (data) => {
     createExposure.mutate(data)
@@ -14,7 +14,7 @@ const AddExposure = ({ kid, handleGoBack }) => {
     handleGoBack()
   }
 
-  const formArray = kid.outcomeOptions.map(option => <label key={option._id} htmlFor={option.outcome}>{ option.outcome } <input type='checkbox' name='outcome' value={option.outcome} {...register('outcomes')}/></label>)
+  const formArray = kid.outcomeOptions.map(option => <label key={option.id} htmlFor={option.outcome}>{ option.outcome } <input type='checkbox' name='outcome' value={option.outcome} {...register('outcomes')}/></label>)
 
   return (
     <>
