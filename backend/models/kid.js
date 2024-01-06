@@ -14,6 +14,14 @@ const outcomeSchema = new Schema({
 })
 const Outcome = model('Outcome', outcomeSchema)
 
+outcomeSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
+})
+
 const kidSchema = new Schema ({
   name: {
     type: String,
