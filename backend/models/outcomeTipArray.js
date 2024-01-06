@@ -16,4 +16,12 @@ const outcomeTipArraySchema = new Schema ({
 
 const OutcomeTipArray = model('OutcomeTipArray', outcomeTipArraySchema)
 
+outcomeTipArraySchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
+})
+
 module.exports = OutcomeTipArray

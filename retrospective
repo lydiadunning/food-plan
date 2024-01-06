@@ -1,0 +1,9 @@
+Learned:
+
+* I had both 'child' and 'try' in my database. Choosing names with existing meanings in a system or software, even when the words suit the ideas / you can go back and change them later / you're very clever about avoiding conflicts, isn't worth the inconvenience of ultimately rewriting everything.
+
+* I designed my data model to store data in several collections instead of using nesting, even though nesting would be appropriate for my app's probable use cases. Nesting is an advantage of document databases, it simplifies them, and it should be used unless there's a good reason not to.
+
+* When I redesigned my backend, I completed design and testing before redesigning the frontend. The frontend needed fewer queries to do the same work, but I had already written and tested many superfluous queries. Implement functionality as needed, not because it may be useful. 
+
+

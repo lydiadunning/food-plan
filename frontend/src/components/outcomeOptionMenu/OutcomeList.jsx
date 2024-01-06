@@ -15,7 +15,7 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
       console.log(data)
       const convertedOutcomes = data.data.outcomeTips.map(x => {
         return {
-          _id: x._id,
+          id: x.id,
           outcome: x.outcome,
         }
       })
@@ -38,7 +38,7 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
 
   const removeOutcomeHandler = (id) => {
     console.log('in removeOutcomeHandler', id)
-    setOutcomes(outcomes.filter(x => x._id !== id))
+    setOutcomes(outcomes.filter(x => x.id !== id))
   }
 
   const moveDown = (index) => {
@@ -66,13 +66,13 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
       { outcomes.length > 0 
       ? outcomes.map((x, i) => 
         <Outcome 
-          key={x._id}
+          key={x.id}
           outcome={x.outcome} 
           isFirst={i === 0}
           isLast={i === outcomes.length - 1}
           moveThisUp={() => moveUp(i)}
           moveThisDown={() => moveDown(i)}
-          removeThis={() => removeOutcomeHandler(x._id)}
+          removeThis={() => removeOutcomeHandler(x.id)}
         />
         )
       : <p>Add a new outcome</p>

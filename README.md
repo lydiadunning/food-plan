@@ -48,6 +48,7 @@ To run tests, navigate to the backend folder in terminal and type `npm run test`
 * Ensure login functionality works properly
   * Test edgecases and improve error prevention
 * Make sure deleting or editing one kid doesn't remove other kids.
+* consider incorporating react router
 
 ### For Later
 * Review responses: correct HTTP code? enough information? 

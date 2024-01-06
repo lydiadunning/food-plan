@@ -12,7 +12,7 @@ const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
     e.preventDefault()
     const outcome = {
       outcome: newOutcome, 
-      _id: keyCounter
+      id: keyCounter
     }
     setOutcomes([...outcomes, outcome])
     setNewOutcome('')

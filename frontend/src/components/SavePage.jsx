@@ -19,7 +19,7 @@ export default function SavePage({ kidName, outcomeOptions, handleGoBack }) {
   return (
     <>
       <h3>{kidName}</h3>
-      {outcomeOptions?.map( x => <p key={x._id}>{x.outcome}</p>)}
+      {outcomeOptions?.map( x => <p key={x.id}>{x.outcome}</p>)}
       <button onClick={saveHandler}>Save</button>
     </>
   )

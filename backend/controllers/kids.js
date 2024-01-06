@@ -5,7 +5,7 @@ const kidRouter = require('express').Router()
 // const { userExtractor } = require('../utils/middleware')
 
 kidRouter.get('/', async (request, response) => {
-  const kids = await Kid.find({ users: request.user }).populate('outcomeOptions', {outcome: 1, _id: 1})
+  const kids = await Kid.find({ users: request.user }).populate('outcomeOptions', {outcome: 1, id: 1})
   
   response.json(kids)
 })
@@ -118,8 +118,7 @@ kidRouter.patch('/:id', async (request, response, next) => {
     response.status(404).json({ error: 'child not found'}).end()
   }
 
-  // simplified this. If it needs more sophistication, this resource
-  // might help
+  // simplified this. If it needs more sophistication, this resource might help
   // Jonathan Muller's answer:
   // https://stackoverflow.com/questions/35810951/how-to-change-order-of-array-with-mongodb
 
@@ -127,7 +126,7 @@ kidRouter.patch('/:id', async (request, response, next) => {
 
 // does the app even need this?
 kidRouter.get('/:kidId/outcomeOptions', async (request, response) => {
-  const kid = await Kid.findById(request.params.kidId).populate('outcomeOptions', {outcome: 1, _id: 1, active: 1})
+  const kid = await Kid.findById(request.params.kidId).populate('outcomeOptions', {outcome: 1, id: 1, active: 1})
   if (kid) {
     response.json(kid.outcomeOptions)
   } else {

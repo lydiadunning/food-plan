@@ -4,30 +4,12 @@ const Kid  = require('../models/kid.js')
 const logger = require('../utils/logger.js')
 const bcrypt = require('bcryptjs')
 
-
 userRouter.get('/', async (request, response) => {
   const users = await User.find({})
-  .populate('kids', 
-    // { 
-    //   name: 1, 
-    //   outcomeOptions: 1,// not sure what this will give me
-    //   exposures: 1,
-    // }
-  )
+  .populate('kids')
   response.json(users)
 })
-// allow for creating a user profile
-// each user profile can reference kid profiles.
 
-// operations:
-
-// create a new user
-// userRouter.post('/', async (request, response) => {
-  // validate that body contains all required information
-  // add the user to the database
-  // send a response with the created user.
-  // send an error response if necessary.
-// })
 userRouter.post('/', async (request, response, next) => {
   const { username, name, password, email } = request.body
   logger.info('from request.body', username, name, password, email)
