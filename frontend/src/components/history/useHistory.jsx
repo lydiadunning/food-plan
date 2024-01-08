@@ -31,14 +31,11 @@ export function historyReducer(state, action) {
   }
 }
 
-
-
-
 const HistoryContext = createContext()
 
 export const HistoryContextProvider = (props) => {
   const startingHistory = {
-    current: 'kidList',
+    current: props.loggedInUser ? 'kidList' : 'login',
     history: []
   }
   console.log('in HistoryContextProvider')
