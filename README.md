@@ -41,14 +41,16 @@ To run tests, navigate to the backend folder in terminal and type `npm run test`
 ## Next Steps in Development
 
 ### Now
+* Ensure menus for adding and editing outcomes are present in all relevant locations.
+* Ensure all endpoints used for current frontend functionality are present and work as expected.
 
 ### Next
-* Ensure all endpoints used for current frontend functionality are present and work as expected.
 * Add components nested in views that aren't on the App page to currentView component switch
 * Ensure login functionality works properly
   * Test edgecases and improve error prevention
 * Make sure deleting or editing one kid doesn't remove other kids.
 * consider incorporating react router
+
 
 ### For Later
 * Review responses: correct HTTP code? enough information? 

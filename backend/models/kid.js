@@ -15,7 +15,11 @@ const outcomeSchema = new Schema({
 const Outcome = model('Outcome', outcomeSchema)
 
 outcomeSchema.set('toJSON', {
-  transform: formatJSONData(document, returnedObject)
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
 })
 
 const exposureSchema = new Schema({
@@ -43,7 +47,11 @@ const exposureSchema = new Schema({
 })
 
 exposureSchema.set('toJSON', {
-  transform: formatJSONData(document, returnedObject)
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
 })
 
 const kidSchema = new Schema ({
@@ -66,13 +74,11 @@ const kidSchema = new Schema ({
 })
 
 kidSchema.set('toJSON', {
-  transform: formatJSONData(document, returnedObject)
-})
-
-function formatJSONData (document, returnedObject) {
-  returnedObject.id = returnedObject._id.toString()
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
     delete returnedObject.__v
-}
+  }
+})
 
 module.exports = model('Kid', kidSchema)
