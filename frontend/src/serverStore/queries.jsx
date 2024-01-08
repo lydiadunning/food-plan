@@ -40,13 +40,3 @@ export const useExposures = (kidId) => {
 }
 
 
-
-// export const useExposure = (kidId, exposureId) => {
-//   const config = getUserConfig()
-//   const exposureUrl = baseUrl.concat('kid', kidId, 'exposure/', exposureId)
-//   console.log('exposureUrl', exposureUrl)
-//   return useQuery(['exposure', exposureId], () => 
-//     axios.get(exposureUrl, config)
-//   )
-// }
-

@@ -41,8 +41,8 @@ To run tests, navigate to the backend folder in terminal and type `npm run test`
 ## Next Steps in Development
 
 ### Now
-* Ensure menus for adding and editing outcomes are present in all relevant locations.
-* Ensure all endpoints used for current frontend functionality are present and work as expected.
+* Ensure login functionality works properly
+  * Test edgecases and improve error prevention
 
 ### Next
 * Add components nested in views that aren't on the App page to currentView component switch

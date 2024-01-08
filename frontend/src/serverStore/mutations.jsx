@@ -15,9 +15,7 @@ const loginUrl = baseUrl.concat('login/')
  * @returns mutation object with method mutate
  */
 export const useCreateAccount = () => {
-  // useCreateAccount is a model for making a useMutation available.
-  const queryClient = useQueryClient()
-  
+  // useCreateAccount is a model for making a useMutation available.  
   return useMutation(user => {
     return axios.post(userUrl, user)
   })
@@ -25,8 +23,6 @@ export const useCreateAccount = () => {
 
 // not currently using this
 export const useLoginAccount = () => {
-  const queryClient = useQueryClient()
-
   return useMutation(credentials => {
     return axios.post(loginUrl, credentials)
   }, {
@@ -132,7 +128,6 @@ export const useUpdateExposure = (kidId, exposureId) => {
     }
   })
 }
-
 
 // DELETE
 
