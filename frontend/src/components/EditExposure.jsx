@@ -2,11 +2,11 @@ import { useUpdateExposure } from "../serverStore/mutations"
 import { useForm } from "react-hook-form"
 
 const EditExposure = ({ kid, exposure, closeEditExposure }) => {
-    const {register, handleSubmit} = useForm({
+  const {register, handleSubmit} = useForm({
     defaultValues: {
       food: exposure.food,
       description: exposure.description,
-      outcome: exposure.outcome,
+      outcomes: exposure.outcomes,
       meal: exposure.meal,
       date: exposure.date.slice(0, 10)
     }
@@ -16,9 +16,10 @@ const EditExposure = ({ kid, exposure, closeEditExposure }) => {
 
   const onSubmit = (data) => {
     updateExposure.mutate(data)
-    console.log('data', data)
     closeEditExposure()
   }
+
+  const formArray = kid.outcomeOptions.map(option => <label key={option.id} htmlFor={option.outcome}>{ option.outcome } <input type='checkbox' name='outcome' value={option.outcome} {...register('outcomes')}/></label>)
 
   return (
     <>
@@ -29,9 +30,7 @@ const EditExposure = ({ kid, exposure, closeEditExposure }) => {
         <label htmlFor='description'>description</label>
         <input id='description' type='text' required {...register('description')} />
         <label htmlFor='outcome'>what did { kid.name } try?</label>
-        {/* <select id='outcome' {...register('outcome')}> */}
-          {/* { kid.outcomes.map( x => <option key={x.id} value={x.id}>{x.outcome}</option> ) } */}
-        {/* </select> */}
+        {formArray}
         <label htmlFor='meal'>meal</label>
         <input id='meal' type='text' {...register('meal')}></input>
         <label htmlFor='date'>date</label>
