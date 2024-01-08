@@ -1,9 +1,7 @@
 import './App.css'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useKids } from './serverStore/queries';
-// import { UpdateKid } from './serverStore/mutations';
-import { checkForLogin } from './components/userAuth/userHooks.jsx';
 import { 
   useHistory,
   useHistoryDispatch,
@@ -13,7 +11,6 @@ import CurrentView from './CurrentView.jsx';
 
 
 function App() {
-  const [user, setUser] = useState({ id: ''})
   const [kid, setKid] = useState(null)
 
   const dispatch = useHistoryDispatch()
@@ -47,16 +44,6 @@ function App() {
 
   const current = history.current
 
-  useEffect( () => {
-    const user = checkForLogin()
-    if (user) {
-      setUser(user)
-      handleGoTo('kidList')
-    } else {
-      handleGoTo('login')
-    }
-  }, [])
-
   // react-query used here. Comments stay until I'm more familiar with using the technology.
   // using react-query and axios to simplify state management for values retrieved from the server.
   // gets result of query with useKids
@@ -73,7 +60,7 @@ function App() {
 
   return (
     <div className="App">
-      <CurrentView current={current} kid={kid} setKid={setKid} setUser={setUser} kids={kids} handleHistory={handleHistory} />
+      <CurrentView current={current} kid={kid} setKid={setKid} kids={kids} handleHistory={handleHistory} />
     </div>
   );
 }

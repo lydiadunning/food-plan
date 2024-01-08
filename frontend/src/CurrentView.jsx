@@ -6,7 +6,7 @@ import { KidList } from './components/KidList';
 import { Login } from './components/userAuth/Login.jsx'
 
 
-const CurrentView = ({ current, kid, setKid, setUser, kids, handleHistory }) => {
+const CurrentView = ({ current, kid, setKid, kids, handleHistory }) => {
   console.log('in CurrentView', current)
 
   const { handleGoTo, handleGoBack } = handleHistory
@@ -18,7 +18,7 @@ const CurrentView = ({ current, kid, setKid, setUser, kids, handleHistory }) => 
 
   switch (current) {
     case 'login':
-      return <Login setUser={setUser} handleGoTo={handleGoTo} />;
+      return <Login handleGoTo={handleGoTo} />;
     case 'addExposure':
       return <AddExposure kid={kid} handleGoBack={handleGoBack} />;
     case 'editKid':
