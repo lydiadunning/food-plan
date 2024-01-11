@@ -42,7 +42,8 @@ To run tests, navigate to the backend folder in terminal and type `npm run test`
 
 ### Now
 * Ensure login functionality works properly
-  * Test edgecases and improve error prevention
+  * Test edgecases and improve error detection
+- why don't a user's children load in after login?
 
 ### Next
 * Add components nested in views that aren't on the App page to currentView component switch

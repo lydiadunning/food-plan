@@ -42,7 +42,7 @@ export function Login({ handleGoTo }) {
       </form>
       {errorMessage && <Error message={errorMessage}/>}
       <button onClick={ () => setShowCreateAccount(!showCreateAccount)}>{showCreateAccount ? 'close create account' : 'create account'}</button>
-      { showCreateAccount && <CreateUserAccount/> }
+      { showCreateAccount && <CreateUserAccount setShowCreateAccount={setShowCreateAccount} setErrorMessage={setErrorMessage}  /> }
     </>
   )
 }

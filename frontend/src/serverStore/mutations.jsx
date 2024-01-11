@@ -10,14 +10,11 @@ const loginUrl = baseUrl.concat('login/')
 
 // POST ---
 
-/**
- * 
- * @returns mutation object with method mutate
- */
-export const useCreateAccount = () => {
+// not currently using this
+export const useCreateAccount =  () => {
   // useCreateAccount is a model for making a useMutation available.  
   return useMutation(user => {
-    return axios.post(userUrl, user)
+    axios.post(userUrl, user)
   })
 }
 

@@ -13,6 +13,7 @@ export const browserLogin = (userData) => {
 
 export const getUserConfig = () => {
   const user = checkForLogin()
+  console.log({user})
   
   return user ? {
     headers: { Authorization: `Bearer ${user.token}` }
@@ -23,13 +24,19 @@ export const handleLogin = async (credentials) => {
   try {
     const loggedInUser = await axios.post('http://localhost:2002/api/login/', credentials)
     browserLogin(loggedInUser.data)
-    // const userData = JSON.stringify(loggedInUser.data)
-    // window.localStorage.setItem('foodUser', JSON.stringify(userData))
     return true
   } catch (error) {
     console.error(error)
     return false
   }
-  
+}
 
+export const handleCreateAccount = async (user) => {
+  try {
+    const response = await axios.post('http://localhost:2002/api/user/', user)
+    return response
+  } catch (error) {
+    console.error(error)
+    return error
+  }
 }
