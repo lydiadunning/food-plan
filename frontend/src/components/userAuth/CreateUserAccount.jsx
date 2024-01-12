@@ -8,14 +8,14 @@ const CreateUserAccount = ({ setShowCreateAccount }) => {
   const [ errorMessage, setErrorMessage ] = useState(null)
 
   const {register, handleSubmit} = useForm()
-  console.log('CREATE USER ACCOUNT')
+  // console.log('CREATE USER ACCOUNT')
 
   // const createAccount = useCreateAccount()
 
   const onSubmit = async (data) => {
-    console.log('Submit data', data)
+    // console.log('Submit data', data)
     const created = await handleCreateAccount(data)
-    console.log(created)
+    // console.log(created)
     if (created) {
       setShowCreateAccount(false)
     } else {

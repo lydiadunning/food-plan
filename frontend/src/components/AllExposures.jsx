@@ -8,7 +8,7 @@ const AllExposures = ({ kid, openEditExposures }) => {
   if (error) return 'An error has occurred: ' + error.message
   const exposures = data.data
 
-  console.log({exposures})
+  // console.log({exposures})
 
   return (
     <>

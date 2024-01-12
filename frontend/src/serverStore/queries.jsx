@@ -12,9 +12,10 @@ const baseUrl = 'http://localhost:2002/api/'
  */
 export const useKids = () => {
   const config = getUserConfig()
-  console.log('returning useQuery')
+  console.log('returning useKids useQuery')
+  console.log('config. if none, returns []', config)
   return useQuery('kids', () => {
-    console.log('kid query')
+    console.log('executing kid query')
     if (!config) return []
     console.log('axios query')
     return axios.get(baseUrl.concat('kid/'), config)

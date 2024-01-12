@@ -5,6 +5,7 @@ export const checkForLogin = () => {
     const user = JSON.parse(foodUserJSON)
     return user
   }
+  return null
 }
 
 export const browserLogin = (userData) => {

@@ -3,8 +3,6 @@ import { createContext, useReducer, useContext } from "react";
 export function historyReducer(state, action) {
   const lastKnown = state.current
 
-  console.log('in historyReducer')
-
   switch (action.type) {
     case 'goto': {
       return {
@@ -38,7 +36,6 @@ export const HistoryContextProvider = (props) => {
     current: props.loggedInUser ? 'kidList' : 'login',
     history: []
   }
-  console.log('in HistoryContextProvider')
   const [history, historyDispatch] = useReducer(historyReducer, startingHistory)
 
   return (
@@ -50,13 +47,11 @@ export const HistoryContextProvider = (props) => {
 
 export const useHistory = () => {
   const historyAndDispatch = useContext(HistoryContext)
-  console.log(historyAndDispatch)
   return historyAndDispatch[0]
 }
 
 export const useHistoryDispatch = () => {
   const historyAndDispatch = useContext(HistoryContext)
-  console.log(historyAndDispatch)
   return historyAndDispatch[1]
 }
 

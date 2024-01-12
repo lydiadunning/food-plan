@@ -9,19 +9,16 @@ import { useForm } from "react-hook-form"
 const EditKid = ({ kid, handleGoBack }) => {
   const [outcomes, setOutcomes] = useState([...kid.outcomeOptions])
   const [name, setName] = useState(kid.name)
-  console.log('kid', kid)
 
   const {register, handleSubmit} = useForm()
 
   const updateKid = useUpdateKid(kid.id)
-  console.log(kid.id)
   
   const onNameUpdate = (data) => {
     setName(data.name)
   }
 
   const update = () => {
-    console.log({kid})
     updateKid.mutate({
       'name': name,
       outcomeOptions: outcomes.map(option => {

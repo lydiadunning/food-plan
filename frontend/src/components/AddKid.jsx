@@ -11,7 +11,7 @@ const AddKid = ({ handleGoBack }) => {
   const [showOutcomes, setShowOutcomes] = useState(false)
   const [showSave, setShowSave] = useState(false)
 
-  console.log('executing AddKid', kidName, outcomes)
+  // console.log('executing AddKid', kidName, outcomes)
   const nameLabel = "What's the kid's name?"
 
   const acceptHandler = () => {
