@@ -67,3 +67,14 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.popover {
+  background-color: white;
+  border: solid 1px gainsboro;
+  border-radius: .75rem;
+  padding: 1rem;
+}
+
+.popover-arrow {
+  fill: gainsboro;
+}

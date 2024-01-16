@@ -7,7 +7,7 @@ import {
   useHistoryDispatch,
 } from './components/history/useHistory.jsx'
 import CurrentView from './CurrentView.jsx';
-
+import TopBar from './components/TopBar.jsx';
 
 
 function App() {
@@ -60,6 +60,7 @@ function App() {
 
   return (
     <div className="App">
+      <TopBar/>
       <CurrentView current={current} kid={kid} setKid={setKid} kids={kids} handleHistory={handleHistory} />
     </div>
   );

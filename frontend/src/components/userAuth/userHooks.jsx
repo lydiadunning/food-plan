@@ -40,3 +40,7 @@ export const handleCreateAccount = async (user) => {
     return error
   }
 }
+
+export logout = async => {
+  
+}

@@ -30,14 +30,6 @@ const AllExposures = ({ kid, openEditExposures }) => {
   ) : (
     <Exposure exposure={ exposures[0] } openEditExposures={openEditExposures}  />
   )
-
-  // return (
-  //   <>
-  //     { exposures.map(exposure => 
-  //       <Exposure key={ exposure.id } exposure={ exposure } openEditExposures={openEditExposures}  />
-  //     )}
-  //   </>
-  // )
 }
 
 export default AllExposures

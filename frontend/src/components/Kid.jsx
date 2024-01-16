@@ -5,6 +5,7 @@ import AllExposures from './AllExposures.jsx'
 import { DeleteKid } from './DeleteKid.jsx'
 import EditExposure from './EditExposure.jsx'
 
+
 const Kid = ({ kid, handleGoToKid, handleGoBack }) => {
   const [ showAllExposures, setShowAllExposures ] = useState(false)
   const [ showEditExposure, setShowEditExposure ] = useState(false)
