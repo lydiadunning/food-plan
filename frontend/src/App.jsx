@@ -36,10 +36,19 @@ function App() {
     });
   }
 
+  function handleResetTo(target) {
+    dispatch({
+      type: 'resetto',
+      target: target,
+    });
+  }
+
+
   const handleHistory = {
     handleGoTo,
     handleGoBack,
-    handleGoBackTo
+    handleGoBackTo,
+    handleResetTo
   }
 
   const current = history.current
@@ -60,7 +69,7 @@ function App() {
 
   return (
     <div className="App">
-      <TopBar/>
+      <TopBar handleResetTo={handleResetTo}/>
       <CurrentView current={current} kid={kid} setKid={setKid} kids={kids} handleHistory={handleHistory} />
     </div>
   );

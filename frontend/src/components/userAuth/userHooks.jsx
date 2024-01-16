@@ -11,6 +11,10 @@ export const browserLogin = (userData) => {
   window.localStorage.setItem('foodUser', JSON.stringify(userData))
 }
 
+export const browserLogout = () => {
+  window.localStorage.clear()
+}
+
 export const getUserConfig = () => {
   const user = checkForLogin()
   console.log({user})
@@ -39,8 +43,4 @@ export const handleCreateAccount = async (user) => {
     console.error(error)
     return error
   }
-}
-
-export logout = async => {
-  
 }
