@@ -1,6 +1,6 @@
 const Exposure = ({ exposure, openEditExposures }) => {
 
-  const date = new Date(exposure.date) || null
+  const date = exposure.date ? new Date(exposure.date) : null
 
   return (
     <section>
