@@ -1,11 +1,12 @@
 import KidInList from './KidInList.jsx';
+import { Button } from '@radix-ui/themes'
 
 export const KidList = ({ kidData, handleGoToKid, handleGoTo }) => {
 
   return (
     <>
       <h1>Kids</h1>
-      { kidData ? <ul>
+      { kidData ? <ul className='container-v'>
         { kidData?.map(kid => 
           <KidInList 
             key={ kid.id } 
@@ -16,7 +17,7 @@ export const KidList = ({ kidData, handleGoToKid, handleGoTo }) => {
           />
         )}
       </ul> : <p>no children</p>}
-      <button onClick={() => handleGoTo('addKid')}>Add a kid</button>
+      <Button onClick={() => handleGoTo('addKid')}>Add a kid</Button>
     </>
   );
 }

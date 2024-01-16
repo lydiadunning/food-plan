@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
 import OutcomeMenu from "./outcomeOptionMenu/OutcomeMenu.jsx"
+import { Button } from '@radix-ui/themes'
 
 import SavePage from './SavePage.jsx'
 
@@ -26,22 +27,22 @@ const AddKid = ({ handleGoBack }) => {
         <form onSubmit={() => setKidName(kidNameForm)}>
           <label>{nameLabel}</label>
           <input onChange={(e) => setKidNameForm(e.target.value)} required></input>
-          <button type='submit'>Continue</button>
+          <Button type='submit'>Continue</Button>
         </form>
       }
       {
         (kidName && showOutcomes == [] && !showSave) &&
         <>
           <h3>Do you want to record how {kidName} responds to foods?</h3>
-          <button onClick={() => {setShowOutcomes(true)}}>yes</button>
-          <button onClick={() => setShowSave(true)}>no</button>
+          <Button onClick={() => {setShowOutcomes(true)}}>yes</Button>
+          <Button onClick={() => setShowSave(true)}>no</Button>
         </>
       }
       {
         showOutcomes &&
         <>
           <OutcomeMenu outcomes={outcomes} setOutcomes={ setOutcomes } showOutcomeHints={ true } />
-          <button onClick={ acceptHandler }>Accept</button>
+          <Button onClick={ acceptHandler }>Accept</Button>
         </>
       }
       {
@@ -52,7 +53,7 @@ const AddKid = ({ handleGoBack }) => {
           handleGoBack={handleGoBack}
         />
       }
-      <button onClick={ handleGoBack }>Cancel</button>
+      <Button onClick={ handleGoBack }>Cancel</Button>
     </div>
   )
 }

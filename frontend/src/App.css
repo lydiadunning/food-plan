@@ -1,8 +1,9 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: pink;
 }
 
 .logo {
@@ -40,3 +41,39 @@
 .read-the-docs {
   color: #888;
 }
+
+.container-v {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kid-name {
+  border: 1px solid black;
+  border-radius: 10px 10px 0 0;
+  width: 50%;
+  border-bottom: none;
+}
+
+.kid-in-list {
+  border: 1px solid black;
+  border-radius: 0px 10px 10px 10px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 10px;
+}
+
+li {
+  list-style: none;
+}
+
+p {
+  margin:0;
+  padding: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+} */

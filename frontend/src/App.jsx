@@ -1,4 +1,4 @@
-import './App.css'
+// import './App.css'
 import { useState } from 'react';
 
 import { useKids } from './serverStore/queries';
@@ -8,6 +8,7 @@ import {
 } from './components/history/useHistory.jsx'
 import CurrentView from './CurrentView.jsx';
 import TopBar from './components/TopBar.jsx';
+import { Container } from '@radix-ui/themes'
 
 
 function App() {
@@ -68,10 +69,10 @@ function App() {
   // end of react-query behavior  
 
   return (
-    <div className="App">
+    <Container className="App, container-v">
       <TopBar handleResetTo={handleResetTo}/>
       <CurrentView current={current} kid={kid} setKid={setKid} kids={kids} handleHistory={handleHistory} />
-    </div>
+    </Container>
   );
 }
 

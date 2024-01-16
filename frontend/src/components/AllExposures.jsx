@@ -2,6 +2,8 @@ import Exposure from './Exposure.jsx'
 import { useExposures } from '../serverStore/queries.jsx'
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { useState } from 'react';
+import { Button } from '@radix-ui/themes'
+
 
 const AllExposures = ({ kid, openEditExposures }) => {
   const [open, setOpen] = useState(false);
@@ -16,7 +18,7 @@ const AllExposures = ({ kid, openEditExposures }) => {
   return exposures.length > 1 ? (
     <Collapsible.Root className="CollapsibleRoot" open={open} onOpenChange={setOpen}>
       <Collapsible.Trigger asChild>
-        <button>See All</button>
+        <Button>See All</Button>
       </Collapsible.Trigger>
       <Exposure exposure={ exposures[0] } openEditExposures={openEditExposures}  />
       { exposures.slice(1).map(exposure => 

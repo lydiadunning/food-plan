@@ -1,3 +1,5 @@
+import { Button } from '@radix-ui/themes'
+
 const Exposure = ({ exposure, openEditExposures }) => {
 
   const date = exposure.date ? new Date(exposure.date) : null
@@ -9,7 +11,7 @@ const Exposure = ({ exposure, openEditExposures }) => {
       { exposure.outcomes.length > 0 && <p>Outcome: { exposure.outcomes.join(', ') }</p> } 
       { exposure.meal && <p>Meal: { exposure.meal }</p> }
       { exposure.date && <p>Date: { date.toDateString() }</p>}
-      <button onClick={ () => openEditExposures(exposure) }>Edit Exposure</button>
+      <Button onClick={ () => openEditExposures(exposure) }>Edit Exposure</Button>
     </section>
   )
 }

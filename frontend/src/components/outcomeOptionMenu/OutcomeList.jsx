@@ -3,7 +3,6 @@ import { useEffect } from "react"
 import {useOutcomeTips} from '../../serverStore/queries'
 import Outcome from './Outcome'
 
-
 const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
 
   const {isLoading, error, data} = useOutcomeTips()

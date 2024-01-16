@@ -4,7 +4,7 @@ import { useState } from 'react'
 import AllExposures from './AllExposures.jsx'
 import { DeleteKid } from './DeleteKid.jsx'
 import EditExposure from './EditExposure.jsx'
-
+import { Button } from '@radix-ui/themes'
 
 const Kid = ({ kid, handleGoToKid, handleGoBack }) => {
   const [ showAllExposures, setShowAllExposures ] = useState(false)
@@ -42,22 +42,22 @@ const Kid = ({ kid, handleGoToKid, handleGoBack }) => {
         ? 
         <>
           <AllExposures kid={kid} openEditExposures={openEditExposures} />
-          <button onClick={closeAllExposures}>Close Exposures</button> 
+          <Button onClick={closeAllExposures}>Close Exposures</Button> 
         </>
         :
-        <button onClick={ openAllExposures } >show all exposures</button>
+        <Button onClick={ openAllExposures } >show all exposures</Button>
         // show most recent exposure
       } 
-      <button 
+      <Button 
         onClick={ () => handleGoToKid('addExposure', kid) }
       >add an introduction
-      </button>
-      <button onClick={ () => handleGoToKid('editKid', kid) }>Edit</button>
+      </Button>
+      <Button onClick={ () => handleGoToKid('editKid', kid) }>Edit</Button>
       <DeleteKid kid={kid} closeKid={handleGoBack} />
-      <button 
+      <Button 
         onClick={ handleGoBack }
       >back to list
-      </button>
+      </Button>
     </>
   )
 }

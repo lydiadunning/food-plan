@@ -1,5 +1,7 @@
 import { useCreateExposure } from "../serverStore/mutations"
 import { useForm } from "react-hook-form"
+import { Button } from '@radix-ui/themes'
+
 
 const AddExposure = ({ kid, handleGoBack }) => {
   const {register, handleSubmit} = useForm()
@@ -31,9 +33,9 @@ const AddExposure = ({ kid, handleGoBack }) => {
         <input id='meal' type='text' {...register('meal')}></input>
         <label htmlFor='date'>date</label>
         <input id='date' type='date' defaultValue={today} {...register("date", { valueAsDate: true })} />
-        <button type='submit'>submit</button>
+        <Button type='submit'>submit</Button>
       </form>
-      <button onClick={ handleGoBack }>Back</button>
+      <Button onClick={ handleGoBack }>Back</Button>
     </>
   )
 }

@@ -39,14 +39,17 @@ Go to `/backend/tests` to see unit tests and documentation of testing progress.
 
 To run tests, navigate to the backend folder in terminal and type `npm run test`. To run a subset of tests, enter `npm run test -- tests/ *filename* `
 ## Next Steps in Development
-* Return all exposures in reverse chronological order
 
 ### Now
+* Styling with Radix
+
 * Ensure login functionality works properly
   * Test edgecases and improve error detection
 - why don't a user's children load in after login?
 
 ### Next
+* Return all exposures in reverse chronological order
+
 * Add components nested in views that aren't on the App page to currentView component switch
 * Ensure login functionality works properly
   * Test edgecases and improve error prevention

@@ -6,6 +6,7 @@ import { handleLogin } from './userHooks'
 import Error from '../Error'
 import * as Form from '@radix-ui/react-form';
 import * as Popover from '@radix-ui/react-popover';
+import { Button } from '@radix-ui/themes'
 
 export function Login({ handleGoTo }) {
   const [ showCreateAccount, setShowCreateAccount ] = useState(false)
@@ -58,13 +59,13 @@ export function Login({ handleGoTo }) {
           </Form.Control>
         </Form.Field>
         <Form.Submit asChild>
-          <button type='submit'>submit</button>
+          <Button type='submit'>submit</Button>
         </Form.Submit>
       </Form.Root>
       {errorMessage && <Error message={errorMessage}/>}
       <Popover.Root open={showCreateAccount} onOpenChange={setShowCreateAccount}>
         <Popover.Trigger asChild>
-          <button>{showCreateAccount ? 'close create account' : 'create account'}</button>
+          <Button>{showCreateAccount ? 'close create account' : 'create account'}</Button>
         </Popover.Trigger>
         <Popover.Content className='popover'>
           <CreateUserAccount setShowCreateAccount={setShowCreateAccount} setErrorMessage={setErrorMessage}  />

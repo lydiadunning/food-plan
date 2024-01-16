@@ -1,5 +1,6 @@
 import { useDeleteKid } from "../serverStore/mutations"
 import { useState } from "react"
+import { Button } from '@radix-ui/themes'
 
 export const DeleteKid = ({ kid, closeKid }) => {
   const [showConfirm, setShowConfirm] = useState(false)
@@ -24,10 +25,10 @@ export const DeleteKid = ({ kid, closeKid }) => {
     {
       showConfirm ? <>
         <p>Do you want to delete {kid.name}? All records for that kid will be lost.</p>
-        <button onClick={ confirmDelete }>Confirm</button>
-        <button onClick={ cancelDelete }>Cancel</button>
+        <Button onClick={ confirmDelete }>Confirm</Button>
+        <Button onClick={ cancelDelete }>Cancel</Button>
       </>
-      : <button onClick={ deleteHandler }>Delete</button>
+      : <Button onClick={ deleteHandler }>Delete</Button>
     }
     </>
   )

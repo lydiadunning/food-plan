@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
 import OutcomeList from './OutcomeList'
-
+import { Button } from '@radix-ui/themes'
 
 const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
   const [ newOutcome, setNewOutcome ] = useState('')
@@ -29,7 +29,7 @@ const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
             setNewOutcome(e.target.value)
 
           }} required></input>
-        <button type='submit'>submit</button>
+        <Button type='submit'>submit</Button>
       </form>    
     </>
   )

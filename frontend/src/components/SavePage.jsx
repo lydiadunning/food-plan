@@ -1,4 +1,5 @@
 import { useCreateKid} from '../serverStore/mutations'
+import { Button } from '@radix-ui/themes'
 
 export default function SavePage({ kidName, outcomeOptions, handleGoBack }) {
 
@@ -20,7 +21,7 @@ export default function SavePage({ kidName, outcomeOptions, handleGoBack }) {
     <>
       <h3>{kidName}</h3>
       {outcomeOptions?.map( x => <p key={x.id}>{x.outcome}</p>)}
-      <button onClick={saveHandler}>Save</button>
+      <Button onClick={saveHandler}>Save</Button>
     </>
   )
 }

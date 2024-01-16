@@ -4,6 +4,8 @@ import { useState } from "react"
 import { handleCreateAccount } from "./userHooks"
 import Error from "../Error"
 import * as Form from '@radix-ui/react-form';
+import { Button } from '@radix-ui/themes'
+
 
 const CreateUserAccount = ({ setShowCreateAccount }) => {
   const [ errorMessage, setErrorMessage ] = useState(null)
@@ -43,7 +45,7 @@ const CreateUserAccount = ({ setShowCreateAccount }) => {
         <input id='email' type='text' required {...register('email')}></input>
         <label htmlFor='password'>password</label>
         <input id='password' type='text' required {...register('password')}></input>
-        <button type='submit'>submit</button>
+        <Button type='submit'>submit</Button>
       </form> */}
       <Form.Root onSubmit={handleSubmit(onSubmit)} className='center'>
         <Form.Field>
@@ -91,7 +93,7 @@ const CreateUserAccount = ({ setShowCreateAccount }) => {
           </Form.Control>
         </Form.Field>
         <Form.Submit asChild>
-          <button type='submit'>submit</button>
+          <Button type='submit'>submit</Button>
         </Form.Submit>
       </Form.Root>
     </>
