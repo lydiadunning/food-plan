@@ -4,7 +4,8 @@ import CreateUserAccount from './CreateUserAccount'
 // import { useLoginAccount } from '../../serverStore/mutations'
 import { handleLogin } from './userHooks'
 import Error from '../Error'
-
+import * as Form from '@radix-ui/react-form';
+import * as Popover from '@radix-ui/react-popover';
 
 export function Login({ handleGoTo }) {
   const [ showCreateAccount, setShowCreateAccount ] = useState(false)
@@ -33,16 +34,46 @@ export function Login({ handleGoTo }) {
   return (
     <>
       <h1>Login</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>username: </label>
-        <input id='username' type='text' required {...register('username')}></input>
-        <label>password: </label>
-        <input id='password' type='text' required {...register('password')}></input>
-        <button type='submit'>submit</button>
-      </form>
+      <Form.Root onSubmit={handleSubmit(onSubmit)} className={'container-v'}>
+        <Form.Field>
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
+            <Form.Label>username: </Form.Label>
+            <Form.Message className='form-message' match="valueMissing">
+              Please enter your username
+            </Form.Message>
+          </div>
+          <Form.Control asChild>
+            <input id='username' type='text' required {...register('username')}/>
+          </Form.Control>
+        </Form.Field>
+        <Form.Field>
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
+            <Form.Label>password: </Form.Label>
+            <Form.Message className='form-message' match="valueMissing">
+                Please enter your password
+              </Form.Message>
+            </div>
+          <Form.Control asChild>
+            <input id='password' type='text' required {...register('password')}/>
+          </Form.Control>
+        </Form.Field>
+        <Form.Submit asChild>
+          <button type='submit'>submit</button>
+        </Form.Submit>
+      </Form.Root>
       {errorMessage && <Error message={errorMessage}/>}
-      <button onClick={ () => setShowCreateAccount(!showCreateAccount)}>{showCreateAccount ? 'close create account' : 'create account'}</button>
-      { showCreateAccount && <CreateUserAccount setShowCreateAccount={setShowCreateAccount} setErrorMessage={setErrorMessage}  /> }
+      <Popover.Root open={showCreateAccount} onOpenChange={setShowCreateAccount}>
+        <Popover.Trigger asChild>
+          <button>{showCreateAccount ? 'close create account' : 'create account'}</button>
+        </Popover.Trigger>
+        <Popover.Content className='popover'>
+          <CreateUserAccount setShowCreateAccount={setShowCreateAccount} setErrorMessage={setErrorMessage}  />
+          <Popover.Close>x</Popover.Close>
+          <Popover.Arrow className='popover-arrow'/>
+        </Popover.Content>
+      </Popover.Root>
+
+
     </>
   )
 }
