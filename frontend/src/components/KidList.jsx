@@ -1,12 +1,12 @@
 import KidInList from './KidInList.jsx';
-import { Button } from '@radix-ui/themes'
+import { Button, Flex, Heading, Strong } from '@radix-ui/themes'
 
 export const KidList = ({ kidData, handleGoToKid, handleGoTo }) => {
 
   return (
     <>
-      <h1>Kids</h1>
-      { kidData ? <ul className='container-v'>
+      <Heading align='center' m='3'>Kids</Heading>
+      { kidData ? <Flex direction='row' wrap='wrap' gap='3' >
         { kidData?.map(kid => 
           <KidInList 
             key={ kid.id } 
@@ -16,8 +16,9 @@ export const KidList = ({ kidData, handleGoToKid, handleGoTo }) => {
             openEditKid={ () => handleGoToKid('editKid', kid)}
           />
         )}
-      </ul> : <p>no children</p>}
-      <Button onClick={() => handleGoTo('addKid')}>Add a kid</Button>
+      </Flex> : <p>no children</p>}
+      <Button size='3' mt='3' mx='auto'
+      onClick={() => handleGoTo('addKid')}><Strong >+</Strong></Button>
     </>
   );
 }

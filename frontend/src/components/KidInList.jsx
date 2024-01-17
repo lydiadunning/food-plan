@@ -1,27 +1,37 @@
 /* eslint-disable react/prop-types */
 import { DeleteKid } from './DeleteKid.jsx'
-import { Button } from '@radix-ui/themes'
+import { Button, Grid, Text, Flex, Heading, Card } from '@radix-ui/themes'
 
 const KidInList = ({ kid, openAddExposure, openKid, openEditKid }) => {
-  
   function listEach(arr, propertyName) {
-    const strings = arr.map(x => x[propertyName])
-    return strings.toString()
+    console.log({arr})
+
+    const strings = arr.map(x => <Text key={x.id}>{x[propertyName].toString()}</Text>)
+    return strings
   }
 
   return (
-    <li key={ kid.id }>
-      <p className='kid-name'>{ kid.name }</p>
-      <div className='kid-in-list'>
-        <div style={{}}>
+    <Card size='1' key={ kid.id }>
+      <Grid gap='3' flow='row' columns='2'>
+        <Heading className='kid-name'>{ kid.name }</Heading>
+        <Flex gap='3' justify='end' wrap='wrap'>
+          <Button onClick={ () => openEditKid() }>Edit</Button>
+          <DeleteKid kid={kid} closeKid={()=>{}}/>
+        </Flex>
+        {/* <div className='kid-in-list'> */}
+        <Flex gap='3' direction='column'>
+
           <Button onClick={ () => openKid(kid) }>More Info</Button>
           <Button onClick={ () => openAddExposure() }>add an introduction</Button>
-        </div>
-        <p>{ listEach(kid.outcomeOptions, 'outcome') }</p>
-        <Button onClick={ () => openEditKid() }>Edit</Button>
-        <DeleteKid kid={kid} closeKid={()=>{}}/>
-      </div>
-    </li>
+        </Flex>
+        <Flex gap='3' direction='column' align='center'>
+          { listEach(kid.outcomeOptions, 'outcome') }
+        </Flex>
+
+        
+        {/* </div> */}
+      </Grid>
+    </Card>
   )
 }
 
