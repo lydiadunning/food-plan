@@ -4,7 +4,8 @@ import { useUpdateKid } from '../serverStore/mutations.jsx'
 import OutcomeMenu from './outcomeOptionMenu/OutcomeMenu.jsx'
 
 import { useForm } from "react-hook-form"
-import { Button } from '@radix-ui/themes'
+import { Button, Card, Flex } from '@radix-ui/themes'
+import * as Form from '@radix-ui/react-form';
 
 const EditKid = ({ kid, handleGoBack }) => {
   const [outcomes, setOutcomes] = useState([...kid.outcomeOptions])
@@ -33,15 +34,24 @@ const EditKid = ({ kid, handleGoBack }) => {
 
   return (
     <>
-      <form onSubmit={ handleSubmit(onNameUpdate) }>
-        <label>
-          name: {name}
-          <input id='name' type='text' required {...register('name')} />
-        </label>
-        <Button type='submit'>replace</Button>
-      </form>
+      <Card>
+        <Form.Root onSubmit={ handleSubmit(onNameUpdate) }>
+          <Form.Field>
+            <Flex gap='3' align='center'>
+              <Form.Label>name: {name}</Form.Label>
+              <Form.Control asChild>
+                <input id='name' type='text' required {...register('name')} />
+              </Form.Control>
+              <Form.Submit asChild>
+                <Button type='submit'>replace</Button>
+              </Form.Submit>
+            </Flex>
+            
+          </Form.Field>
+        </Form.Root>
+      </Card>
       <OutcomeMenu outcomes={outcomes} setOutcomes={setOutcomes} />
-      <Button onClick={ update }>Save Changes</Button>
+      <Button mr='3' onClick={ update }>Save Changes</Button>
       {/* <Button onClick={ deleteKid }>delete</Button> */}
       <Button onClick={ handleGoBack }>Back</Button>
     </>

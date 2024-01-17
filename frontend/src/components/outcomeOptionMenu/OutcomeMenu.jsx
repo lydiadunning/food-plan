@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
 import OutcomeList from './OutcomeList'
-import { Button } from '@radix-ui/themes'
+import { Button, Card, Flex, Box } from '@radix-ui/themes'
 
 const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
   const [ newOutcome, setNewOutcome ] = useState('')
@@ -21,18 +21,21 @@ const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
   }
 
   return (
-    <>
-      <OutcomeList outcomes={outcomes} setOutcomes={setOutcomes} showOutcomeHints={showOutcomeHints} />
+    <Card size='1' my='3'>
+      <Box mr='8' >
+        <OutcomeList outcomes={outcomes} setOutcomes={setOutcomes} showOutcomeHints={showOutcomeHints} />
+        <form onSubmit={ submitHandler }>
+          <label htmlFor='outcome'>add an outcome </label>
+            <input type='text' id='outcome' name='outcome' value={newOutcome} onChange={ (e) => {
+              setNewOutcome(e.target.value)
 
-      <form onSubmit={ submitHandler }>
-        <label htmlFor='outcome'>add an outcome</label>
-          <input type='text' id='outcome' name='outcome' value={newOutcome} onChange={ (e) => {
-            setNewOutcome(e.target.value)
-
-          }} required></input>
-        <Button type='submit'>submit</Button>
-      </form>    
-    </>
+            }} required></input>
+          <Flex mt='3' justify='center'>
+            <Button type='submit'>submit</Button>
+          </Flex>
+        </form>    
+      </Box>
+    </Card>
   )
 }
 

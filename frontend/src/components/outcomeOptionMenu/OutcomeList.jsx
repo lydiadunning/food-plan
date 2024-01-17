@@ -2,6 +2,7 @@
 import { useEffect } from "react"
 import {useOutcomeTips} from '../../serverStore/queries'
 import Outcome from './Outcome'
+import { Flex } from "@radix-ui/themes"
 
 const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
 
@@ -63,7 +64,8 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
   console.log('ids', outcomes.map(x => x.id))
 
   return (
-    <ul>
+    <ol>
+      <Flex gap='3' direction='column'>
       { outcomes.length > 0 
       ? outcomes.map((x, i) => 
         <Outcome 
@@ -78,7 +80,9 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
         )
       : <p>Add a new outcome</p>
       }
-    </ul>
+      </Flex>
+    </ol>
+    
   )
 }
 
