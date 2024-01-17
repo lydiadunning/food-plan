@@ -14,7 +14,7 @@ const TopBar = ({ handleResetTo }) => {
   }
 
   return (
-    <Flex justify='end'>
+    <Flex justify='end' mb='3'>
       <Popover.Root open={open} onOpenChange={setOpen}>
         <Popover.Trigger asChild >
           <Button >user</Button>
