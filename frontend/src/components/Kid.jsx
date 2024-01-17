@@ -4,22 +4,13 @@ import { useState } from 'react'
 import AllExposures from './AllExposures.jsx'
 import { DeleteKid } from './DeleteKid.jsx'
 import EditExposure from './EditExposure.jsx'
-import { Button } from '@radix-ui/themes'
+import { Button, Card, Heading, Flex } from '@radix-ui/themes'
 
 const Kid = ({ kid, handleGoToKid, handleGoBack }) => {
-  const [ showAllExposures, setShowAllExposures ] = useState(false)
   const [ showEditExposure, setShowEditExposure ] = useState(false)
   const [ exposureToEdit, setExposureToEdit ] = useState(null)
 
   console.log('kid in Kid', kid)
-
-  const openAllExposures = () => {
-    setShowAllExposures(true)
-  }
-
-  const closeAllExposures = () => {
-    setShowAllExposures(false)
-  }
 
   const openEditExposures = (exposure) => {
     setExposureToEdit(exposure)
@@ -31,34 +22,30 @@ const Kid = ({ kid, handleGoToKid, handleGoBack }) => {
   }
 
   return (
-    <>
-      <p>{ kid.name }</p>
+    <Card>
+      <Flex justify="between">
+        <Heading>{ kid.name }</Heading>
+        <Flex gap='3'>
+          <Button onClick={ () => handleGoToKid('editKid', kid) }>Edit</Button>
+          <DeleteKid kid={kid} closeKid={handleGoBack} />
+          <Button 
+            onClick={ handleGoBack }
+          >back to list
+          </Button>
+        </Flex>
+      </Flex>
+      <AllExposures kid={kid} openEditExposures={openEditExposures} />
       {  
         showEditExposure
-        ?
+        &&
         <EditExposure kid={kid} exposure={exposureToEdit} closeEditExposure={closeEditExposure} />
-        :
-        showAllExposures 
-        ? 
-        <>
-          <AllExposures kid={kid} openEditExposures={openEditExposures} />
-          <Button onClick={closeAllExposures}>Close Exposures</Button> 
-        </>
-        :
-        <Button onClick={ openAllExposures } >show all exposures</Button>
-        // show most recent exposure
+
       } 
       <Button 
         onClick={ () => handleGoToKid('addExposure', kid) }
       >add an introduction
       </Button>
-      <Button onClick={ () => handleGoToKid('editKid', kid) }>Edit</Button>
-      <DeleteKid kid={kid} closeKid={handleGoBack} />
-      <Button 
-        onClick={ handleGoBack }
-      >back to list
-      </Button>
-    </>
+    </Card>
   )
 }
 

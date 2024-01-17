@@ -1,16 +1,20 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
+import { useForm } from "react-hook-form"
 import OutcomeMenu from "./outcomeOptionMenu/OutcomeMenu.jsx"
-import { Button } from '@radix-ui/themes'
+import { Button, Heading } from '@radix-ui/themes'
+import * as Form from '@radix-ui/react-form';
 
 import SavePage from './SavePage.jsx'
 
 const AddKid = ({ handleGoBack }) => {
   const [kidName, setKidName] = useState('')
-  const [kidNameForm, setKidNameForm] = useState('')
   const [outcomes, setOutcomes] = useState([])
   const [showOutcomes, setShowOutcomes] = useState(false)
   const [showSave, setShowSave] = useState(false)
+
+  const { register, handleSubmit } = useForm()
+
 
   console.log('executing AddKid', kidName, outcomes)
   const nameLabel = "What's the kid's name?"
@@ -19,30 +23,41 @@ const AddKid = ({ handleGoBack }) => {
     setShowOutcomes(false)
     setShowSave(true)
   }
+  console.log({kidName})
+
+  const submitName = (data) => {
+    setKidName(data.name)
+  }
 
   return (
     <div>
       {
         !kidName &&
-        <form onSubmit={() => setKidName(kidNameForm)}>
-          <label>{nameLabel}</label>
-          <input onChange={(e) => setKidNameForm(e.target.value)} required></input>
-          <Button type='submit'>Continue</Button>
-        </form>
+        <Form.Root onSubmit={handleSubmit(submitName)}>
+          <Form.Field>
+            <Form.Label>{nameLabel}</Form.Label>
+            <Form.Control asChild> 
+              <input id='name' type='text' {...register('name')} required></input>
+            </Form.Control>
+          </Form.Field>
+          <Form.Submit asChild>
+            <Button my='3'type='submit'>Continue</Button>
+          </Form.Submit>
+        </Form.Root>
       }
       {
         (kidName && showOutcomes == [] && !showSave) &&
         <>
-          <h3>Do you want to record how {kidName} responds to foods?</h3>
+          <Heading>Do you want to record how {kidName} responds to foods?</Heading>
           <Button onClick={() => {setShowOutcomes(true)}}>yes</Button>
-          <Button onClick={() => setShowSave(true)}>no</Button>
+          <Button mx='3' onClick={() => setShowSave(true)}>no</Button>
         </>
       }
       {
         showOutcomes &&
         <>
           <OutcomeMenu outcomes={outcomes} setOutcomes={ setOutcomes } showOutcomeHints={ true } />
-          <Button onClick={ acceptHandler }>Accept</Button>
+          <Button mr='3' onClick={ acceptHandler }>Accept</Button>
         </>
       }
       {

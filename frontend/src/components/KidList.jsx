@@ -6,7 +6,7 @@ export const KidList = ({ kidData, handleGoToKid, handleGoTo }) => {
   return (
     <>
       <Heading align='center' m='3'>Kids</Heading>
-      { kidData ? <Flex direction='row' wrap='wrap' gap='3' >
+      { kidData ? <Flex align='center' direction='column' gap='3' >
         { kidData?.map(kid => 
           <KidInList 
             key={ kid.id } 
@@ -16,9 +16,10 @@ export const KidList = ({ kidData, handleGoToKid, handleGoTo }) => {
             openEditKid={ () => handleGoToKid('editKid', kid)}
           />
         )}
-      </Flex> : <p>no children</p>}
-      <Button size='3' mt='3' mx='auto'
+        <Button size='3' mt='3' mx='auto'
       onClick={() => handleGoTo('addKid')}><Strong >+</Strong></Button>
+      </Flex> : <p>no children</p>}
+      
     </>
   );
 }

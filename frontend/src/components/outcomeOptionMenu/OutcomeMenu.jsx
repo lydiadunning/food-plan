@@ -8,6 +8,7 @@ const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
   // keycounter prevents duplication of keys in new outcomes
   const [ keyCounter, setKeyCounter] = useState(1) 
 
+  console.log({outcomes})
   const submitHandler = (e) => {
     e.preventDefault()
     const outcome = {
