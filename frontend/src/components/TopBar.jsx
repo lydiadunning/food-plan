@@ -1,7 +1,7 @@
 import * as Popover from '@radix-ui/react-popover';
 import { browserLogout } from './userAuth/userHooks';
 import { useState } from 'react';
-import { Button } from '@radix-ui/themes'
+import { Button, Box, Flex } from '@radix-ui/themes'
 
 
 const TopBar = ({ handleResetTo }) => {
@@ -14,18 +14,20 @@ const TopBar = ({ handleResetTo }) => {
   }
 
   return (
-    <Popover.Root open={open} onOpenChange={setOpen}>
-      <Popover.Trigger asChild >
-        <Button>user</Button>
-      </Popover.Trigger>
-      <Popover.Content className='popover'>
-        <div>
-          <Button onClick={logout} >log out</Button>
-          <Popover.Close>x</Popover.Close>
-          <Popover.Arrow className='popover-arrow'/>
-        </div>
-      </Popover.Content>
-    </Popover.Root>
+    <Flex justify='end'>
+      <Popover.Root open={open} onOpenChange={setOpen}>
+        <Popover.Trigger asChild >
+          <Button >user</Button>
+        </Popover.Trigger>
+        <Popover.Content className='popover'>
+          <Box>
+            <Button onClick={logout} >log out</Button>
+            <Popover.Close>x</Popover.Close>
+            <Popover.Arrow className='popover-arrow'/>
+          </Box>
+        </Popover.Content>
+      </Popover.Root>
+    </Flex>
   )
 };
 
