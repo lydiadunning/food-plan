@@ -6,7 +6,7 @@ import { handleLogin } from './userHooks'
 import Error from '../Error'
 import * as Form from '@radix-ui/react-form';
 import * as Popover from '@radix-ui/react-popover';
-import { Button } from '@radix-ui/themes'
+import { Button, Heading, Card } from '@radix-ui/themes'
 
 export function Login({ handleGoTo }) {
   const [ showCreateAccount, setShowCreateAccount ] = useState(false)
@@ -34,7 +34,7 @@ export function Login({ handleGoTo }) {
 
   return (
     <>
-      <h1>Login</h1>
+      <Heading >Login</Heading>
       <Form.Root onSubmit={handleSubmit(onSubmit)} className={'container-v'}>
         <Form.Field>
           <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
@@ -59,7 +59,7 @@ export function Login({ handleGoTo }) {
           </Form.Control>
         </Form.Field>
         <Form.Submit asChild>
-          <Button type='submit'>submit</Button>
+          <Button my='2' type='submit'>submit</Button>
         </Form.Submit>
       </Form.Root>
       {errorMessage && <Error message={errorMessage}/>}
@@ -68,9 +68,11 @@ export function Login({ handleGoTo }) {
           <Button>{showCreateAccount ? 'close create account' : 'create account'}</Button>
         </Popover.Trigger>
         <Popover.Content className='popover'>
+          <Card>
           <CreateUserAccount setShowCreateAccount={setShowCreateAccount} setErrorMessage={setErrorMessage}  />
           <Popover.Close>x</Popover.Close>
           <Popover.Arrow className='popover-arrow'/>
+          </Card>
         </Popover.Content>
       </Popover.Root>
 

@@ -4,7 +4,7 @@ import { useState } from "react"
 import { handleCreateAccount } from "./userHooks"
 import Error from "../Error"
 import * as Form from '@radix-ui/react-form';
-import { Button } from '@radix-ui/themes'
+import { Button, Heading } from '@radix-ui/themes'
 
 
 const CreateUserAccount = ({ setShowCreateAccount }) => {
@@ -34,7 +34,7 @@ const CreateUserAccount = ({ setShowCreateAccount }) => {
 
   return (
     <>
-      <h1>Create a new user account </h1>
+      <Heading>Create a new user account </Heading>
       {errorMessage && <Error message={errorMessage}/>}
       {/* <form onSubmit={ handleSubmit(onSubmit) }>
         <label htmlFor='username'>username</label>
