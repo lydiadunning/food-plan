@@ -6,7 +6,7 @@ export const KidList = ({ kidData, handleGoToKid, handleGoTo }) => {
 
   return (
     <>
-      <Heading align='center' m='3'>Kids</Heading>
+      <Heading align='center' mt='3' mb='6'>Kids</Heading>
       { <Flex align='center' direction='column' gap='3' >
         { kidData?.map(kid => 
           <KidInList 

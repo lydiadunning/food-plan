@@ -69,7 +69,7 @@ function App() {
   // end of react-query behavior  
 
   return (
-    <Container size='1' className="App, container-v">
+    <Container size='1' className="app" p='1'>
       <TopBar handleResetTo={handleResetTo}/>
       <CurrentView current={current} kid={kid} setKid={setKid} kids={kids} handleHistory={handleHistory} />
     </Container>
