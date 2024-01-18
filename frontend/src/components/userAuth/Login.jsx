@@ -6,7 +6,7 @@ import { handleLogin } from './userHooks'
 import Error from '../Error'
 import * as Form from '@radix-ui/react-form';
 import * as Popover from '@radix-ui/react-popover';
-import { Button, Heading, Card } from '@radix-ui/themes'
+import { Button, Heading, Card, Flex } from '@radix-ui/themes'
 
 export function Login({ handleGoTo }) {
   const [ showCreateAccount, setShowCreateAccount ] = useState(false)
@@ -37,23 +37,23 @@ export function Login({ handleGoTo }) {
       <Heading >Login</Heading>
       <Form.Root onSubmit={handleSubmit(onSubmit)} className={'container-v'}>
         <Form.Field>
-          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
+          <Flex direction='column' justify='between'>
             <Form.Label>username: </Form.Label>
             <Form.Message className='form-message' match="valueMissing">
               Please enter your username
             </Form.Message>
-          </div>
+          </Flex>
           <Form.Control asChild>
             <input id='username' type='text' required {...register('username')}/>
           </Form.Control>
         </Form.Field>
         <Form.Field>
-          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
+          <Flex direction='column' justify='between'>
             <Form.Label>password: </Form.Label>
             <Form.Message className='form-message' match="valueMissing">
                 Please enter your password
               </Form.Message>
-            </div>
+            </Flex>
           <Form.Control asChild>
             <input id='password' type='text' required {...register('password')}/>
           </Form.Control>

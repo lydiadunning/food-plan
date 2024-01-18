@@ -12,6 +12,7 @@ export const KidList = ({ kidData, handleGoToKid, handleGoTo }) => {
           <KidInList 
             key={ kid.id } 
             kid={ kid } 
+            openAddExposure={ () => handleGoToKid('addExposure', kid)}
             openKid={ () => handleGoToKid('kid', kid) }
             openEditKid={ () => handleGoToKid('editKid', kid)}
           />

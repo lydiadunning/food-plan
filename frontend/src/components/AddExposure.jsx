@@ -1,7 +1,7 @@
 import { useCreateExposure } from "../serverStore/mutations"
 import { useForm } from "react-hook-form"
-import { Button } from '@radix-ui/themes'
-
+import { Button, Heading, Flex } from '@radix-ui/themes'
+import * as Form from '@radix-ui/react-form';
 
 const AddExposure = ({ kid, handleGoBack }) => {
   const {register, handleSubmit} = useForm()
@@ -20,22 +20,60 @@ const AddExposure = ({ kid, handleGoBack }) => {
 
   return (
     <>
-      <h1>Add Intro</h1>
-      <form onSubmit={ handleSubmit(submit) }>
-        <label htmlFor='food'>food</label>
-        <input id='food' type='text' required {...register('food')} />
-        <label htmlFor='description'>description</label>
-        <input id='description' type='text' required {...register('description')} />
-        <legend>what did { kid.name } do?</legend>
-        {formArray}
-        <br/>
-        <label htmlFor='meal'>meal</label>
-        <input id='meal' type='text' {...register('meal')}></input>
-        <label htmlFor='date'>date</label>
-        <input id='date' type='date' defaultValue={today} {...register("date", { valueAsDate: true })} />
-        <Button type='submit'>submit</Button>
-      </form>
-      <Button onClick={ handleGoBack }>Back</Button>
+      <Flex justify='between'>
+        <Heading>Add Intro</Heading>
+        <Button onClick={ handleGoBack }>Back</Button>
+      </Flex>
+      <Form.Root onSubmit={ handleSubmit(submit) }>
+        <Flex direction='column' gap='2' align='center'>
+          <Form.Field>
+            <Flex direction='column' justify='between'>
+              <Form.Label>food</Form.Label>
+              <Form.Control asChild>
+                <input id='food' type='text' required {...register('food')} ></input>
+              </Form.Control>
+            </Flex>
+          </Form.Field>
+        
+          <Form.Field>
+            <Flex direction='column' justify='between'>
+              <Form.Label>description</Form.Label>
+              <Form.Control asChild>
+                <input id='description' type='text' required {...register('description')} ></input>
+              </Form.Control>
+            </Flex>
+          </Form.Field>
+          
+          What did {kid.name} do?
+          {formArray}
+          
+          <Form.Field>
+            <Flex direction='column' justify='between'>
+              <Form.Label>meal</Form.Label>
+              <Form.Control asChild>
+                <input id='meal' type='text' {...register('meal')}></input>
+              </Form.Control>
+            </Flex>
+          </Form.Field>
+          
+          <Form.Field>
+            <Flex direction='column' justify='between'>
+              <Form.Label>date</Form.Label>
+              <Form.Control asChild>
+                <input id='date' type='date' defaultValue={today} {...register("date", { valueAsDate: true })} ></input>
+              </Form.Control>
+            </Flex>
+          </Form.Field>
+
+          <Form.Submit asChild>
+            <Button type='submit'>submit</Button>
+          </Form.Submit>
+        </Flex>
+        
+        
+
+      </Form.Root>
+      
     </>
   )
 }
