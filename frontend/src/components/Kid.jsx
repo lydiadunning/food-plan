@@ -4,7 +4,8 @@ import { useState } from 'react'
 import AllExposures from './AllExposures.jsx'
 import { DeleteKid } from './DeleteKid.jsx'
 import EditExposure from './EditExposure.jsx'
-import { Button, Card, Heading, Flex } from '@radix-ui/themes'
+import { Button, Card, Heading, Flex, IconButton } from '@radix-ui/themes'
+import { pencil } from '../assets/svgImages.jsx'
 
 const Kid = ({ kid, handleGoToKid, handleGoBack }) => {
   const [ showEditExposure, setShowEditExposure ] = useState(false)
@@ -23,28 +24,32 @@ const Kid = ({ kid, handleGoToKid, handleGoBack }) => {
 
   return (
     <Card>
-      <Flex justify="between">
-        <Heading>{ kid.name }</Heading>
-        <Flex gap='3'>
-          <Button onClick={ () => handleGoToKid('editKid', kid) }>Edit</Button>
-          <DeleteKid kid={kid} closeKid={handleGoBack} />
-          <Button 
-            onClick={ handleGoBack }
-          >back to list
-          </Button>
+      <Flex direction='column' p='6'>
+        <Flex justify="between">
+          <Heading>{ kid.name }</Heading>
+          <Flex gap='2'>
+            <IconButton onClick={ () => handleGoToKid('editKid', kid) }>{pencil}</IconButton>
+            <DeleteKid kid={kid} closeKid={handleGoBack} />
+            <Button 
+              size='3'
+              onClick={ handleGoBack }
+            >back to list
+            </Button>
+          </Flex>
         </Flex>
+        <Button 
+            size='3'
+            my='3'
+            onClick={ () => handleGoToKid('addExposure', kid) }
+          >add an introduction
+        </Button>
+        <AllExposures kid={kid} openEditExposures={openEditExposures} />
+        {  
+          showEditExposure
+          &&
+          <EditExposure kid={kid} exposure={exposureToEdit} closeEditExposure={closeEditExposure} />
+        } 
       </Flex>
-      <AllExposures kid={kid} openEditExposures={openEditExposures} />
-      {  
-        showEditExposure
-        &&
-        <EditExposure kid={kid} exposure={exposureToEdit} closeEditExposure={closeEditExposure} />
-
-      } 
-      <Button 
-        onClick={ () => handleGoToKid('addExposure', kid) }
-      >add an introduction
-      </Button>
     </Card>
   )
 }

@@ -2,7 +2,7 @@
 import { useState } from "react"
 import { useUpdateKid } from '../serverStore/mutations.jsx'
 import OutcomeMenu from './outcomeOptionMenu/OutcomeMenu.jsx'
-
+import { DeleteKid } from './DeleteKid.jsx'
 import { useForm } from "react-hook-form"
 import { Button, Card, Flex } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form';
@@ -52,7 +52,8 @@ const EditKid = ({ kid, handleGoBack }) => {
       </Card>
       <OutcomeMenu outcomes={outcomes} setOutcomes={setOutcomes} />
       <Button mr='3' onClick={ update }>Save Changes</Button>
-      {/* <Button onClick={ deleteKid }>delete</Button> */}
+      <DeleteKid kid={kid} closeKid={handleGoBack}/>
+
       <Button onClick={ handleGoBack }>Back</Button>
     </>
   )
