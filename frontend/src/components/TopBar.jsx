@@ -21,7 +21,7 @@ const TopBar = ({ handleResetTo }) => {
     <Flex justify='end' mb='3'>
       <Popover.Root open={open} onOpenChange={setOpen}>
 
-        <Popover.Content className='popover' style={{ zIndex: 10 }}>
+        <Popover.Content className='popover'>
           <Card>
             <Button onClick={logout} >log out</Button>
             <Popover.Close style={{padding: '3px 3px 0 3px', border: 'none', marginLeft: '3px'}}>{ x }</Popover.Close>
