@@ -1,8 +1,7 @@
 import { useDeleteKid } from "../serverStore/mutations"
-import { useState } from "react"
-import { Button, Card } from '@radix-ui/themes'
+import { Button, IconButton, Card } from '@radix-ui/themes'
 import * as Popover from '@radix-ui/react-popover'
-import { x } from '../assets/svgImages';
+import { trashcan, x } from '../assets/svgImages';
 
 export const DeleteKid = ({ kid, closeKid }) => {
 
@@ -15,7 +14,7 @@ export const DeleteKid = ({ kid, closeKid }) => {
 
   return (
     <Popover.Root>
-      <Popover.Content className='popover'>
+      <Popover.Content className='popover' style={{ zIndex: '200'}}>
         <Card>
           <Button onClick={ confirmDelete }>Confirm</Button>
           <Popover.Close style={{padding: '3px 3px 0 3px', border: 'none', marginLeft: '3px'}}>{ x }</Popover.Close>
@@ -23,7 +22,7 @@ export const DeleteKid = ({ kid, closeKid }) => {
         </Card>
       </Popover.Content>
       <Popover.Trigger asChild >
-        <Button>Delete</Button>
+        <IconButton>{trashcan}</IconButton>
       </Popover.Trigger>
     </Popover.Root>
     
