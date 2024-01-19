@@ -20,10 +20,7 @@ const AddExposure = ({ kid, handleGoBack }) => {
 
   return (
     <>
-      <Flex justify='between'>
-        <Heading>Add Intro</Heading>
-        <Button onClick={ handleGoBack }>Back</Button>
-      </Flex>
+      <Heading>Add Intro</Heading>
       <Form.Root onSubmit={ handleSubmit(submit) }>
         <Flex direction='column' gap='2' align='center'>
           <Form.Field>

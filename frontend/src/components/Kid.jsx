@@ -30,11 +30,6 @@ const Kid = ({ kid, handleGoToKid, handleGoBack }) => {
           <Flex gap='2'>
             <IconButton onClick={ () => handleGoToKid('editKid', kid) }>{pencil}</IconButton>
             <DeleteKid kid={kid} closeKid={handleGoBack} />
-            <Button 
-              size='3'
-              onClick={ handleGoBack }
-            >back to list
-            </Button>
           </Flex>
         </Flex>
         <Button 

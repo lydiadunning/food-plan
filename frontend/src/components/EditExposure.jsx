@@ -27,7 +27,6 @@ const EditExposure = ({ kid, exposure, closeEditExposure }) => {
     <>
       <Flex justify='between'>
         <Heading>Edit Exposure</Heading>
-        <Button onClick={ closeEditExposure }>Back</Button>
       </Flex>
       <Form.Root onSubmit={ handleSubmit(onSubmit) }>
         <Flex direction='column' gap='2' align='center'>

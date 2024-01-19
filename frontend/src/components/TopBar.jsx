@@ -1,11 +1,11 @@
 import * as Popover from '@radix-ui/react-popover';
 import { browserLogout } from './userAuth/userHooks';
 import { useState } from 'react';
-import { Button, Card, Flex } from '@radix-ui/themes'
+import { Button, Card, Flex, Link } from '@radix-ui/themes'
 import { useQueryClient } from 'react-query';
-import { x } from '../assets/svgImages';
+import { triangle, x } from '../assets/svgImages';
 
-const TopBar = ({ handleResetTo }) => {
+const TopBar = ({ handleResetTo, handleGoBack, showBack }) => {
   const [open, setOpen] = useState(false)
 
   const queryClient = useQueryClient()
@@ -18,7 +18,7 @@ const TopBar = ({ handleResetTo }) => {
   }
 
   return (
-    <Flex justify='end' mb='3'>
+    <Flex justify='between' direction='row-reverse' mb='3'>
       <Popover.Root open={open} onOpenChange={setOpen}>
 
         <Popover.Content className='popover' style={{ zIndex: '200' }}>
@@ -32,8 +32,10 @@ const TopBar = ({ handleResetTo }) => {
         <Popover.Trigger asChild >
           <Button >user</Button>
         </Popover.Trigger>
-        
+
       </Popover.Root>
+      {showBack && <Link onClick={handleGoBack}>{triangle} Back</Link>}
+
     </Flex>
   )
 };

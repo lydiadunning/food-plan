@@ -54,6 +54,8 @@ function App() {
 
   const current = history.current
 
+  const showBack = current !== 'login' && current !=='kidList'
+
   // react-query used here. Comments stay until I'm more familiar with using the technology.
   // using react-query and axios to simplify state management for values retrieved from the server.
   // gets result of query with useKids
@@ -70,7 +72,7 @@ function App() {
 
   return (
     <Container size='1' className="app" py='1' px='6'>
-      <TopBar handleResetTo={handleResetTo}/>
+      <TopBar handleResetTo={handleResetTo} handleGoBack={handleGoBack} showBack={showBack}/>
       <CurrentView current={current} kid={kid} setKid={setKid} kids={kids} handleHistory={handleHistory} />
     </Container>
   );

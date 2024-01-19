@@ -54,7 +54,6 @@ const EditKid = ({ kid, handleGoBack }) => {
       <Button mr='3' onClick={ update }>Save Changes</Button>
       <DeleteKid kid={kid} closeKid={handleGoBack}/>
 
-      <Button onClick={ handleGoBack }>Back</Button>
     </>
   )
 }
