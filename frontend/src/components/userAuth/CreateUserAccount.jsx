@@ -4,8 +4,8 @@ import { useState } from "react"
 import { handleCreateAccount } from "./userHooks"
 import Error from "../Error"
 import * as Form from '@radix-ui/react-form';
-import { Button, Heading } from '@radix-ui/themes'
-
+import { Button, Heading, Flex } from '@radix-ui/themes'
+import { inputStyle } from "../../assets/styles";
 
 const CreateUserAccount = ({ setShowCreateAccount }) => {
   const [ errorMessage, setErrorMessage ] = useState(null)
@@ -15,7 +15,7 @@ const CreateUserAccount = ({ setShowCreateAccount }) => {
 
   // const createAccount = useCreateAccount()
 
-  const inputStyle = { 
+  const formStyle = { 
     display: 'flex', 
     alignItems: 'baseline', 
     justifyContent: 'space-between' 
@@ -34,69 +34,60 @@ const CreateUserAccount = ({ setShowCreateAccount }) => {
 
   return (
     <>
-      <Heading>Create a new user account </Heading>
+      <Heading>Create a new account: </Heading>
       {errorMessage && <Error message={errorMessage}/>}
-      {/* <form onSubmit={ handleSubmit(onSubmit) }>
-        <label htmlFor='username'>username</label>
-        <input id='username' type='text' required {...register('username')} />
-        <label htmlFor='name'>name</label>
-        <input id='name' type='text' required {...register('name')} />
-        <label htmlFor='email'>email</label>
-        <input id='email' type='text' required {...register('email')}></input>
-        <label htmlFor='password'>password</label>
-        <input id='password' type='text' required {...register('password')}></input>
-        <Button type='submit'>submit</Button>
-      </form> */}
       <Form.Root onSubmit={handleSubmit(onSubmit)} className='center'>
-        <Form.Field>
-          <div style={inputStyle}>
-            <Form.Label>username: </Form.Label>
-            <Form.Message className='form-message' match="valueMissing">
-              Please enter your username
-            </Form.Message>
-          </div>
-          <Form.Control asChild>
-            <input id='username' type='text' required {...register('username')} />
-          </Form.Control>
-        </Form.Field>
-        <Form.Field>
-          <div style={inputStyle}>
-            <Form.Label>name: </Form.Label>
-            <Form.Message className='form-message' match="valueMissing">
-              Please enter your name
-            </Form.Message>
-          </div>
-          <Form.Control asChild>
-            <input id='name' type='text' required {...register('name')} />
-          </Form.Control>
-        </Form.Field>
-        <Form.Field>
-          <div style={inputStyle}>
-            <Form.Label>email: </Form.Label>
-            <Form.Message className='form-message' match="valueMissing">
-              Please enter your email
-            </Form.Message>
-          </div>
-          <Form.Control asChild>
-            <input id='email' type='text' required {...register('email')}></input>
-          </Form.Control>
-        </Form.Field>
-        <Form.Field>
-          <div style={inputStyle}>
-            <Form.Label>password: </Form.Label>
-            <Form.Message className='form-message' match="valueMissing">
-              Please enter your password
-            </Form.Message>
-          </div>
-          <Form.Control asChild>
-            <input id='password' type='text' required {...register('password')}></input>
-          </Form.Control>
-        </Form.Field>
-        <Form.Submit asChild>
-          <Button type='submit'>submit</Button>
-        </Form.Submit>
+        <Flex direction='column' gap='3' pt='3' align='start'>
+          <Form.Field>
+            <div style={formStyle}>
+              <Form.Label>username: </Form.Label>
+              <Form.Message className='form-message' match="valueMissing">
+                Please enter your username
+              </Form.Message>
+            </div>
+            <Form.Control asChild>
+              <input id='username' type='text' required {...register('username')} style={inputStyle} />
+            </Form.Control>
+          </Form.Field>
+          <Form.Field>
+            <div style={formStyle}>
+              <Form.Label>name: </Form.Label>
+              <Form.Message className='form-message' match="valueMissing">
+                Please enter your name
+              </Form.Message>
+            </div>
+            <Form.Control asChild>
+              <input id='name' type='text' required {...register('name')} style={inputStyle}/>
+            </Form.Control>
+          </Form.Field>
+          <Form.Field>
+            <div style={formStyle}>
+              <Form.Label>email: </Form.Label>
+              <Form.Message className='form-message' match="valueMissing">
+                Please enter your email
+              </Form.Message>
+            </div>
+            <Form.Control asChild>
+              <input id='email' type='text' required {...register('email')}style={inputStyle}></input>
+            </Form.Control>
+          </Form.Field>
+          <Form.Field>
+            <div style={formStyle}>
+              <Form.Label>password: </Form.Label>
+              <Form.Message className='form-message' match="valueMissing">
+                Please enter your password
+              </Form.Message>
+            </div>
+            <Form.Control asChild>
+              <input id='password' type='text' required {...register('password')} style={inputStyle}></input>
+            </Form.Control>
+          </Form.Field>
+          <Form.Submit asChild>
+            <Button size='3' type='submit'>submit</Button>
+          </Form.Submit>
+        </Flex>
       </Form.Root>
-    </>
+     </>
   )
 }
 
