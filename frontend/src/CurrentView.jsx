@@ -22,7 +22,7 @@ const CurrentView = ({ current, kid, setKid, kids, handleHistory }) => {
     case 'addExposure':
       return <AddExposure kid={kid} handleGoBack={handleGoBack} />;
     case 'editKid':
-      return <EditKid kid={kid} handleGoBack={handleGoBack} />;
+      return <EditKid kid={kid} handleGoBack={handleGoBack} setKid={setKid} />;
     case 'addKid':
       return <AddKid handleGoBack={handleGoBack}/>;
     case 'kid':

@@ -8,8 +8,6 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
 
   const {isLoading, error, data} = useOutcomeTips()
   
-  console.log({data})
-
   useEffect(() => {
     if(outcomes.length == 0 && data && showOutcomeHints) {
       console.log(data.data.outcomeTips)
@@ -34,7 +32,6 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
   // if outcome-hints isn't cached, there is an unneccesary server query
   // the useEffect will trigger, but outcomes.length won't be 0
   // so it will have no effect.
-  console.log(outcomes)
 
   const removeOutcomeHandler = (id) => {
     console.log('in removeOutcomeHandler', id)
@@ -60,8 +57,6 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
         ...outcomes.slice(index + 1))
     setOutcomes(reordered)
   }  
-
-  console.log('ids', outcomes.map(x => x.id))
 
   return (
     <ol>

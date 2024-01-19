@@ -2,38 +2,43 @@
 import { useState } from "react"
 import OutcomeList from './OutcomeList'
 import { Button, Card, Flex, Box } from '@radix-ui/themes'
+import { useForm } from "react-hook-form"
+import * as Form from '@radix-ui/react-form'
 
 const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
-  const [ newOutcome, setNewOutcome ] = useState('')
+
   // keycounter prevents duplication of keys in new outcomes
   const [ keyCounter, setKeyCounter] = useState(1) 
 
-  console.log({outcomes})
-  const submitHandler = (e) => {
-    e.preventDefault()
+  const {register, handleSubmit} = useForm()
+
+  const submitHandler = (data) => {
     const outcome = {
-      outcome: newOutcome, 
+      outcome: data.outcome, 
       id: keyCounter
     }
     setOutcomes([...outcomes, outcome])
-    setNewOutcome('')
     setKeyCounter(keyCounter + 1)
   }
 
   return (
     <Card size='1' my='3'>
-      <Box mr='8' >
+      <Box >
         <OutcomeList outcomes={outcomes} setOutcomes={setOutcomes} showOutcomeHints={showOutcomeHints} />
-        <form onSubmit={ submitHandler }>
-          <label htmlFor='outcome'>add an outcome </label>
-            <input type='text' id='outcome' name='outcome' value={newOutcome} onChange={ (e) => {
-              setNewOutcome(e.target.value)
-
-            }} required></input>
-          <Flex mt='3' justify='center'>
-            <Button type='submit'>submit</Button>
+        
+        <Form.Root onSubmit={ handleSubmit(submitHandler) }>
+          <Flex mt='3' justify='between' align='center'>
+            <Form.Field>
+              <Form.Label>Add an outcome: </Form.Label>
+              <Form.Control asChild>
+                <input type='text' id='outcome' name='outcome' {...register('outcome')} required></input>
+              </Form.Control>
+            </Form.Field>
+            <Form.Submit asChild>
+              <Button type='submit'>submit</Button>
+            </Form.Submit>
           </Flex>
-        </form>    
+        </Form.Root>    
       </Box>
     </Card>
   )
