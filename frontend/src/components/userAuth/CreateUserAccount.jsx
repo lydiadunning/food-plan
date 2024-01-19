@@ -6,6 +6,8 @@ import Error from "../Error"
 import * as Form from '@radix-ui/react-form';
 import { Button, Heading, Flex } from '@radix-ui/themes'
 import { inputStyle } from "../../assets/styles";
+import { Button, Heading, Flex } from '@radix-ui/themes'
+import { inputStyle } from "../../assets/styles";
 
 
 const CreateUserAccount = ({ setShowCreateAccount }) => {
