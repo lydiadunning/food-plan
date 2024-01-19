@@ -1,13 +1,10 @@
 import { useDeleteKid } from "../serverStore/mutations"
 import { useState } from "react"
-import { Button } from '@radix-ui/themes'
+import { Button, Card } from '@radix-ui/themes'
+import * as Popover from '@radix-ui/react-popover'
+import { x } from '../assets/svgImages';
 
 export const DeleteKid = ({ kid, closeKid }) => {
-  const [showConfirm, setShowConfirm] = useState(false)
-
-  const deleteHandler = () => {
-    setShowConfirm(true)
-  }
 
   const deleteKid = useDeleteKid()
   const confirmDelete = () => {
@@ -16,21 +13,20 @@ export const DeleteKid = ({ kid, closeKid }) => {
     closeKid()
   }
 
-  const cancelDelete = () => {
-    setShowConfirm(false)
-  }
-
   return (
-    <>
-    {
-      showConfirm ? <>
-        <p>Do you want to delete {kid.name}? All records for that kid will be lost.</p>
-        <Button onClick={ confirmDelete }>Confirm</Button>
-        <Button onClick={ cancelDelete }>Cancel</Button>
-      </>
-      : <Button onClick={ deleteHandler }>Delete</Button>
-    }
-    </>
+    <Popover.Root>
+      <Popover.Content className='popover'>
+        <Card>
+          <Button onClick={ confirmDelete }>Confirm</Button>
+          <Popover.Close style={{padding: '3px 3px 0 3px', border: 'none', marginLeft: '3px'}}>{ x }</Popover.Close>
+          <Popover.Arrow className='popover-arrow'/>
+        </Card>
+      </Popover.Content>
+      <Popover.Trigger asChild >
+        <Button>Delete</Button>
+      </Popover.Trigger>
+    </Popover.Root>
+    
   )
 }
 
