@@ -1,6 +1,7 @@
 import { useUpdateExposure } from "../serverStore/mutations"
 import { useForm } from "react-hook-form"
 import { Button, Flex, Heading } from '@radix-ui/themes'
+import * as Form from '@radix-ui/react-form';
 
 const EditExposure = ({ kid, exposure, closeEditExposure }) => {
   const {register, handleSubmit} = useForm({
@@ -28,20 +29,53 @@ const EditExposure = ({ kid, exposure, closeEditExposure }) => {
         <Heading>Edit Exposure</Heading>
         <Button onClick={ closeEditExposure }>Back</Button>
       </Flex>
-      <form onSubmit={ handleSubmit(onSubmit) }>
-        <label htmlFor='food'>food</label>
-        <input id='food' type='text' required {...register('food')} />
-        <label htmlFor='description'>description</label>
-        <input id='description' type='text' required {...register('description')} />
-        <label htmlFor='outcome'>what did { kid.name } try?</label>
-        {formArray}
-        <label htmlFor='meal'>meal</label>
-        <input id='meal' type='text' {...register('meal')}></input>
-        <label htmlFor='date'>date</label>
-        <input id='date' type='date' {...register("date", { valueAsDate: true })} />
-        <Button type='submit'>submit</Button>
-      </form>
-      
+      <Form.Root onSubmit={ handleSubmit(onSubmit) }>
+        <Flex direction='column' gap='2' align='center'>
+          <Form.Field>
+            <Flex direction='column' justify='between'>
+              <Form.Label>food</Form.Label>
+              <Form.Control asChild>
+                <input id='food' type='text' required {...register('food')} ></input>
+              </Form.Control>
+            </Flex>
+          </Form.Field>
+        
+          <Form.Field>
+            <Flex direction='column' justify='between'>
+              <Form.Label>description</Form.Label>
+              <Form.Control asChild>
+                <input id='description' type='text' required {...register('description')} ></input>
+              </Form.Control>
+            </Flex>
+          </Form.Field>
+          
+          What did {kid.name} do?
+          {formArray}
+          
+          <Form.Field>
+            <Flex direction='column' justify='between'>
+              <Form.Label>meal</Form.Label>
+              <Form.Control asChild>
+                <input id='meal' type='text' {...register('meal')}></input>
+              </Form.Control>
+            </Flex>
+          </Form.Field>
+          
+          <Form.Field>
+            <Flex direction='column' justify='between'>
+              <Form.Label>date</Form.Label>
+              <Form.Control asChild>
+                <input id='date' type='date' {...register("date", { valueAsDate: true })} ></input>
+              </Form.Control>
+            </Flex>
+          </Form.Field>
+
+          <Form.Submit asChild>
+            <Button type='submit'>submit</Button>
+          </Form.Submit>
+          
+        </Flex>
+      </Form.Root>      
     </>
   )
 }
