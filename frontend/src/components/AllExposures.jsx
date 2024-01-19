@@ -2,7 +2,7 @@ import Exposure from './Exposure.jsx'
 import { useExposures } from '../serverStore/queries.jsx'
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { useState } from 'react';
-import { Button } from '@radix-ui/themes'
+import { Button, Flex } from '@radix-ui/themes'
 
 
 const AllExposures = ({ kid, openEditExposures }) => {
@@ -17,15 +17,20 @@ const AllExposures = ({ kid, openEditExposures }) => {
 
   return exposures.length > 1 ? (
     <Collapsible.Root className="CollapsibleRoot" open={open} onOpenChange={setOpen}>
-      <Collapsible.Trigger asChild>
-        <Button>See All</Button>
-      </Collapsible.Trigger>
-      <Exposure exposure={ exposures[0] } openEditExposures={openEditExposures}  />
-      { exposures.slice(1).map(exposure => 
-        <Collapsible.Content key={ exposure.id }>
-          <Exposure exposure={ exposure } openEditExposures={openEditExposures}  />
-        </Collapsible.Content>
-      )}
+        <Flex direction='column' gap='3'> 
+        
+          <Exposure exposure={ exposures[0] } openEditExposures={openEditExposures}  />
+          { exposures.slice(1).map(exposure => 
+            <Collapsible.Content key={ exposure.id }>
+              <Exposure exposure={ exposure } openEditExposures={openEditExposures}  />
+              
+            </Collapsible.Content>
+          )}
+          <Collapsible.Trigger asChild>
+            <Button size='3'>See All</Button>
+          </Collapsible.Trigger>
+          
+        </Flex>
     </Collapsible.Root>
   ) : exposures.length < 1 ? (
     <p>No Exposures have been added</p>

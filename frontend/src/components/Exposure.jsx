@@ -6,7 +6,7 @@ const Exposure = ({ exposure, openEditExposures }) => {
   const date = exposure.date ? new Date(exposure.date) : null
 
   return (
-    <Card m='4'>
+    <Card>
       <Flex gap='2'>
         <Flex direction='column' >
 
