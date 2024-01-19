@@ -60,7 +60,7 @@ const AddExposure = ({ kid, handleGoBack }) => {
             <Flex direction='column' justify='between'>
               <Form.Label>date</Form.Label>
               <Form.Control asChild>
-                <input id='date' type='date' defaultValue={today} {...register("date", { valueAsDate: true })} ></input>
+                <input id='date' type='date'  {...register("date", { valueAsDate: true })} ></input>
               </Form.Control>
             </Flex>
           </Form.Field>
