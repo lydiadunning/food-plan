@@ -1,7 +1,8 @@
 import { useUpdateExposure } from "../serverStore/mutations"
 import { useForm } from "react-hook-form"
-import { Button, Flex, Heading } from '@radix-ui/themes'
+import { Button, Flex, Heading, IconButton } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form';
+import { x } from "../assets/svgImages";
 
 const EditExposure = ({ kid, exposure, closeEditExposure }) => {
   const {register, handleSubmit} = useForm({
@@ -10,7 +11,7 @@ const EditExposure = ({ kid, exposure, closeEditExposure }) => {
       description: exposure.description,
       outcomes: exposure.outcomes,
       meal: exposure.meal,
-      date: exposure.date.slice(0, 10)
+      date: exposure.date?.slice(0, 10)
     }
   })
   
@@ -27,6 +28,7 @@ const EditExposure = ({ kid, exposure, closeEditExposure }) => {
     <>
       <Flex justify='between'>
         <Heading>Edit Exposure</Heading>
+        <IconButton onClick={closeEditExposure}>{x}</IconButton>
       </Flex>
       <Form.Root onSubmit={ handleSubmit(onSubmit) }>
         <Flex direction='column' gap='2' align='center'>

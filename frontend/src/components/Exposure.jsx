@@ -3,6 +3,7 @@ import { pencil } from '../assets/svgImages'
 
 const Exposure = ({ exposure, openEditExposures }) => {
 
+  console.log({exposure})
   const date = exposure.date ? new Date(exposure.date) : null
 
   return (
