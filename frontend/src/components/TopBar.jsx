@@ -12,7 +12,7 @@ const TopBar = ({ handleResetTo, handleGoBack, showBack }) => {
 
   const logout = async () => {
     browserLogout()
-    await queryClient.invalidateQueries('kids')
+    queryClient.clear()
     handleResetTo('login')
     setOpen(false)
   }
