@@ -37,7 +37,7 @@ const AddKid = ({ handleGoBack }) => {
           <Form.Field>
             <Form.Label>{nameLabel}</Form.Label>
             <Form.Control asChild> 
-              <input id='name' type='text' {...register('name')} required></input>
+              <input type='text' {...register('name')} required></input>
             </Form.Control>
           </Form.Field>
           <Form.Submit asChild>

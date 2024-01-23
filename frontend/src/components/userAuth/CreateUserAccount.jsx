@@ -46,7 +46,7 @@ const CreateUserAccount = ({ setShowCreateAccount }) => {
               </Form.Message>
             </div>
             <Form.Control asChild>
-              <input id='username' type='text' required {...register('username')} style={inputStyle} />
+              <input type='text' required {...register('username')} style={inputStyle} />
             </Form.Control>
           </Form.Field>
           <Form.Field>
@@ -57,7 +57,7 @@ const CreateUserAccount = ({ setShowCreateAccount }) => {
               </Form.Message>
             </div>
             <Form.Control asChild>
-              <input id='name' type='text' required {...register('name')} style={inputStyle}/>
+              <input type='text' required {...register('name')} style={inputStyle}/>
             </Form.Control>
           </Form.Field>
           <Form.Field>
@@ -68,7 +68,7 @@ const CreateUserAccount = ({ setShowCreateAccount }) => {
               </Form.Message>
             </div>
             <Form.Control asChild>
-              <input id='email' type='text' required {...register('email')}style={inputStyle}></input>
+              <input type='text' required {...register('email')}style={inputStyle}></input>
             </Form.Control>
           </Form.Field>
           <Form.Field>
@@ -79,7 +79,7 @@ const CreateUserAccount = ({ setShowCreateAccount }) => {
               </Form.Message>
             </div>
             <Form.Control asChild>
-              <input id='password' type='text' required {...register('password')} style={inputStyle}></input>
+              <input  type='text' required {...register('password')} style={inputStyle}></input>
             </Form.Control>
           </Form.Field>
           <Form.Submit asChild>

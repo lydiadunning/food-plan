@@ -31,7 +31,7 @@ const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
             <Form.Field>
               <Form.Label>Add an outcome: </Form.Label>
               <Form.Control asChild>
-                <input type='text' id='outcome' name='outcome' {...register('outcome')} required></input>
+                <input type='text' name='outcome' {...register('outcome')} required></input>
               </Form.Control>
             </Form.Field>
             <Form.Submit asChild>

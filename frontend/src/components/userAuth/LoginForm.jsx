@@ -52,7 +52,7 @@ export function LoginForm({ handleGoTo }) {
                     </Form.Message>
                   </Flex>
                   <Form.Control asChild>
-                    <input id='username' type='text' required {...register('username')} style={inputStyle}/>
+                    <input type='text' required {...register('username')} style={inputStyle}/>
                   </Form.Control>
                 </Form.Field>
                 <Form.Field>
@@ -63,7 +63,7 @@ export function LoginForm({ handleGoTo }) {
                       </Form.Message>
                     </Flex>
                   <Form.Control asChild>
-                    <input id='password' type='text' required {...register('password')} style={inputStyle}/>
+                    <input type='text' required {...register('password')} style={inputStyle}/>
                   </Form.Control>
                 </Form.Field>
                 <Form.Submit asChild>

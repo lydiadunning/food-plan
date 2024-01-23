@@ -46,7 +46,7 @@ const EditKid = ({ kid, handleGoBack, setKid }) => {
                 <Flex gap='1'>
                   <Form.Label>Rename {name}:</Form.Label>
                   <Form.Control asChild>
-                    <input id='name' type='text' required {...register('name')} />
+                    <input type='text' required {...register('name')} />
                   </Form.Control>
                 </Flex>
                 <Form.Submit asChild>
