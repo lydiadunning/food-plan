@@ -71,7 +71,7 @@ function App() {
   // end of react-query behavior  
 
   return (
-    <Container size='1' className="app" py='1' px='6'>
+    <Container style={{backgroundColor: 'var(--sand-3)'}} size='1' className="app" py='1' px='6'>
       <TopBar handleResetTo={handleResetTo} handleGoBack={handleGoBack} showBack={showBack}/>
       <CurrentView current={current} kid={kid} setKid={setKid} kids={kids} handleHistory={handleHistory} />
     </Container>
