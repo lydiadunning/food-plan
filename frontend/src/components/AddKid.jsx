@@ -2,7 +2,7 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import OutcomeMenu from "./outcomeOptionMenu/OutcomeMenu.jsx"
-import { Button, Heading } from '@radix-ui/themes'
+import { Button, Heading, Card, Box, Flex } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form';
 
 import SavePage from './SavePage.jsx'
@@ -30,46 +30,50 @@ const AddKid = ({ handleGoBack }) => {
   }
 
   return (
-    <div>
-      {
-        !kidName &&
-        <Form.Root onSubmit={handleSubmit(submitName)}>
-          <Form.Field>
-            <Form.Label>{nameLabel}</Form.Label>
-            <Form.Control asChild> 
-              <input type='text' {...register('name')} required></input>
-            </Form.Control>
-          </Form.Field>
-          <Form.Submit asChild>
-            <Button my='3'type='submit'>Continue</Button>
-          </Form.Submit>
-        </Form.Root>
-      }
-      {
-        (kidName && showOutcomes == [] && !showSave) &&
-        <>
-          <Heading>Do you want to record how {kidName} responds to foods?</Heading>
-          <Button onClick={() => {setShowOutcomes(true)}}>yes</Button>
-          <Button mx='3' onClick={() => setShowSave(true)}>no</Button>
-        </>
-      }
-      {
-        showOutcomes &&
-        <>
-          <OutcomeMenu outcomes={outcomes} setOutcomes={ setOutcomes } showOutcomeHints={ true } />
-          <Button mr='3' onClick={ acceptHandler }>Accept</Button>
-        </>
-      }
-      {
-        showSave && 
-        <SavePage 
-          kidName={kidName}
-          outcomeOptions={outcomes}
-          handleGoBack={handleGoBack}
-        />
-      }
-      <Button onClick={ handleGoBack }>Cancel</Button>
-    </div>
+    <Card>
+      <Box p='6'>
+        {
+          !kidName &&
+          <Form.Root onSubmit={handleSubmit(submitName)}>
+            <Form.Field>
+              <Form.Label>{nameLabel}</Form.Label>
+              <Form.Control asChild> 
+                <input type='text' {...register('name')} required></input>
+              </Form.Control>
+            </Form.Field>
+            <Form.Submit asChild>
+              <Button size='3' my='3'type='submit'>Continue</Button>
+            </Form.Submit>
+          </Form.Root>
+        }
+        {
+          (kidName && showOutcomes == [] && !showSave) &&
+          <Flex direction='column' gap='2' mb='3'>
+            <Heading>Do you want to record how {kidName} responds to foods?</Heading>
+            <Flex gap='2'>
+              <Button size='3' onClick={() => {setShowOutcomes(true)}}>yes</Button>
+              <Button size='3' mx='3' onClick={() => setShowSave(true)}>no</Button>
+            </Flex>
+          </Flex>
+        }
+        {
+          showOutcomes &&
+          <>
+            <OutcomeMenu outcomes={outcomes} setOutcomes={ setOutcomes } showOutcomeHints={ true } />
+            <Button size='3' mr='3' onClick={ acceptHandler }>Accept</Button>
+          </>
+        }
+        {
+          showSave && 
+          <SavePage 
+            kidName={kidName}
+            outcomeOptions={outcomes}
+            handleGoBack={handleGoBack}
+          />
+        }
+        <Button size='3' onClick={ handleGoBack }>Cancel</Button>
+      </Box>
+    </Card>
   )
 }
 

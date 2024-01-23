@@ -20,8 +20,8 @@ const KidInList = ({ kid, openAddExposure, openKid, openEditKid }) => {
         {/* <div className='kid-in-list'> */}
         <Flex gap='3' direction='column'>
 
-          <Button onClick={ () => openKid(kid) }>More Info</Button>
-          <Button onClick={ () => openAddExposure() }>add an introduction</Button>
+          <Button size='3' onClick={ () => openKid(kid) }>More Info</Button>
+          <Button size='3' onClick={ () => openAddExposure() }>add an introduction</Button>
         </Flex>
         <Flex gap='3' direction='column' align='center'>
           { listEach(kid.outcomeOptions, 'outcome') }

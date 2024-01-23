@@ -50,7 +50,7 @@ const EditExposure = ({ kid, exposure, closeEditExposure }) => {
             </Flex>
           </Form.Field>
           
-          <Flex justify='between'>
+          <Flex justify='between' wrap='wrap'>
             <Form.Field>
               <Flex direction='column' justify='between'>
                 <Form.Label>meal</Form.Label>

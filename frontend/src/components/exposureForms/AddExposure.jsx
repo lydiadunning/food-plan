@@ -44,12 +44,12 @@ const AddExposure = ({ kid, handleGoBack }) => {
                 </Flex>
               </Form.Field>
               
-              <Flex justify='between'>
+              <Flex justify='between' wrap='wrap'>
                 <Form.Field>
                   <Flex direction='column' justify='between'>
                     <Form.Label>meal</Form.Label>
                     <Form.Control asChild>
-                      <input type='text' {...register('meal')}></input>
+                      <input size='10' type='text' {...register('meal')}></input>
                     </Form.Control>
                   </Flex>
                 </Form.Field>
