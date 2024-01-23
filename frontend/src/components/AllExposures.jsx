@@ -3,8 +3,7 @@ import { useExposures } from '../serverStore/queries.jsx'
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { useState } from 'react';
 import { Button, Flex } from '@radix-ui/themes'
-import EditExposure from './EditExposure.jsx';
-import exp from 'constants';
+import EditExposure from './exposureForms/EditExposure.jsx';
 
 
 const AllExposures = ({ kid, openEditExposures }) => {

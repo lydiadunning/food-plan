@@ -3,7 +3,7 @@ import { useState } from 'react'
 // import Exposure from "./Exposure.jsx"
 import AllExposures from './AllExposures.jsx'
 import { DeleteKid } from './DeleteKid.jsx'
-import EditExposure from './EditExposure.jsx'
+import EditExposure from './exposureForms/EditExposure.jsx'
 import { Button, Card, Heading, Flex, IconButton } from '@radix-ui/themes'
 import { pencil } from '../assets/svgImages.jsx'
 

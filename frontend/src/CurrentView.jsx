@@ -1,5 +1,5 @@
 import AddKid from './components/AddKid.jsx'
-import AddExposure from './components/AddExposure.jsx'
+import AddExposure from './components/exposureForms/AddExposure.jsx'
 import Kid from './components/Kid';
 import EditKid from './components/EditKid.jsx'
 import { KidList } from './components/KidList';
