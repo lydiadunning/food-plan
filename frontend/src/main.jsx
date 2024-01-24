@@ -4,7 +4,7 @@ import App from './App.jsx'
 import './index.css'
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { HistoryContextProvider } from './components/history/useHistory.jsx'
 import { checkForLogin } from './components/userAuth/userHooks.jsx'
 

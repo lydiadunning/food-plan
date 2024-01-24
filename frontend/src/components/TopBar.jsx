@@ -2,7 +2,7 @@ import * as Popover from '@radix-ui/react-popover';
 import { browserLogout } from './userAuth/userHooks';
 import { useState } from 'react';
 import { Button, Card, Flex, Link } from '@radix-ui/themes'
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { triangle, x } from '../assets/svgImages';
 
 const TopBar = ({ handleResetTo, handleGoBack, showBack }) => {

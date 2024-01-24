@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getUserConfig, handleLogin } from "../components/userAuth/userHooks";
 
 const baseUrl = 'http://localhost:2002/api/'
@@ -13,27 +13,21 @@ const loginUrl = baseUrl.concat('login/')
 // not currently using this
 export const useCreateAccount =  () => {
   // useCreateAccount is a model for making a useMutation available.  
-  return useMutation(user => {
-    axios.post(userUrl, user)
+  return useMutation({
+    mutationFn: user => axios.post(userUrl, user)
   })
 }
 
 // not currently using this
 export const useLoginAccount = () => {
-  return useMutation(credentials => {
-    return axios.post(loginUrl, credentials)
-  }, {
-    onSuccess: async(data) => {
-      console.log('login successful')
-      console.log(data)
-      handleLogin(data.data)
-    },
+  return useMutation({
+    mutationFn: credentials => axios.post(loginUrl, credentials),
+    onSuccess: async(data) => handleLogin(data.data),
     onError: (data) => {
       console.log(data)
     }
   })
 }
-
 
 /**
  * 
@@ -46,14 +40,15 @@ export const useCreateKid = () => {
   // creating a kid should add the kid to the list of kids in data.
   
 
-  return useMutation(kid => {
-    const config = getUserConfig()
-    console.log({config}, {kid})
-    return axios.post(kidUrl, kid, config)
-  }, {
+  return useMutation({
+    mutationFn: kid => {
+      const config = getUserConfig()
+      console.log({config}, {kid})
+      return axios.post(kidUrl, kid, config)
+    }, 
     onSuccess: async (data) => {
       console.log('success')
-      await queryClient.invalidateQueries('kids')
+      await queryClient.invalidateQueries({queryKey: ['kids']})
     }
   })
 }
@@ -68,17 +63,11 @@ export const useCreateExposure = (kidId) => {
   const queryClient = useQueryClient()
 
 
-  return useMutation(exposure => {
-    console.log({url})
-    console.log({exposure})
-    console.log({kidId})
-    return axios.patch(url, exposure, config)
-  }, {
+  return useMutation({
+    mutationFn: exposure => axios.patch(url, exposure, config), 
     onSuccess: async (data) => {
       console.log('success')
-      await queryClient.invalidateQueries('exposure')
-      await queryClient.invalidateQueries('kids')
-
+      await queryClient.invalidateQueries(['kids'])
     }
   })
 }
@@ -90,15 +79,12 @@ export const useUpdateKid = (kidId) => {
   const queryClient = useQueryClient()
   console.log(kidId)
 
-  return useMutation(kid => {
-    console.log(kidUrl.concat(kidId), kid, kidId)
-    console.log({kid})
-    return axios.patch(kidUrl.concat(kidId), kid, config)
-  }, {
+  return useMutation({
+    mutationFn: kid => axios.patch(kidUrl.concat(kidId), kid, config),
     onSuccess: async (data) => {
       console.log('success')
       console.log(data.data)
-      await queryClient.invalidateQueries('kids')
+      await queryClient.invalidateQueries(['kids'])
     }
   })
 }
@@ -113,15 +99,11 @@ export const useUpdateExposure = (kidId, exposureId) => {
   const url = kidUrl.concat(kidId, '/exposure/', exposureId, '/')
   const queryClient = useQueryClient()
 
-  return useMutation(exposure => {
-    console.log({url})
-    console.log({exposure})
-    return axios.patch(url, exposure, config)
-  }, {
+  return useMutation({
+    mutationFn: exposure => axios.patch(url, exposure, config),
     onSuccess: async (data) => {
       console.log('success')
-      await queryClient.invalidateQueries('exposure')
-      await queryClient.invalidateQueries('kids')
+      await queryClient.invalidateQueries(['kids'])
     }
   })
 }
@@ -136,13 +118,11 @@ export const useDeleteKid = () => {
   const config = getUserConfig()
   const queryClient = useQueryClient()
   
-  return useMutation (kid => {
-    console.log('in delete mutation', kidUrl.concat(kid.id))
-    return axios.delete(kidUrl.concat(kid.id), config)
-  }, {
+  return useMutation ({
+    mutationFn: kid => axios.delete(kidUrl.concat(kid.id), config),
     onSuccess: async (data, variables, context) => {
       console.log('success')
-      await queryClient.invalidateQueries('kids')
+      await queryClient.invalidateQueries(['kids'])
     }
   })
 }

@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getUserConfig } from "../components/userAuth/userHooks";
 
 const baseUrl = 'http://localhost:2002/api/'
@@ -12,12 +12,12 @@ const baseUrl = 'http://localhost:2002/api/'
  */
 export const useKids = () => {
   const config = getUserConfig()
-  console.log('returning useQuery')
-  return useQuery('kids', () => {
-    console.log('kid query')
+  return useQuery({
+    queryKey: ['kids'], 
+    queryFn: () => {
     if (!config) return []
-    console.log('axios query')
     return axios.get(baseUrl.concat('kid/'), config)
+    }
   })
 }
 
@@ -25,8 +25,9 @@ export const useKids = () => {
  * @returns { isLoading, error, data }
  */
 export const useOutcomeTips = () => {
-  return useQuery('outcomeTips', () => 
-    axios.get(baseUrl.concat('outcometips/'))
-  )
+  return useQuery({
+    queryKey: ['outcomeTips'], 
+    queryFn: () => axios.get(baseUrl.concat('outcometips/'))
+  })
 }
 
