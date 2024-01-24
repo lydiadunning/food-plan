@@ -40,22 +40,26 @@ Go to `/backend/tests` to see unit tests and documentation of testing progress.
 To run tests, navigate to the backend folder in terminal and type `npm run test`. To run a subset of tests, enter `npm run test -- tests/ *filename* `
 ## Next Steps in Development
 
-### Now
-* Styling with Radix
+### What I've Learned / What's Gone Wrong
+1. Build new parts as you need them. I built this app starting with the data model, and constructed a huge backend full of endpoints to coordinate with my initial data model, which used too many schemas and needed complex operations and many access points. Even after I simplified the data, I refactored more endpoints than my frontend really needed. 
 
+### Technologies
+## Backend
+Node.js with Express. Uses mongoose to access MongoDB. Manages password encryption with bcryptjs and uses json web tokens to authenticate users. Backend endpoint testing with Jest.
+
+## Frontend
+React.js, no framework, build with Vite. Accesses backend with axios and manages server state with react-query. Manages forms with react-hook-form. Styled with Radix UI themes and primitives.
+
+### Now
+* Package into build and upload to fly.io
+
+### Next
+* Test login edgecases and improve error prevention
+* Make sure deleting or editing one kid doesn't remove other kids.
+* Replace history reducer with a router. Can I build my own, instead of using a library? 
 * Ensure login functionality works properly
   * Test edgecases and improve error detection
 - why don't a user's children load in after login?
-
-### Next
-* Return all exposures in reverse chronological order
-
-* Add components nested in views that aren't on the App page to currentView component switch
-* Ensure login functionality works properly
-  * Test edgecases and improve error prevention
-* Make sure deleting or editing one kid doesn't remove other kids.
-* consider incorporating react router
-
 
 ### For Later
 * Review responses: correct HTTP code? enough information? 

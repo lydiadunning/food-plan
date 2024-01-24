@@ -41,6 +41,8 @@ userRouter.post('/', async (request, response, next) => {
     next(error)
   }
 })
+
+// not yet implemented.
  
 // // change a user - add a kid - not create a kid
 // userRouter.patch('/:id/addKid/:kidId', async (request, response) => {
