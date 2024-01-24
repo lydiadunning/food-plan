@@ -38,17 +38,16 @@ Go to `/backend/tests` to see unit tests and documentation of testing progress.
 ### Running Tests
 
 To run tests, navigate to the backend folder in terminal and type `npm run test`. To run a subset of tests, enter `npm run test -- tests/ *filename* `
-## Next Steps in Development
-
-### What I've Learned / What's Gone Wrong
-1. Build new parts as you need them. I built this app starting with the data model, and constructed a huge backend full of endpoints to coordinate with my initial data model, which used too many schemas and needed complex operations and many access points. Even after I simplified the data, I refactored more endpoints than my frontend really needed. 
 
 ### Technologies
-## Backend
+#### Backend
 Node.js with Express. Uses mongoose to access MongoDB. Manages password encryption with bcryptjs and uses json web tokens to authenticate users. Backend endpoint testing with Jest.
 
-## Frontend
+#### Frontend
 React.js, no framework, build with Vite. Accesses backend with axios and manages server state with react-query. Manages forms with react-hook-form. Styled with Radix UI themes and primitives.
+
+
+## Next Steps in Development
 
 ### Now
 * Package into build and upload to fly.io

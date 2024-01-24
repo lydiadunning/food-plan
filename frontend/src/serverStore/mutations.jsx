@@ -2,7 +2,7 @@ import axios from "axios"
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getUserConfig, handleLogin } from "../components/userAuth/userHooks";
 
-const baseUrl = 'http://localhost:2002/api/'
+const baseUrl = '/api/'
 const kidUrl = baseUrl.concat('kid/')
 
 const userUrl = baseUrl.concat('user/')

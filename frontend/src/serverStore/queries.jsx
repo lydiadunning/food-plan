@@ -2,7 +2,7 @@ import axios from "axios"
 import { useQuery } from '@tanstack/react-query';
 import { getUserConfig } from "../components/userAuth/userHooks";
 
-const baseUrl = 'http://localhost:2002/api/'
+const baseUrl = '/api/'
 
 
 // Queries ---------------------------------------------------
