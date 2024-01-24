@@ -9,8 +9,7 @@ const AllExposures = ({ kid }) => {
   const [open, setOpen] = useState(false);
   const [exposureIDToEdit, setExposureIDToEdit] = useState(null)
 
-  const exposures = kid.exposures
-
+  const exposures = kid.exposures || []
   const latestExposure = exposures.length > 0 ? exposures[0] : null
 
   return exposures.length > 1 ? (
