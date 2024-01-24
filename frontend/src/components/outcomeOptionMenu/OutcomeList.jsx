@@ -10,7 +10,6 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
   
   useEffect(() => {
     if(outcomes.length == 0 && data && showOutcomeHints) {
-      console.log(data.data.outcomeTips)
       const convertedOutcomes = data.data.outcomeTips.map(x => {
         return {
           id: x._id,
@@ -34,7 +33,6 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
   // so it will have no effect.
 
   const removeOutcomeHandler = (id) => {
-    console.log('in removeOutcomeHandler', id)
     setOutcomes(outcomes.filter(x => x.id !== id))
   }
 
@@ -77,7 +75,6 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
       }
       </Flex>
     </ol>
-    
   )
 }
 

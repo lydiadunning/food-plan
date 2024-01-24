@@ -11,7 +11,6 @@ const CreateUserAccount = ({ setShowCreateAccount }) => {
   const [ errorMessage, setErrorMessage ] = useState(null)
 
   const {register, handleSubmit} = useForm()
-  console.log('CREATE USER ACCOUNT')
 
   // const createAccount = useCreateAccount()
 
@@ -22,9 +21,7 @@ const CreateUserAccount = ({ setShowCreateAccount }) => {
   }
 
   const onSubmit = async (data) => {
-    console.log('Submit data', data)
     const created = await handleCreateAccount(data)
-    console.log(created)
     if (created) {
       setShowCreateAccount(false)
     } else {

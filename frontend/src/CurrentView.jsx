@@ -7,8 +7,6 @@ import { LoginForm } from './components/userAuth/LoginForm.jsx'
 
 
 const CurrentView = ({ current, kid, setKid, kids, handleHistory }) => {
-  console.log('in CurrentView', current)
-
   const { handleGoTo, handleGoBack } = handleHistory
 
   const handleGoToKid = (target, kid) => {

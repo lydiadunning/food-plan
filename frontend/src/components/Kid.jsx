@@ -1,26 +1,12 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react'
-// import Exposure from "./Exposure.jsx"
 import AllExposures from './AllExposures.jsx'
 import { DeleteKid } from './DeleteKid.jsx'
-import EditExposure from './exposureForms/EditExposure.jsx'
 import { Button, Card, Heading, Flex, IconButton } from '@radix-ui/themes'
 import { pencil } from '../assets/svgImages.jsx'
 
 const Kid = ({ kid, handleGoToKid, handleGoBack }) => {
-  const [ showEditExposure, setShowEditExposure ] = useState(false)
-  const [ exposureToEdit, setExposureToEdit ] = useState(null)
 
   console.log('kid in Kid', kid)
-
-  const openEditExposures = (exposure) => {
-    setExposureToEdit(exposure)
-    setShowEditExposure(true)
-  }
-
-  const closeEditExposure = () => {
-    setShowEditExposure(false)
-  }
 
   return (
     <Card>
@@ -38,12 +24,8 @@ const Kid = ({ kid, handleGoToKid, handleGoBack }) => {
             onClick={ () => handleGoToKid('addExposure', kid) }
           >add an introduction
         </Button>
-        <AllExposures kid={kid} openEditExposures={openEditExposures} />
-        {  
-          showEditExposure
-          &&
-          <EditExposure kid={kid} exposure={exposureToEdit} closeEditExposure={closeEditExposure} />
-        } 
+        <AllExposures kid={kid} />
+
       </Flex>
     </Card>
   )

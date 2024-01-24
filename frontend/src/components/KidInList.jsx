@@ -4,8 +4,6 @@ import { IconButton, Button, Grid, Text, Flex, Heading, Card } from '@radix-ui/t
 
 const KidInList = ({ kid, openAddExposure, openKid, openEditKid }) => {
   function listEach(arr, propertyName) {
-    console.log({arr})
-
     const strings = arr.map(x => <Text key={x.id}>{x[propertyName].toString()}</Text>)
     return strings
   }

@@ -6,7 +6,7 @@ import { Button, Flex } from '@radix-ui/themes'
 import EditExposure from './exposureForms/EditExposure.jsx';
 
 
-const AllExposures = ({ kid, openEditExposures }) => {
+const AllExposures = ({ kid }) => {
   const [open, setOpen] = useState(false);
   const [exposureIDToEdit, setExposureIDToEdit] = useState(null)
 
@@ -17,7 +17,6 @@ const AllExposures = ({ kid, openEditExposures }) => {
 
 
   const latestExposure = exposures.length > 0 ? exposures[0] : null
-  // console.log(latestExposure.id, exposureIDToEdit, exposureIDToEdit === latestExposure.id)
 
   return exposures.length > 1 ? (
     <Collapsible.Root className="CollapsibleRoot" open={open} onOpenChange={setOpen}>

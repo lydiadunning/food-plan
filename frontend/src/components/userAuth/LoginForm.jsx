@@ -21,7 +21,6 @@ export function LoginForm({ handleGoTo }) {
 
   const onSubmit = async (data) => {
     //login
-    console.log('data', data)
     const isLoggedIn = await handleLogin(data)
     // const something = loginAccount.mutate(data)
     if (isLoggedIn) {
