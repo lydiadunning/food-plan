@@ -5,7 +5,13 @@ const kidRouter = require('express').Router()
 // const { userExtractor } = require('../utils/middleware')
 
 kidRouter.get('/', async (request, response) => {
-  const kids = await Kid.find({ users: request.user }).populate('outcomeOptions', {outcome: 1, id: 1})
+  const kids = await Kid.find({ users: request.user })//.populate('outcomeOptions', {outcome: 1, id: 1})
+  kids.forEach(kid => {kid.exposures.sort((a, b) => {
+    return b.date.valueOf() - a.date.valueOf()
+  })
+  console.log(kid.exposures)
+}
+  )
   
   response.json(kids)
 })
@@ -134,7 +140,7 @@ kidRouter.get('/:kidId/outcomeOptions', async (request, response) => {
   }})
 
 kidRouter.get('/:kidId/exposure', async (request, response) => {
-  const kid = await Kid.findById(request.params.kidId).populate('exposures')
+  const kid = await Kid.findById(request.params.kidId).populate('exposures').sort({date: 1})
   if (kid) {
     response.json(kid.exposures)
   } else {
