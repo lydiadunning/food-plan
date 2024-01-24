@@ -30,13 +30,3 @@ export const useOutcomeTips = () => {
   )
 }
 
-export const useExposures = (kidId) => {
-  const config = getUserConfig()
-  const exposureUrl = baseUrl.concat('kid/', kidId, '/exposure/')
-  console.log('exposureUrl', exposureUrl)
-  return useQuery('exposure', () => 
-    axios.get(exposureUrl, config)
-  )
-}
-
-

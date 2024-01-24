@@ -1,5 +1,4 @@
 import Exposure from './Exposure.jsx'
-import { useExposures } from '../serverStore/queries.jsx'
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { useState } from 'react';
 import { Button, Flex } from '@radix-ui/themes'
@@ -10,11 +9,7 @@ const AllExposures = ({ kid }) => {
   const [open, setOpen] = useState(false);
   const [exposureIDToEdit, setExposureIDToEdit] = useState(null)
 
-  const { isLoading, error, data } = useExposures(kid.id)
-  if (isLoading) return 'Loading...'
-  if (error) return 'An error has occurred: ' + error.message
-  const exposures = data.data
-
+  const exposures = kid.exposures
 
   const latestExposure = exposures.length > 0 ? exposures[0] : null
 

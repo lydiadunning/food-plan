@@ -4,6 +4,7 @@ import { plus } from '../assets/svgImages.jsx';
 
 export const KidList = ({ kidData, handleGoToKid, handleGoTo }) => {
 
+  console.log({kidData})
   return (
     <>
       <Heading align='center' mt='3' mb='6'>Kids</Heading>
