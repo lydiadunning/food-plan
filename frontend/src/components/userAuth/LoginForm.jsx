@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { useForm } from "react-hook-form"
 import CreateUserAccount from './CreateUserAccount'
-// import { useLoginAccount } from '../../serverStore/mutations'
-import { handleLogin } from './userHooks'
+import { useLoginAccount } from '../../serverStore/mutations'
 import Error from '../Error'
 import * as Form from '@radix-ui/react-form';
 import { Button, Card, Flex, Box } from '@radix-ui/themes'
@@ -14,21 +13,13 @@ export function LoginForm({ handleGoTo }) {
 
   const { register, handleSubmit } = useForm()
 
-// commenting out serverStore mutation solutions until I decide they're better than the approach I'm implementing here.
-// one advantage is consistency with how other data is handled
-// disadvantage is that increased abstraction makes the jwt login process more nebulous.
-  // const loginAccount = useLoginAccount()
+  const loginAccount = useLoginAccount(
+    () => handleGoTo('kidList'),
+    () => setErrorMessage('Login unsuccessful')
+  )
 
   const onSubmit = async (data) => {
-    //login
-    const isLoggedIn = await handleLogin(data)
-    // const something = loginAccount.mutate(data)
-    if (isLoggedIn) {
-      handleGoTo('kidList')
-    } else {
-      // display an error message saying the login credentials weren't accepted/ the user doesn't exist
-      setErrorMessage('Login unsuccessful')
-    }
+    loginAccount.mutate(data)
   }
 
   return (

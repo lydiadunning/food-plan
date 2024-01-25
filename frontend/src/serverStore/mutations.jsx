@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { getUserConfig, handleLogin } from "../components/userAuth/userHooks";
+import { getUserConfig } from "../components/userAuth/userHooks";
 
 const baseUrl = '/api/'
 const kidUrl = baseUrl.concat('kid/')
@@ -18,14 +18,16 @@ export const useCreateAccount =  () => {
   })
 }
 
-// not currently using this
-export const useLoginAccount = () => {
+export const useLoginAccount = (successAction, errorAction) => {
+  const queryClient = useQueryClient()
   return useMutation({
     mutationFn: credentials => axios.post(loginUrl, credentials),
-    onSuccess: async(data) => handleLogin(data.data),
-    onError: (data) => {
-      console.log(data)
-    }
+    onSuccess: async(data) => {
+      window.localStorage.setItem('foodUser', JSON.stringify(data.data))
+      await queryClient.invalidateQueries({queryKey: ['kids']})
+      successAction()
+    },
+    onError: (data) => errorAction()
   })
 }
 

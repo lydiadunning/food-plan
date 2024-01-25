@@ -11,12 +11,12 @@ const baseUrl = '/api/'
  * @returns { isLoading, error, data }
  */
 export const useKids = () => {
-  const config = getUserConfig()
   return useQuery({
     queryKey: ['kids'], 
     queryFn: () => {
-    if (!config) return []
-    return axios.get(baseUrl.concat('kid/'), config)
+      const config = getUserConfig()
+      if (!config) return []
+      return axios.get(baseUrl.concat('kid/'), config)
     }
   })
 }
