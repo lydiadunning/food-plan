@@ -42,8 +42,8 @@ kidRouter.post('/', async (request, response) => {
       users: [user.id]
     })
     const result = await kid.save()
- 
-    user.updateOne({$push: {'kids': user.id}}, {upsert: true})
+    await user.updateOne({$push: {'kids': kid.id}}, {upsert: true})
+    user.save()
 
     response.status(201).json(result)
 
