@@ -14,12 +14,16 @@ They don't help parents track how regularly they're introducing foods, they don'
 
 I wanted to build an app for collecting data about feeding kids, approaching the data in a way that centers the parents role in offering foods instead of whether the child eats them. I also want to allow parents to record very small wins specific to their unique situation.
 
-## How To Download and Run
+## How To Run
 
-*This app is not yet hosted.*
-The hosted site will be linked from the About section of this project's repo on GitHub.
+### Live App
+A live version of the app is available at [https://food-app.fly.dev/](https://food-app.fly.dev/). 
+Log in as 'Example' with password 'example' to see the app in action without creating a profile. 
+Logging in as 'Example' populates the app with default data.
 
-* Clone a copy of this repo locally by entering 'git clone lydiadunning/food-plan' into git bash, terminal, command prompt, or another command line interface.
+### Local Version
+
+* Clone a copy of this repo locally by entering 'git clone lydiadunning/food-plan' into your preferred command line interface.
 * Place a .env file with the following contents in the backend folder:
 ```
 MONGODB_URI= *a MongoDB URI*
