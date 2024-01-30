@@ -1,8 +1,9 @@
 import axios from "axios"
-import { useQuery } from 'react-query';
-import { getUserConfig } from "../components/userAuth/userHooks";
+import { useQuery } from '@tanstack/react-query';
+import { checkForLogin, getUserConfig } from "../components/userAuth/userHooks";
+import sampleKids from "../assets/sample";
 
-const baseUrl = 'http://localhost:2002/api/'
+const baseUrl = '/api/'
 
 
 // Queries ---------------------------------------------------
@@ -11,14 +12,16 @@ const baseUrl = 'http://localhost:2002/api/'
  * @returns { isLoading, error, data }
  */
 export const useKids = () => {
-  const config = getUserConfig()
-  console.log('returning useKids useQuery')
-  console.log('config. if none, returns []', config)
-  return useQuery('kids', () => {
-    console.log('executing kid query')
-    if (!config) return []
-    console.log('axios query')
-    return axios.get(baseUrl.concat('kid/'), config)
+  let isExample = false
+  return useQuery({
+    queryKey: ['kids'], 
+    queryFn: () => {
+      const config = getUserConfig()
+      if (!config) return []
+      isExample = checkForLogin().username === 'Example' 
+      return axios.get(baseUrl.concat('kid/'), config)
+    },
+    initialData: isExample ? sampleKids : []
   })
 }
 
@@ -26,18 +29,9 @@ export const useKids = () => {
  * @returns { isLoading, error, data }
  */
 export const useOutcomeTips = () => {
-  return useQuery('outcomeTips', () => 
-    axios.get(baseUrl.concat('outcometips/'))
-  )
+  return useQuery({
+    queryKey: ['outcomeTips'], 
+    queryFn: () => axios.get(baseUrl.concat('outcometips/'))
+  })
 }
-
-export const useExposures = (kidId) => {
-  const config = getUserConfig()
-  const exposureUrl = baseUrl.concat('kid/', kidId, '/exposure/')
-  console.log('exposureUrl', exposureUrl)
-  return useQuery('exposure', () => 
-    axios.get(exposureUrl, config)
-  )
-}
-
 

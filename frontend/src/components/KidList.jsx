@@ -1,22 +1,32 @@
 import KidInList from './KidInList.jsx';
+import { IconButton, Flex, Heading, Card } from '@radix-ui/themes'
+import { plus } from '../assets/svgImages.jsx';
 
 export const KidList = ({ kidData, handleGoToKid, handleGoTo }) => {
 
+  console.log({kidData})
   return (
     <>
-      <h1>Kids</h1>
-      { kidData ? <ul>
+      <Heading align='center' mt='3' mb='6'>Kids</Heading>
+      { <Flex direction='column' gap='3' >
         { kidData?.map(kid => 
           <KidInList 
             key={ kid.id } 
             kid={ kid } 
-            openAddExposure={ () => handleGoToKid('addExposure', kid) }
+            openAddExposure={ () => handleGoToKid('addExposure', kid)}
             openKid={ () => handleGoToKid('kid', kid) }
             openEditKid={ () => handleGoToKid('editKid', kid)}
           />
         )}
-      </ul> : <p>no children</p>}
-      <button onClick={() => handleGoTo('addKid')}>Add a kid</button>
+        <Card size='5'>
+          <IconButton 
+            size='3' 
+            onClick={() => handleGoTo('addKid')}>
+            { plus }
+          </IconButton>
+        </Card>
+      </Flex> }
+      
     </>
   );
 }

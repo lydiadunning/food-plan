@@ -1,22 +1,34 @@
 /* eslint-disable react/prop-types */
-import { DeleteKid } from './DeleteKid.jsx'
+import { pencil } from '../assets/svgImages.jsx'
+import { IconButton, Button, Grid, Text, Flex, Heading, Card } from '@radix-ui/themes'
 
 const KidInList = ({ kid, openAddExposure, openKid, openEditKid }) => {
-  
   function listEach(arr, propertyName) {
-    const strings = arr.map(x => x[propertyName])
-    return strings.toString()
+    const strings = arr.map(x => <Text key={x.id}>{x[propertyName].toString()}</Text>)
+    return strings
   }
 
   return (
-    <li key={ kid.id }>
-      <p>{ kid.name }</p>
-      <button onClick={ () => openKid(kid) }>More Info</button>
-      <p>{ listEach(kid.outcomeOptions, 'outcome') }</p>
-      <button onClick={ () => openAddExposure() }>add an introduction</button>
-      <button onClick={ () => openEditKid() }>Edit</button>
-      <DeleteKid kid={kid} closeKid={()=>{}}/>
-    </li>
+    <Card size='1' key={ kid.id }>
+      <Grid gap='3' flow='row' columns='2' p='6'>
+        <Heading className='kid-name'>{ kid.name }</Heading>
+        <Flex gap='3' justify='end' wrap='wrap'>
+          <IconButton onClick={ () => openEditKid() }>{pencil}</IconButton>
+        </Flex>
+        {/* <div className='kid-in-list'> */}
+        <Flex gap='3' direction='column'>
+
+          <Button size='3' onClick={ () => openKid(kid) }>More Info</Button>
+          <Button size='3' onClick={ () => openAddExposure() }>add an introduction</Button>
+        </Flex>
+        <Flex gap='3' direction='column' align='center'>
+          { listEach(kid.outcomeOptions, 'outcome') }
+        </Flex>
+
+        
+        {/* </div> */}
+      </Grid>
+    </Card>
   )
 }
 

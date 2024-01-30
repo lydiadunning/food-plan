@@ -7,7 +7,8 @@ import {
   useHistoryDispatch,
 } from './components/history/useHistory.jsx'
 import CurrentView from './CurrentView.jsx';
-import AddKid from './components/AddKid.jsx'
+import TopBar from './components/TopBar.jsx';
+import { Container } from '@radix-ui/themes'import AddKid from './components/AddKid.jsx'
 import AddExposure from './components/AddExposure.jsx'
 import Kid from './components/Kid';
 import EditKid from './components/EditKid.jsx'
@@ -45,10 +46,19 @@ function App() {
     });
   }
 
+  function handleResetTo(target) {
+    dispatch({
+      type: 'resetto',
+      target: target,
+    });
+  }
+
+
   const handleHistory = {
     handleGoTo,
     handleGoBack,
-    handleGoBackTo
+    handleGoBackTo,
+    handleResetTo
   }
 
   // const currentPath = `/${history.current}`
@@ -80,6 +90,11 @@ function App() {
   console.log(checkForLogin(), checkForLogin() ? 'yes' : 'no')
 
   return (
+    <Container style={{backgroundColor: 'var(--sand-3)'}} size='1' className="app" py='1' px='6'>
+      <TopBar handleResetTo={handleResetTo} handleGoBack={handleGoBack} showBack={showBack}/>
+      <CurrentView current={current} kid={kid} setKid={setKid} kids={kids} handleHistory={handleHistory} />
+    </Container>
+  );
     <BrowserRouter>
       <Routes>
         <Route path='/' element=

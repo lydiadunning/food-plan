@@ -17,7 +17,7 @@ const userRouter = require('./controllers/users.js')
 const loginRouter = require('./controllers/login.js')
 
 const app = express()
-app.use(express.static('build'))// serves static files in a directory called build. REST api, confirm if necessary.
+app.use(express.static('dist'))// serves static files, in this case the frontend build, in a directory called dist. 
 app.use(express.json()) // enables json parsing middleware
 app.use(requestLogger)
 app.use(tokenExtractor)
@@ -35,7 +35,7 @@ mongoose.connect(config.MONGODB_URI)
   })
 
 app.use(cors())// enables cors (cross origin resource sharing)
-app.get('http://localhost:5173', cors(), function (req, res, next) {
+app.get(config.PORT, cors(), function (req, res, next) {
   res.json({msg: 'This is CORS-enabled for a Single Route'})
 })
 

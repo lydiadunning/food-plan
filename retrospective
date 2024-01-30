@@ -6,4 +6,3 @@ Learned:
 
 * When I redesigned my backend, I completed design and testing before redesigning the frontend. The frontend needed fewer queries to do the same work, but I had already written and tested many superfluous queries. Implement functionality as needed, not because it may be useful. 
 
-

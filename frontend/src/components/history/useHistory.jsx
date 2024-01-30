@@ -23,6 +23,12 @@ export function historyReducer(state, action) {
         history: state.history.slice(0, state.history.findLastIndex(loc => loc === action.target))
       }
     }
+    case 'resetto': {
+      return {
+        current: action.target,
+        history: []
+      }
+    }
     default: {
       throw Error('Unknown action: ' + action.type);
     }

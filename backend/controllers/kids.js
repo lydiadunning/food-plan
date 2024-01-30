@@ -1,12 +1,16 @@
 const Kid  = require('../models/kid.js')
 const User = require('../models/user.js')
 const kidRouter = require('express').Router()
-// const logger = require('../utils/logger.js')
-// const { userExtractor } = require('../utils/middleware')
+const logger = require('../utils/logger.js')
+
 
 kidRouter.get('/', async (request, response) => {
-  const kids = await Kid.find({ users: request.user }).populate('outcomeOptions', {outcome: 1, id: 1})
-  
+  const kids = await Kid.find({ users: request.user })
+  kids.forEach(kid => { // inefficient. alternative approach to sorting here is keeping the list in order.
+    kid.exposures.sort((a, b) => {
+      return b.date.valueOf() - a.date.valueOf()
+    })
+  })
   response.json(kids)
 })
 
@@ -24,7 +28,6 @@ kidRouter.get('/', async (request, response) => {
 kidRouter.post('/', async (request, response) => {
   // return 400 error if request body missing vital info
   // name exists, contains characters
-  // outcomes, if it exists, is a list
   if (!request.body.name) {
     response.status(400).end()
   } 
@@ -32,7 +35,6 @@ kidRouter.post('/', async (request, response) => {
   try {
     const user = request.user
 
-    // if outcomes.length > 0, is it made of strings? convert to objects.
     const outcomeOptions = request.body.outcomeOptions || []
     const kid = new Kid({
       name: request.body.name,
@@ -40,8 +42,8 @@ kidRouter.post('/', async (request, response) => {
       users: [user.id]
     })
     const result = await kid.save()
- 
-    user.updateOne({$push: {'kids': user.id}}, {upsert: true})
+    await user.updateOne({$push: {'kids': kid.id}}, {upsert: true})
+    user.save()
 
     response.status(201).json(result)
 
@@ -134,7 +136,7 @@ kidRouter.get('/:kidId/outcomeOptions', async (request, response) => {
   }})
 
 kidRouter.get('/:kidId/exposure', async (request, response) => {
-  const kid = await Kid.findById(request.params.kidId).populate('exposures')
+  const kid = await Kid.findById(request.params.kidId).populate('exposures').sort({date: 1})
   if (kid) {
     response.json(kid.exposures)
   } else {

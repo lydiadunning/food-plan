@@ -14,12 +14,16 @@ They don't help parents track how regularly they're introducing foods, they don'
 
 I wanted to build an app for collecting data about feeding kids, approaching the data in a way that centers the parents role in offering foods instead of whether the child eats them. I also want to allow parents to record very small wins specific to their unique situation.
 
-## How To Download and Run
+## How To Run
 
-*This app is not yet hosted.*
-The hosted site will be linked from the About section of this project's repo on GitHub.
+### Live App
+A live version of the app is available at [https://food-app.fly.dev/](https://food-app.fly.dev/). 
+Log in as 'Example' with password 'example' to see the app in action without creating a profile. 
+Logging in as 'Example' populates the app with default data.
 
-* Clone a copy of this repo locally by entering 'git clone lydiadunning/food-plan' into git bash, terminal, command prompt, or another command line interface.
+### Local Version
+
+* Clone a copy of this repo locally by entering 'git clone lydiadunning/food-plan' into your preferred command line interface.
 * Place a .env file with the following contents in the backend folder:
 ```
 MONGODB_URI= *a MongoDB URI*
@@ -38,20 +42,27 @@ Go to `/backend/tests` to see unit tests and documentation of testing progress.
 ### Running Tests
 
 To run tests, navigate to the backend folder in terminal and type `npm run test`. To run a subset of tests, enter `npm run test -- tests/ *filename* `
+
+### Technologies
+#### Backend
+Node.js with Express. Uses mongoose to access MongoDB. Manages password encryption with bcryptjs and uses json web tokens to authenticate users. Backend endpoint testing with Jest.
+
+#### Frontend
+React.js, no framework, build with Vite. Accesses backend with axios and manages server state with react-query. Manages forms with react-hook-form. Styled with Radix UI themes and primitives.
+
+
 ## Next Steps in Development
 
 ### Now
+* Package into build and upload to fly.io
+
+### Next
+* Test login edgecases and improve error prevention
+* Make sure deleting or editing one kid doesn't remove other kids.
+* Replace history reducer with a router. Can I build my own, instead of using a library? 
 * Ensure login functionality works properly
   * Test edgecases and improve error detection
 - why don't a user's children load in after login?
-
-### Next
-* Add components nested in views that aren't on the App page to currentView component switch
-* Ensure login functionality works properly
-  * Test edgecases and improve error prevention
-* Make sure deleting or editing one kid doesn't remove other kids.
-* consider incorporating react router
-
 
 ### For Later
 * Review responses: correct HTTP code? enough information? 

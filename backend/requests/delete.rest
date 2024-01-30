@@ -1,6 +1,7 @@
 # DELETE http://localhost:2002/api/try/hints
 
-DELETE http://localhost:2002/api/kid/657247a82baf586dfd313a31
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkJlbnRvYXN0IiwiaWQiOiI2NTZhM2YyYTI0NzY1YzhlYmMyMGU5YzgiLCJpYXQiOjE3MDE5ODgwOTN9.Hi4QAV2wW6Re085btphwGgeXvj93sXLhNaRdfWy0SLc
+DELETE http://localhost:2002/api/kid/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkV4YW1wbGUiLCJpZCI6IjY1YjE4OGY4ZTNkYzAxNDI2ZDQ5MzQ3NSIsImlhdCI6MTcwNjI5MjkwM30.DD5MoegQqcb79DKloxIQh-uYCJdsLmlcN0Yu0rlxyXM
 
 # DELETE http://localhost:2002/api/kid
+

@@ -1,14 +1,12 @@
 import AddKid from './components/AddKid.jsx'
-import AddExposure from './components/AddExposure.jsx'
+import AddExposure from './components/exposureForms/AddExposure.jsx'
 import Kid from './components/Kid';
 import EditKid from './components/EditKid.jsx'
 import { KidList } from './components/KidList';
-import { Login } from './components/userAuth/Login.jsx'
+import { LoginForm } from './components/userAuth/LoginForm.jsx'
 
 
 const CurrentView = ({ current, kid, setKid, kids, handleHistory }) => {
-  console.log('in CurrentView', current)
-
   const { handleGoTo, handleGoBack } = handleHistory
 
   const handleGoToKid = (target, kid) => {
@@ -18,11 +16,11 @@ const CurrentView = ({ current, kid, setKid, kids, handleHistory }) => {
 
   switch (current) {
     case 'login':
-      return <Login handleGoTo={handleGoTo} />;
+      return <LoginForm handleGoTo={handleGoTo} />;
     case 'addExposure':
       return <AddExposure kid={kid} handleGoBack={handleGoBack} />;
     case 'editKid':
-      return <EditKid kid={kid} handleGoBack={handleGoBack} />;
+      return <EditKid kid={kid} handleGoBack={handleGoBack} setKid={setKid} />;
     case 'addKid':
       return <AddKid handleGoBack={handleGoBack}/>;
     case 'kid':
