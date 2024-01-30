@@ -35,7 +35,7 @@ mongoose.connect(config.MONGODB_URI)
   })
 
 app.use(cors())// enables cors (cross origin resource sharing)
-app.get('http://localhost:5173', cors(), function (req, res, next) {
+app.get(config.PORT, cors(), function (req, res, next) {
   res.json({msg: 'This is CORS-enabled for a Single Route'})
 })
 
