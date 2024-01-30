@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useQuery } from '@tanstack/react-query';
-import { getUserConfig } from "../components/userAuth/userHooks";
+import { checkForLogin, getUserConfig } from "../components/userAuth/userHooks";
+import sampleKids from "../assets/sample";
 
 const baseUrl = '/api/'
 
@@ -11,13 +12,16 @@ const baseUrl = '/api/'
  * @returns { isLoading, error, data }
  */
 export const useKids = () => {
+  let isExample = false
   return useQuery({
     queryKey: ['kids'], 
     queryFn: () => {
       const config = getUserConfig()
       if (!config) return []
+      isExample = checkForLogin().username === 'Example' 
       return axios.get(baseUrl.concat('kid/'), config)
-    }
+    },
+    initialData: isExample ? sampleKids : []
   })
 }
 

@@ -11,6 +11,7 @@ const { ObjectId } = mongoose.Types;
 
 loginRouter.post('/', async (request, response) => {
   const { username, password } = request.body
+  const isExample = username === 'Example'
 
   const user = await User.findOne({ username })
   const passwordCorrect = user === null
@@ -29,7 +30,7 @@ loginRouter.post('/', async (request, response) => {
 
   const token = jwt.sign(userForToken, process.env.SECRET)
 
-  if (username === 'Example') {
+  if (isExample) {
     resetExample(user)
   }
 
@@ -38,23 +39,18 @@ loginRouter.post('/', async (request, response) => {
     .send({ token, username: user.username, name: user.name })
 })
 
-async function  resetExample(user) {
+async function resetExample(user) {
   const sampleKidIds = [
     "65b1894800779901eedb5096",
     "65b19e2ddcfa436365a182e9"
   ]
- 
-  await Kid.deleteMany({ users: user.id })
 
-  const kids = await Kid.find({ users: user.id })
-
-  const kid1 = new Kid(sampleKids[0])
-  const kid2 = new Kid(sampleKids[1])
-  await kid1.save()
-  await kid2.save()
-
+  const kidsToDelete = user.kids.filter(id => !sampleKidIds.includes(id.toString()))
+  await Kid.findByIdAndUpdate('65b1894800779901eedb5096', sampleKids[0])
+  await Kid.findByIdAndUpdate('65b19e2ddcfa436365a182e9', sampleKids[1])
+  await Promise.all(kidsToDelete.map(kidId => Kid.findByIdAndDelete(kidId)))
   user.kids = sampleKidIds.map(id => new ObjectId(id))
-  await user.save()
+  user.save()
 }
 
 module.exports = loginRouter
