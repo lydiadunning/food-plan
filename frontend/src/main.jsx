@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { HistoryContextProvider } from './components/history/useHistory.jsx'
 import { checkForLogin } from './components/userAuth/userHooks.jsx'
 // import { UserContextProvider } from './components/userAuth/userContext.js'
+import { BrowserRouter } from 'react-router-dom';
 
 const queryClient = new QueryClient()
 const loggedInUser = checkForLogin()
@@ -17,9 +18,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Theme accentColor="amber" grayColor="sand" radius="large" hasBackground='true' scaling="95%" panelBackground='solid'>
       <QueryClientProvider client={queryClient}>
         <HistoryContextProvider loggedInUser={loggedInUser}>  
-        {/* <UserContextProvider user={loggedInUser}> */}
+          <BrowserRouter>
             <App />
-        {/* </UserContextProvider> */}
+          </BrowserRouter>
         </HistoryContextProvider>
       </QueryClientProvider>
     </Theme>
