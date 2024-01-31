@@ -26,6 +26,7 @@ export function LoginForm() {
 
   return (
     <>
+      <Card>Log in with a demo account: <br/> username: Example, password: example</Card>
       <Card>
         {showCreateAccount 
           ?
