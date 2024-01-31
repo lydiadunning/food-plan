@@ -8,7 +8,7 @@ import * as Form from '@radix-ui/react-form'
 const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
 
   // keycounter prevents duplication of keys in new outcomes
-  const [ keyCounter, setKeyCounter] = useState(1) 
+  const [ keyCounter, setKeyCounter] = useState(outcomes.length + 1) 
 
   const {register, handleSubmit} = useForm()
 

@@ -29,7 +29,7 @@ const EditKid = ({ kid, setKid }) => {
       })
     }
     updateKid.mutate(newKid)
-    setKid({id: kid.id, ...newKid})
+    setKid({id: kid.id, exposures: kid.exposures, outcomeOptions: outcomes, name:newKid.name})
     navigate(-1)
   }
 
