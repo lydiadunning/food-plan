@@ -1,8 +1,9 @@
+import { useNavigate } from 'react-router-dom'
 import { useCreateKid} from '../serverStore/mutations'
 import { Button } from '@radix-ui/themes'
 
-export default function SavePage({ kidName, outcomeOptions, handleGoBack }) {
-
+export default function SavePage({ kidName, outcomeOptions }) {
+  const navigate = useNavigate()
   const createKid = useCreateKid()
 
   const saveHandler = (e) => {
@@ -14,7 +15,7 @@ export default function SavePage({ kidName, outcomeOptions, handleGoBack }) {
       })
     }
     createKid.mutate(kid)
-    handleGoBack()
+    navigate('/kidlist')
   }
   
   return (

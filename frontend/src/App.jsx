@@ -1,6 +1,6 @@
 import './App.css'
 import { useContext, useState } from 'react';
-import {Router, Routes, Route, Navigate, BrowserRouter } from 'react-router-dom'
+import {Router, Routes, Route, Navigate, BrowserRouter, useNavigate } from 'react-router-dom';
 import { useKids } from './serverStore/queries';
 import { 
   useHistory,
@@ -8,58 +8,21 @@ import {
 } from './components/history/useHistory.jsx'
 import CurrentView from './CurrentView.jsx';
 import TopBar from './components/TopBar.jsx';
-import { Container } from '@radix-ui/themes'import AddKid from './components/AddKid.jsx'
-import AddExposure from './components/AddExposure.jsx'
+import { Container } from '@radix-ui/themes';
+import AddKid from './components/AddKid.jsx'
+import AddExposure from './components/exposureForms/AddExposure.jsx'
 import Kid from './components/Kid';
 import EditKid from './components/EditKid.jsx'
 import { KidList } from './components/KidList';
-import { Login } from './components/userAuth/Login.jsx'
+import { LoginForm } from './components/userAuth/LoginForm.jsx'
 import { checkForLogin } from './components/userAuth/userHooks.jsx';
 // import { UserContext } from './components/userAuth/userContext.js';
 
 
-
 function App() {
   const [kid, setKid] = useState(null)
+
   // const user = useContext(UserContext)
-
-  const dispatch = useHistoryDispatch()
-  const history = useHistory()
-
-  function handleGoTo(target) {
-    dispatch({
-      type: 'goto',
-      target: target
-    });
-  }
-
-  function handleGoBack() {
-    dispatch({
-      type: 'goback',
-    });
-  }
-
-  function handleGoBackTo(target) {
-    dispatch({
-      type: 'gobackto',
-      target: target,
-    });
-  }
-
-  function handleResetTo(target) {
-    dispatch({
-      type: 'resetto',
-      target: target,
-    });
-  }
-
-
-  const handleHistory = {
-    handleGoTo,
-    handleGoBack,
-    handleGoBackTo,
-    handleResetTo
-  }
 
   // const currentPath = `/${history.current}`
 
@@ -76,44 +39,29 @@ function App() {
   // after getting the data and confirming it has loaded without errors, use the data.
   const kids = data.data
   // end of react-query behavior  
-
-  const handleGoToKid = (target, kid) => {
-    setKid(kid)
-    handleGoTo(target)
-  }
-
-  // return (
-  //   <div className="App">
-  //     <CurrentView current={current} kid={kid} setKid={setKid} kids={kids} handleHistory={handleHistory} />
-  //   </div>
-  // );
-  console.log(checkForLogin(), checkForLogin() ? 'yes' : 'no')
+  console.log(checkForLogin()? 'checkForLogin is Truthy' : "checkForLogin is Falsy")
 
   return (
-    <Container style={{backgroundColor: 'var(--sand-3)'}} size='1' className="app" py='1' px='6'>
-      <TopBar handleResetTo={handleResetTo} handleGoBack={handleGoBack} showBack={showBack}/>
-      <CurrentView current={current} kid={kid} setKid={setKid} kids={kids} handleHistory={handleHistory} />
-    </Container>
-  );
-    <BrowserRouter>
+       
+  <Container style={{backgroundColor: 'var(--sand-3)'}} size='1' className="app" py='1' px='6'>
+    <TopBar />
+      
       <Routes>
         <Route path='/' element=
-          { checkForLogin() ?  <Navigate to="/kidList" replace={true} /> :  <Navigate to="/login" replace={true} /> }
+          { checkForLogin() ?  <Navigate to="/kidlist" replace={true} /> :  <Navigate to="/login" replace={true} /> }
         />
-        <Route path='/login' element={<Login handleGoTo={handleGoTo} />} />
-        <Route path='/addExposure' element={<AddExposure kid={kid} handleGoBack={handleGoBack} />} />
-        <Route path='/editKid' element={<EditKid kid={kid} handleGoBack={handleGoBack} />}/>
-        <Route path='/addKid' element={<AddKid handleGoBack={handleGoBack}/>}/>
-        <Route path='/kid' element={<Kid kid={kid} handleGoToKid={handleGoToKid} handleGoBack={handleGoBack}/>}/>
-        <Route path='/kidList' element={<KidList kidData={kids} handleGoTo={handleGoTo} handleGoToKid={handleGoToKid} handleGoBack={handleGoBack}/>} />
+        <Route path='/login' element={<LoginForm/>} />
+        <Route path='/addkid' element={<AddKid />}/>
+        <Route path='/kidlist' element={<KidList kidData={kids} setKid={setKid} />} />
+
+        {/* link to specific kid in the list */}
+        <Route path='/kid/:kidid' element={<Kid kid={kid} />}/>
+        <Route path='/kid/:kidid/editkid' element={<EditKid kid={kid} setKid={setKid}/>}/>
+        <Route path='/kid/:kidid/addexposure' element={<AddExposure kid={kid}/>} />
+        
       </Routes>
-    </BrowserRouter>
-  )
+    </Container>
+  );
 }
-
-// default:
-//   throw Error(`Lost in the sauce, current: ${current}`);
-// }
-
 
 export default App

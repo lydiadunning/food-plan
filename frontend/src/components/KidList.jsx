@@ -1,8 +1,15 @@
 import KidInList from './KidInList.jsx';
 import { IconButton, Flex, Heading, Card } from '@radix-ui/themes'
 import { plus } from '../assets/svgImages.jsx';
+import { useNavigate } from 'react-router-dom';
 
-export const KidList = ({ kidData, handleGoToKid, handleGoTo }) => {
+export const KidList = ({ kidData, setKid }) => {
+  const navigate = useNavigate()
+
+  const setKidAndNavigate = (url, kid) => {
+    setKid(kid)
+    navigate(url)
+  }
 
   console.log({kidData})
   return (
@@ -13,15 +20,15 @@ export const KidList = ({ kidData, handleGoToKid, handleGoTo }) => {
           <KidInList 
             key={ kid.id } 
             kid={ kid } 
-            openAddExposure={ () => handleGoToKid('addExposure', kid)}
-            openKid={ () => handleGoToKid('kid', kid) }
-            openEditKid={ () => handleGoToKid('editKid', kid)}
+            openAddExposure={ () => setKidAndNavigate(`/kid/${kid.id}/addexposure`, kid)}
+            openKid={ () => setKidAndNavigate(`/kid/${kid.id}`, kid) }
+            openEditKid={ () => setKidAndNavigate(`/kid/${kid.id}/editkid`, kid)}
           />
         )}
         <Card size='5'>
           <IconButton 
             size='3' 
-            onClick={() => handleGoTo('addKid')}>
+            onClick={() => navigate('/addkid')}>
             { plus }
           </IconButton>
         </Card>

@@ -6,15 +6,16 @@ import { Button, Heading, Card, Box, Flex } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form';
 
 import SavePage from './SavePage.jsx'
+import { useNavigate } from "react-router-dom";
 
-const AddKid = ({ handleGoBack }) => {
+const AddKid = () => {
   const [kidName, setKidName] = useState('')
   const [outcomes, setOutcomes] = useState([])
   const [showOutcomes, setShowOutcomes] = useState(false)
   const [showSave, setShowSave] = useState(false)
 
+  const navigate = useNavigate()
   const { register, handleSubmit } = useForm()
-
 
   console.log('executing AddKid', kidName, outcomes)
   const nameLabel = "What's the kid's name?"
@@ -68,10 +69,10 @@ const AddKid = ({ handleGoBack }) => {
           <SavePage 
             kidName={kidName}
             outcomeOptions={outcomes}
-            handleGoBack={handleGoBack}
+            handleGoBack={() => navigate('/kidlist')}
           />
         }
-        <Button size='3' onClick={ handleGoBack }>Cancel</Button>
+        <Button size='3' onClick={ () => navigate('/kidlist') }>Cancel</Button>
       </Box>
     </Card>
   )

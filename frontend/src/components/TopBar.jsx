@@ -4,16 +4,18 @@ import { useState } from 'react';
 import { Button, Card, Flex, Link } from '@radix-ui/themes'
 import { useQueryClient } from '@tanstack/react-query';
 import { triangle, x } from '../assets/svgImages';
+import { useNavigate } from 'react-router-dom';
 
-const TopBar = ({ handleResetTo, handleGoBack, showBack }) => {
+const TopBar = ({ showBack }) => {
   const [open, setOpen] = useState(false)
+  const navigate = useNavigate()
 
   const queryClient = useQueryClient()
 
   const logout = async () => {
     browserLogout()
     queryClient.clear()
-    handleResetTo('login')
+    navigate('/login')
     setOpen(false)
   }
 
@@ -34,7 +36,7 @@ const TopBar = ({ handleResetTo, handleGoBack, showBack }) => {
         </Popover.Trigger>
 
       </Popover.Root>
-      {showBack && <Link onClick={handleGoBack}>{triangle} Back</Link>}
+      {showBack && <Link onClick={() => navigate(-1)}>{triangle} Back</Link>}
 
     </Flex>
   )

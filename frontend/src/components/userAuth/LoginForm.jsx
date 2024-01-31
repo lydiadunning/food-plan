@@ -6,15 +6,17 @@ import Error from '../Error'
 import * as Form from '@radix-ui/react-form';
 import { Button, Card, Flex, Box } from '@radix-ui/themes'
 import { inputStyle } from '../../assets/styles'
+import { useNavigate } from 'react-router-dom'
 
-export function LoginForm({ handleGoTo }) {
+export function LoginForm() {
   const [ showCreateAccount, setShowCreateAccount ] = useState(false)
   const [ errorMessage, setErrorMessage ] = useState(null)
 
+  const navigate = useNavigate()
   const { register, handleSubmit } = useForm()
 
   const loginAccount = useLoginAccount(
-    () => handleGoTo('kidList'),
+    () => navigate('/kidlist'),
     () => setErrorMessage('Login unsuccessful')
   )
 

@@ -6,11 +6,13 @@ import { DeleteKid } from './DeleteKid.jsx'
 import { useForm } from "react-hook-form"
 import { Button, Card, Flex, Heading } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form';
+import { useNavigate } from "react-router-dom"
 
-const EditKid = ({ kid, handleGoBack, setKid }) => {
+const EditKid = ({ kid, setKid }) => {
   const [outcomes, setOutcomes] = useState([...kid.outcomeOptions])
   const [name, setName] = useState(kid.name)
 
+  const navigate = useNavigate()
   const {register, handleSubmit} = useForm()
 
   const updateKid = useUpdateKid(kid.id)
@@ -28,14 +30,14 @@ const EditKid = ({ kid, handleGoBack, setKid }) => {
     }
     updateKid.mutate(newKid)
     setKid({id: kid.id, ...newKid})
-    handleGoBack()
+    navigate(-1)
   }
 
   return (
     <>
       <Flex my='4' justify='between'>
         <Heading>{ name }</Heading>
-        <DeleteKid kid={kid} closeKid={handleGoBack}/>
+        <DeleteKid kid={kid} closeKid={() => {navigate(-1)}}/>
       </Flex>
       
       <Card>

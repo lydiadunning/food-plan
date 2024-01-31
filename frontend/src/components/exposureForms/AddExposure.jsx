@@ -3,10 +3,12 @@ import { useForm } from "react-hook-form"
 import { Button, Heading, Flex, Card } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form';
 import OutcomeOptionPicker from './OutcomeOptionPicker'
+import { useNavigate } from "react-router-dom";
 
 const AddExposure = ({ kid, handleGoBack }) => {
   const today = new Date().toISOString().substring(0, 10)
 
+  const navigate = useNavigate()
   const {register, handleSubmit, watch} = useForm({
     defaultValues: {
       date: today
@@ -17,7 +19,7 @@ const AddExposure = ({ kid, handleGoBack }) => {
   const submit = (data) => {
     createExposure.mutate(data)
     
-    handleGoBack()
+    navigate(-1)
   }
 
   return (
