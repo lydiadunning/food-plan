@@ -24,7 +24,7 @@ const Kid = ({ kid }) => {
             size='3'
             my='3'
             onClick={ () => navigate(`/kid/${kid.id}/addexposure`) }
-          >add an introduction
+          >add an entry
         </Button>
         <AllExposures kid={kid} />
 
