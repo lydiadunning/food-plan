@@ -3,8 +3,9 @@ import { pencil } from '../assets/svgImages'
 
 const Exposure = ({ exposure, openEditExposures }) => {
 
-  console.log({exposure})
-  const date = exposure.date ? new Date(exposure.date) : null
+  // https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
+  // used Marcos Dantas solution.
+  const date = exposure.date?.slice(0, 10) ? new Date(exposure.date?.slice(0, 10).split('-')) : null
 
   return (
     <Card>
