@@ -37,7 +37,7 @@ PORT= *a 4 digit number*
 
 ## Testing
 
-Go to `/backend/tests` to see unit tests and documentation of testing progress.
+Go to `/backend/tests` to see automated endpoint tests and documentation of testing progress.
 
 ### Running Tests
 
@@ -54,15 +54,12 @@ React.js, no framework, build with Vite. Accesses backend with axios and manages
 ## Next Steps in Development
 
 ### Now
-* Package into build and upload to fly.io
 
 ### Next
-* Test login edgecases and improve error prevention
 * Make sure deleting or editing one kid doesn't remove other kids.
-* Replace history reducer with a router. Can I build my own, instead of using a library? 
 * Ensure login functionality works properly
   * Test edgecases and improve error detection
-- why don't a user's children load in after login?
+* Fix app getting lost on refresh
 
 ### For Later
 * Review responses: correct HTTP code? enough information? 
