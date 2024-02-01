@@ -5,7 +5,7 @@ import * as Form from '@radix-ui/react-form';
 import OutcomeOptionPicker from './OutcomeOptionPicker'
 import { useNavigate } from "react-router-dom";
 
-const AddExposure = ({ kid, handleGoBack }) => {
+const AddExposure = ({ kid }) => {
   const today = new Date().toISOString().substring(0, 10)
 
   const navigate = useNavigate()
