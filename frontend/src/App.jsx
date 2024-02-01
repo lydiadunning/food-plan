@@ -1,12 +1,7 @@
 import './App.css'
-import { useContext, useState } from 'react';
-import {Router, Routes, Route, Navigate, BrowserRouter, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useKids } from './serverStore/queries';
-import { 
-  useHistory,
-  useHistoryDispatch,
-} from './components/history/useHistory.jsx'
-import CurrentView from './CurrentView.jsx';
 import TopBar from './components/TopBar.jsx';
 import { Container } from '@radix-ui/themes';
 import AddKid from './components/AddKid.jsx'
@@ -16,15 +11,10 @@ import EditKid from './components/EditKid.jsx'
 import { KidList } from './components/KidList';
 import { LoginForm } from './components/userAuth/LoginForm.jsx'
 import { checkForLogin } from './components/userAuth/userHooks.jsx';
-// import { UserContext } from './components/userAuth/userContext.js';
 
 
 function App() {
   const [kid, setKid] = useState(null)
-
-  // const user = useContext(UserContext)
-
-  // const currentPath = `/${history.current}`
 
   // react-query used here. Comments stay until I'm more familiar with using the technology.
   // using react-query and axios to simplify state management for values retrieved from the server.
@@ -39,7 +29,6 @@ function App() {
   // after getting the data and confirming it has loaded without errors, use the data.
   const kids = data.data
   // end of react-query behavior  
-  console.log(checkForLogin()? 'checkForLogin is Truthy' : "checkForLogin is Falsy")
 
   return (
        
