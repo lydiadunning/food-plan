@@ -41,7 +41,7 @@ const AddExposure = ({ kid }) => {
                 <Flex direction='column' justify='between'>
                   <Form.Label>description</Form.Label>
                   <Form.Control asChild>
-                    <textarea size='2' type='text' required {...register('description')} ></textarea>
+                    <textarea size='2' type='text' {...register('description')} ></textarea>
                   </Form.Control>
                 </Flex>
               </Form.Field>
