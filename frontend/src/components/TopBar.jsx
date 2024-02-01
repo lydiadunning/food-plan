@@ -4,11 +4,14 @@ import { useState } from 'react';
 import { Button, Card, Flex, Link } from '@radix-ui/themes'
 import { useQueryClient } from '@tanstack/react-query';
 import { triangle, x } from '../assets/svgImages';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useMatch } from 'react-router-dom';
 
-const TopBar = ({ showBack }) => {
+const TopBar = () => {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
+  const matchLogin = useMatch('/login')
+  const matchKidList = useMatch('/kidlist')
+  const showBack = !matchLogin && !matchKidList
 
   const queryClient = useQueryClient()
 
