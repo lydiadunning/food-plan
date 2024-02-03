@@ -11,7 +11,7 @@ const Kid = ({ kid }) => {
   const navigate = useNavigate()
 
   return (
-    <Card>
+    <Card className='swipeable'>
       <Flex direction='column' p='6'>
         <Flex justify="between">
           <Heading>{ kid.name }</Heading>

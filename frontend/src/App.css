@@ -77,3 +77,25 @@ ul {
   margin: 0;
   padding: 0;
 } */
+
+.swipe-container {
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+}
+
+.swipe-container::-webkit-scrollbar {
+  display: none;
+}
+
+.swipeable {
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+
+.swipeable:first-child {
+  margin-left: 20%;
+}
+
+.swipeable:last-child {
+  margin-right: 30%;
+}
