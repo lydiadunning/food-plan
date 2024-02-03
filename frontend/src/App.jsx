@@ -44,7 +44,6 @@ function App() {
         <Route path='/kidlist' element={<KidList kidData={kids} setKid={setKid} />} />
 
         {/* link to specific kid in the list */}
-        <Route path='/kid/:kidid' element={<Kid kid={kid} />}/>
         <Route path='/kid/:kidid/editkid' element={<EditKid kid={kid} setKid={setKid}/>}/>
         <Route path='/kid/:kidid/addexposure' element={<AddExposure kid={kid}/>} />
         

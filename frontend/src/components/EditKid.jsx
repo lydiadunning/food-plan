@@ -2,17 +2,17 @@
 import { useState } from "react"
 import { useUpdateKid } from '../serverStore/mutations.jsx'
 import OutcomeMenu from './outcomeOptionMenu/OutcomeMenu.jsx'
-import { DeleteKid } from './DeleteKid.jsx'
 import { useForm } from "react-hook-form"
-import { Button, Card, Flex, Heading } from '@radix-ui/themes'
+import { Button, Flex, IconButton, Dialog } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form';
-import { useNavigate } from "react-router-dom"
+import { pencil } from '../assets/svgImages.jsx'
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
+
 
 const EditKid = ({ kid, setKid }) => {
   const [outcomes, setOutcomes] = useState([...kid.outcomeOptions])
   const [name, setName] = useState(kid.name)
 
-  const navigate = useNavigate()
   const {register, handleSubmit} = useForm()
 
   const updateKid = useUpdateKid(kid.id)
@@ -30,25 +30,25 @@ const EditKid = ({ kid, setKid }) => {
     }
     updateKid.mutate(newKid)
     setKid({id: kid.id, exposures: kid.exposures, outcomeOptions: outcomes, name:newKid.name})
-    navigate(-1)
   }
 
   return (
-    <>
-      <Flex my='4' justify='between'>
-        <Heading>{ name }</Heading>
-        <DeleteKid kid={kid} closeKid={() => {navigate(-1)}}/>
-      </Flex>
-      
-      <Card>
+    <Dialog.Root>
+      <Dialog.Trigger>
+        <IconButton>{pencil}</IconButton>
+      </Dialog.Trigger>
+
+      <Dialog.Content style={{ maxWidth: 450 }}>
         <Flex direction='column'>
           <Form.Root onSubmit={ handleSubmit(onNameUpdate) }>
             <Form.Field>
               <Flex gap='3' justify='between' align='center'>
                 <Flex gap='1'>
-                  <Form.Label>Rename {name}:</Form.Label>
+                  <VisuallyHidden.Root>
+                    <Form.Label>Rename {name}:</Form.Label>
+                  </VisuallyHidden.Root>
                   <Form.Control asChild>
-                    <input type='text' required {...register('name')} />
+                    <input type='text' required placeholder={name} {...register('name')} />
                   </Form.Control>
                 </Flex>
                 <Form.Submit asChild>
@@ -59,10 +59,22 @@ const EditKid = ({ kid, setKid }) => {
           </Form.Root>
         
           <OutcomeMenu outcomes={outcomes} setOutcomes={setOutcomes} />
-          <Button size='3' onClick={ update }>Save Changes</Button>
+          <Flex justify='center'>
+            <Dialog.Close>
+              <Button mr='1' variant="soft" color="gray">
+                Cancel
+              </Button>
+            </Dialog.Close>
+            <Dialog.Close>
+              <Button ml='1' onClick={update}>Save</Button>
+            </Dialog.Close>
+          </Flex>
+          
         </Flex>
-      </Card>
-    </>
+      
+      </Dialog.Content> 
+    </Dialog.Root>
+
   )
 }
 
