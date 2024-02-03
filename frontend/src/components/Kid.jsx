@@ -4,6 +4,7 @@ import { DeleteKid } from './DeleteKid.jsx'
 import { Button, Card, Heading, Flex,  } from '@radix-ui/themes'
 import { useNavigate } from 'react-router-dom'
 import EditKid from './EditKid.jsx'
+import AddExposure from './exposureForms/AddExposure.jsx'
 
 const Kid = ({ kid, setKid }) => {
   // const kid = useParams()
@@ -20,12 +21,13 @@ const Kid = ({ kid, setKid }) => {
             <DeleteKid kid={kid} closeKid={() => navigate(-1)} />
           </Flex>
         </Flex>
-        <Button 
+        <AddExposure kid={kid}/>
+        {/* <Button 
             size='3'
             my='3'
             onClick={ () => navigate(`/kid/${kid.id}/addexposure`) }
           >add an entry
-        </Button>
+        </Button> */}
         <AllExposures kid={kid} />
 
       </Flex>
