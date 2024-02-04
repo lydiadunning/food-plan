@@ -1,49 +1,51 @@
-const { Schema, model } = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator')
+const { Schema, model } = require("mongoose");
+const uniqueValidator = require("mongoose-unique-validator");
 
-const userSchema = new Schema ({
+const userSchema = new Schema({
   // use a library for validation here, pass off as much user-creation work as possible to simplify and reduce risk.
   username: {
     type: String,
     unique: true,
     minlength: 3,
-    required: true
+    required: true,
   },
   name: {
     type: String,
-    required: false
+    required: false,
   },
   email: {
     type: String,
     unique: true,
-    minlength: 5, 
+    minlength: 5,
     required: true,
   },
   passwordHash: {
     type: String,
-    required: true
+    required: true,
   },
   isAdmin: {
     type: Boolean,
     default: false,
   },
-  kids: [{
-    type: 'ObjectId',
-    ref: 'Kid',
-  }]
-})
+  kids: [
+    {
+      type: "ObjectId",
+      ref: "Kid",
+    },
+  ],
+});
 
-userSchema.plugin(uniqueValidator)
-userSchema.set('toJSON', {
+userSchema.plugin(uniqueValidator);
+userSchema.set("toJSON", {
   transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-    delete returnedObject.__v
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
     // the passwordHash should not be revealed
-    delete returnedObject.passwordHash
-  }
-})
+    delete returnedObject.passwordHash;
+  },
+});
 
-module.exports = model('User', userSchema)
+module.exports = model("User", userSchema);
 
 //https://github.com/Zwimber/mongoose-style-guide

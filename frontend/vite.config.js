@@ -11,7 +11,6 @@ export default defineConfig({
         target: 'http://localhost:2002',
         changeOrigin: true,
       },
-    }
+    },
   },
 })
-

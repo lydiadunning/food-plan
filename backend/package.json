@@ -10,7 +10,7 @@
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
     "build:ui": "@powershell Remove-Item -Recurse -Force dist && cd ../frontend && npm run build && @powershell Copy-Item dist -Recurse ../backend",
     "deploy": "fly deploy",
-    "deploy:full": "npm run build:ui && npm run deploy",    
+    "deploy:full": "npm run build:ui && npm run deploy",
     "logs:prod": "fly logs"
   },
   "author": "Lydia Dunning",
@@ -37,5 +37,10 @@
   },
   "jest": {
     "testEnvironment": "node"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "semi": false,
+    "singleQuote": true
   }
 }

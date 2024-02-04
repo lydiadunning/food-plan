@@ -1,4 +1,4 @@
-const Error = ({message}) => {
+const Error = ({ message }) => {
   return <p>{message}</p>
 }
- export default Error
+export default Error

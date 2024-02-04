@@ -1,49 +1,50 @@
-const User = require('../models/user.js')
-const userRouter = require('express').Router()
-const Kid  = require('../models/kid.js')
-const logger = require('../utils/logger.js')
-const bcrypt = require('bcryptjs')
+const User = require("../models/user.js");
+const userRouter = require("express").Router();
+const Kid = require("../models/kid.js");
+const logger = require("../utils/logger.js");
+const bcrypt = require("bcryptjs");
 
-userRouter.get('/', async (request, response) => {
-  const users = await User.find({})
-  .populate('kids')
-  response.json(users)
-})
+userRouter.get("/", async (request, response) => {
+  const users = await User.find({}).populate("kids");
+  response.json(users);
+});
 
-userRouter.post('/', async (request, response, next) => {
-  const { username, name, password, email } = request.body
-  logger.info('from request.body', username, name, password, email)
+userRouter.post("/", async (request, response, next) => {
+  const { username, name, password, email } = request.body;
+  logger.info("from request.body", username, name, password, email);
 
   if (!password || password.length < 3) {
-    return response.status(400).json({ 
-      error: password ? 'password must be at least 3 characters long' : 'password is required'
-    })
-  } 
-  logger.info('past if password incorrect')
-  
-  const saltRounds = 10
-  const passwordHash = await bcrypt.hash(password, saltRounds)
+    return response.status(400).json({
+      error: password
+        ? "password must be at least 3 characters long"
+        : "password is required",
+    });
+  }
+  logger.info("past if password incorrect");
 
-  logger.info('passwordHash formed')
+  const saltRounds = 10;
+  const passwordHash = await bcrypt.hash(password, saltRounds);
+
+  logger.info("passwordHash formed");
 
   const user = new User({
     username,
     name,
     passwordHash,
-    email
-  })
+    email,
+  });
   try {
-    logger.info('saving user')
-    const savedUser = await user.save()
-    response.status(201).json(savedUser)
+    logger.info("saving user");
+    const savedUser = await user.save();
+    response.status(201).json(savedUser);
   } catch (error) {
-    logger.error(error)
-    next(error)
+    logger.error(error);
+    next(error);
   }
-})
+});
 
 // not yet implemented.
- 
+
 // // change a user - add a kid - not create a kid
 // userRouter.patch('/:id/addKid/:kidId', async (request, response) => {
 //   // verify the kid exists
@@ -66,8 +67,4 @@ userRouter.post('/', async (request, response, next) => {
 //   // or a db error message
 // })
 
-module.exports = userRouter
-
-
-
-
+module.exports = userRouter;

@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from 'axios'
 export const checkForLogin = () => {
   const foodUserJSON = window.localStorage.getItem('foodUser')
   if (foodUserJSON) {
@@ -18,16 +18,21 @@ export const browserLogout = () => {
 
 export const getUserConfig = () => {
   const user = checkForLogin()
-  console.log({user})
-  
-  return user ? {
-    headers: { Authorization: `Bearer ${user.token}` }
-  } : null
+  console.log({ user })
+
+  return user
+    ? {
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
+    : null
 }
 
 export const handleLogin = async (credentials) => {
   try {
-    const loggedInUser = await axios.post('http://localhost:2002/api/login/', credentials)
+    const loggedInUser = await axios.post(
+      'http://localhost:2002/api/login/',
+      credentials
+    )
     browserLogin(loggedInUser.data)
     return true
   } catch (error) {

@@ -1,18 +1,18 @@
-const Kid  = require('../models/kid.js')
-const User = require('../models/user.js')
-const kidRouter = require('express').Router()
-const logger = require('../utils/logger.js')
+const Kid = require("../models/kid.js");
+const User = require("../models/user.js");
+const kidRouter = require("express").Router();
+const logger = require("../utils/logger.js");
 
-
-kidRouter.get('/', async (request, response) => {
-  const kids = await Kid.find({ users: request.user })
-  kids.forEach(kid => { // inefficient. alternative approach to sorting here is keeping the list in order.
+kidRouter.get("/", async (request, response) => {
+  const kids = await Kid.find({ users: request.user });
+  kids.forEach((kid) => {
+    // inefficient. alternative approach to sorting here is keeping the list in order.
     kid.exposures.sort((a, b) => {
-      return b.date.valueOf() - a.date.valueOf()
-    })
-  })
-  response.json(kids)
-})
+      return b.date.valueOf() - a.date.valueOf();
+    });
+  });
+  response.json(kids);
+});
 
 /**
  * request.body: {
@@ -25,56 +25,58 @@ kidRouter.get('/', async (request, response) => {
  *   ]
  * }
  */
-kidRouter.post('/', async (request, response) => {
+kidRouter.post("/", async (request, response) => {
   // return 400 error if request body missing vital info
   // name exists, contains characters
   if (!request.body.name) {
-    response.status(400).end()
-  } 
+    response.status(400).end();
+  }
 
   try {
-    const user = request.user
+    const user = request.user;
 
-    const outcomeOptions = request.body.outcomeOptions || []
+    const outcomeOptions = request.body.outcomeOptions || [];
     const kid = new Kid({
       name: request.body.name,
       outcomeOptions: outcomeOptions,
-      users: [user.id]
-    })
-    const result = await kid.save()
-    await user.updateOne({$push: {'kids': kid.id}}, {upsert: true})
-    user.save()
+      users: [user.id],
+    });
+    const result = await kid.save();
+    await user.updateOne({ $push: { kids: kid.id } }, { upsert: true });
+    user.save();
 
-    response.status(201).json(result)
-
+    response.status(201).json(result);
   } catch (err) {
-    console.error(err.message)
-    response.status(404).end()
+    console.error(err.message);
+    response.status(404).end();
     // return some explanatory text
   }
-})
+});
 
-kidRouter.get('/:id', async (request, response) => {
-  const kid = await Kid.findById(request.params.id)
+kidRouter.get("/:id", async (request, response) => {
+  const kid = await Kid.findById(request.params.id);
 
   if (kid && kid.users.includes(request.user.id)) {
-    response.json(kid)
+    response.json(kid);
   } else {
-    response.status(404).json({ error: 'child not found'}).end()
+    response.status(404).json({ error: "child not found" }).end();
   }
-})
+});
 
 // Should allow a user to remove the link between their profile and a kid, but not delete the kid until it has no remaining ties to any user. Currently doesn't actually delete database record.
-kidRouter.delete('/:id', async (request, response) => {
+kidRouter.delete("/:id", async (request, response) => {
   try {
-    
-    await Kid.findByIdAndUpdate(request.params.id, {
-      $pull: {
-        users: request.user.id
-      }
-    }, {
-      new: true
-    })
+    await Kid.findByIdAndUpdate(
+      request.params.id,
+      {
+        $pull: {
+          users: request.user.id,
+        },
+      },
+      {
+        new: true,
+      },
+    );
     // // const kid = await Kid.find({ id: request.params.id, user: request.user })
     // // const kid = await Kid.findById(request.params.id )
 
@@ -84,114 +86,124 @@ kidRouter.delete('/:id', async (request, response) => {
 
     await User.findByIdAndUpdate(request.user.id, {
       $pull: {
-        kids: request.params.id
-      }
-    })
-    response.status(204).end()
+        kids: request.params.id,
+      },
+    });
+    response.status(204).end();
   } catch {
-    response.status(204).end()
+    response.status(204).end();
     // response.status(400)
     // this seems like a really dumb solution and I hate it.
   }
-  
-})
+});
 
-kidRouter.delete('/all', async (request, response) => {
-  if (request.user.isAdmin){
-    const kid = await Kid.deleteMany()
-    response.status(204).end()
+kidRouter.delete("/all", async (request, response) => {
+  if (request.user.isAdmin) {
+    const kid = await Kid.deleteMany();
+    response.status(204).end();
   }
-})
+});
 
 // patch will accept a request describing any field in the kid model.
-kidRouter.patch('/:id', async (request, response, next) => {
-  const kid = await Kid.findById(request.params.id)
+kidRouter.patch("/:id", async (request, response, next) => {
+  const kid = await Kid.findById(request.params.id);
 
   if (kid && kid.users.includes(request.user.id)) {
     try {
-      const kid = await Kid.findByIdAndUpdate(request.params.id, request.body, { new: true })
+      const kid = await Kid.findByIdAndUpdate(request.params.id, request.body, {
+        new: true,
+      });
 
-      response.status(200).json(kid)
+      response.status(200).json(kid);
     } catch (error) {
-      next(error)
+      next(error);
     }
-    
   } else {
-    response.status(404).json({ error: 'child not found'}).end()
+    response.status(404).json({ error: "child not found" }).end();
   }
 
   // simplified this. If it needs more sophistication, this resource might help
   // Jonathan Muller's answer:
   // https://stackoverflow.com/questions/35810951/how-to-change-order-of-array-with-mongodb
-
-})
+});
 
 // does the app even need this?
-kidRouter.get('/:kidId/outcomeOptions', async (request, response) => {
-  const kid = await Kid.findById(request.params.kidId).populate('outcomeOptions', {outcome: 1, id: 1, active: 1})
+kidRouter.get("/:kidId/outcomeOptions", async (request, response) => {
+  const kid = await Kid.findById(request.params.kidId).populate(
+    "outcomeOptions",
+    { outcome: 1, id: 1, active: 1 },
+  );
   if (kid) {
-    response.json(kid.outcomeOptions)
+    response.json(kid.outcomeOptions);
   } else {
-    response.status(404).end()
-  }})
-
-kidRouter.get('/:kidId/exposure', async (request, response) => {
-  const kid = await Kid.findById(request.params.kidId).populate('exposures').sort({date: 1})
-  if (kid) {
-    response.json(kid.exposures)
-  } else {
-    response.status(404).end()
+    response.status(404).end();
   }
-})
+});
 
-kidRouter.patch('/:kidId/exposure', async (request, response) => {
+kidRouter.get("/:kidId/exposure", async (request, response) => {
   const kid = await Kid.findById(request.params.kidId)
+    .populate("exposures")
+    .sort({ date: 1 });
   if (kid) {
-    const date = new Date()
-    const exposure = {...request.body, date: date}
+    response.json(kid.exposures);
+  } else {
+    response.status(404).end();
+  }
+});
+
+kidRouter.patch("/:kidId/exposure", async (request, response) => {
+  const kid = await Kid.findById(request.params.kidId);
+  if (kid) {
+    const date = new Date();
+    const exposure = { ...request.body, date: date };
     // return 400 error if request body missing vital info
-    kid.exposures.push(exposure)
-    const result = await kid.save()
-    response.status(201).json(exposure)
+    kid.exposures.push(exposure);
+    const result = await kid.save();
+    response.status(201).json(exposure);
   } else {
-    logger.info('kid not found')
-    response.status(404).end()
+    logger.info("kid not found");
+    response.status(404).end();
   }
-})
+});
 
-kidRouter.get('/:kidId/exposure/:id', async (request, response) => {
-  const kid = await Kid.findById(request.params.kidId)
-  const exposure = kid.exposures.find(exposure => exposure.id === request.params.id)
+kidRouter.get("/:kidId/exposure/:id", async (request, response) => {
+  const kid = await Kid.findById(request.params.kidId);
+  const exposure = kid.exposures.find(
+    (exposure) => exposure.id === request.params.id,
+  );
 
   if (exposure) {
-    response.json(exposure)
+    response.json(exposure);
   } else {
-    response.status(404).end()
+    response.status(404).end();
   }
-})
+});
 
-kidRouter.patch('/:kidId/exposure/:id', async (request, response) => {
-  const kid = await Kid.findById(request.params.kidId)
-  const exposureIndex = kid.exposures.findIndex(exposure => exposure.id === request.params.id)
-  
+kidRouter.patch("/:kidId/exposure/:id", async (request, response) => {
+  const kid = await Kid.findById(request.params.kidId);
+  const exposureIndex = kid.exposures.findIndex(
+    (exposure) => exposure.id === request.params.id,
+  );
+
   if (exposureIndex >= 0) {
-    Object.keys(request.body).forEach( key => {
-      kid.exposures[exposureIndex][key] = request.body[key]
-    })
-    await kid.save()
-  
-    response.json(kid.exposures[exposureIndex])
+    Object.keys(request.body).forEach((key) => {
+      kid.exposures[exposureIndex][key] = request.body[key];
+    });
+    await kid.save();
+
+    response.json(kid.exposures[exposureIndex]);
   } else {
-    response.status(404).end()
+    response.status(404).end();
   }
-})
+});
 
-kidRouter.delete('/:kidId/exposure/:id', async (request, response) => {
-  const kid = await Kid.findById(request.params.kidId)
-  kid.exposures = kid.exposures.filter(exposure => exposure.id !== request.params.id)
-  await kid.save()
-  response.status(204).end()
-})
+kidRouter.delete("/:kidId/exposure/:id", async (request, response) => {
+  const kid = await Kid.findById(request.params.kidId);
+  kid.exposures = kid.exposures.filter(
+    (exposure) => exposure.id !== request.params.id,
+  );
+  await kid.save();
+  response.status(204).end();
+});
 
-
-module.exports = kidRouter
+module.exports = kidRouter;

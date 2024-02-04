@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import OutcomeMenu from "./outcomeOptionMenu/OutcomeMenu.jsx"
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import OutcomeMenu from './outcomeOptionMenu/OutcomeMenu.jsx'
 import { Button, Heading, Card, Box, Flex } from '@radix-ui/themes'
-import * as Form from '@radix-ui/react-form';
+import * as Form from '@radix-ui/react-form'
 
 import SavePage from './SavePage.jsx'
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
 
 const AddKid = () => {
   const [kidName, setKidName] = useState('')
@@ -24,7 +24,7 @@ const AddKid = () => {
     setShowOutcomes(false)
     setShowSave(true)
   }
-  console.log({kidName})
+  console.log({ kidName })
 
   const submitName = (data) => {
     setKidName(data.name)
@@ -33,46 +33,63 @@ const AddKid = () => {
   return (
     <Card>
       <Box p='6'>
-        {
-          !kidName &&
+        {!kidName && (
           <Form.Root onSubmit={handleSubmit(submitName)}>
             <Form.Field>
               <Form.Label>{nameLabel}</Form.Label>
-              <Form.Control asChild> 
+              <Form.Control asChild>
                 <input type='text' {...register('name')} required></input>
               </Form.Control>
             </Form.Field>
             <Form.Submit asChild>
-              <Button size='3' my='3'type='submit'>Continue</Button>
+              <Button size='3' my='3' type='submit'>
+                Continue
+              </Button>
             </Form.Submit>
           </Form.Root>
-        }
-        {
-          (kidName && showOutcomes == [] && !showSave) &&
+        )}
+        {kidName && showOutcomes == [] && !showSave && (
           <Flex direction='column' gap='2' mb='3'>
-            <Heading>Do you want to record how {kidName} responds to foods?</Heading>
+            <Heading>
+              Do you want to record how {kidName} responds to foods?
+            </Heading>
             <Flex gap='2'>
-              <Button size='3' onClick={() => {setShowOutcomes(true)}}>yes</Button>
-              <Button size='3' mx='3' onClick={() => setShowSave(true)}>no</Button>
+              <Button
+                size='3'
+                onClick={() => {
+                  setShowOutcomes(true)
+                }}
+              >
+                yes
+              </Button>
+              <Button size='3' mx='3' onClick={() => setShowSave(true)}>
+                no
+              </Button>
             </Flex>
           </Flex>
-        }
-        {
-          showOutcomes &&
+        )}
+        {showOutcomes && (
           <>
-            <OutcomeMenu outcomes={outcomes} setOutcomes={ setOutcomes } showOutcomeHints={ true } />
-            <Button size='3' mr='3' onClick={ acceptHandler }>Accept</Button>
+            <OutcomeMenu
+              outcomes={outcomes}
+              setOutcomes={setOutcomes}
+              showOutcomeHints={true}
+            />
+            <Button size='3' mr='3' onClick={acceptHandler}>
+              Accept
+            </Button>
           </>
-        }
-        {
-          showSave && 
-          <SavePage 
+        )}
+        {showSave && (
+          <SavePage
             kidName={kidName}
             outcomeOptions={outcomes}
             handleGoBack={() => navigate('/kidlist')}
           />
-        }
-        <Button size='3' onClick={ () => navigate('/kidlist') }>Cancel</Button>
+        )}
+        <Button size='3' onClick={() => navigate('/kidlist')}>
+          Cancel
+        </Button>
       </Box>
     </Card>
   )
