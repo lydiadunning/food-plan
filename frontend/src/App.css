@@ -91,9 +91,9 @@ body {
   scroll-snap-type: x mandatory;
 }
 
-.swipe-container::-webkit-scrollbar {
+/* .swipe-container::-webkit-scrollbar {
   display: none;
-}
+} */
 
 .swipeable {
   scroll-snap-align: center;
@@ -101,11 +101,11 @@ body {
 }
 
 .swipeable:first-child {
-  margin-left: 20%;
+  margin-left: 50%;
 }
 
 .swipeable:last-child {
-  margin-right: 30%;
+  margin-right: 50%;
 }
 
 .loading {
