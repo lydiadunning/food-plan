@@ -1,0 +1,7 @@
+@import '@radix-ui/colors/sand.css';
+
+body { 
+  /* Using !important to override high specificity in radix UI's white background defaults. */
+  background-color: var(--sand-3) !important;
+  height: 100%; 
+}
