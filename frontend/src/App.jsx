@@ -35,7 +35,7 @@ function App() {
       size='1'
       className='app'
       py='1'
-      px='6'
+      px='1'
     >
       <TopBar />
 

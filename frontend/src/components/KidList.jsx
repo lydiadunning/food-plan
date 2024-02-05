@@ -14,7 +14,7 @@ export const KidList = ({ kidData, setKid }) => {
         Kids
       </Heading>
       { kidData ?
-        <Flex className='swipe-container' direction='row' gap='3' align='start'>
+        <Flex className='swipe-container' direction='row' gap='4' align='start'>
           {kidData?.map((kid) => (
             <Kid key={kid.id} kid={kid} setKid={setKid} />
           ))}

@@ -94,6 +94,11 @@ ul {
   scroll-snap-stop: always;
 }
 
+.kid-size {
+  width: 220px;
+
+}
+
 .swipeable:first-child {
   margin-left: 50%;
 }
@@ -128,5 +133,17 @@ ul {
   }
   50% {
     outline: solid var(--amber-7) .5px;
+  }
+  60% {
+    outline: solid var(--amber-7) 1px;
+  }
+  70% {
+    outline: solid var(--amber-7) 2px;
+  }
+  80% {
+    outline: solid var(--amber-7) 3px;
+  }
+  90% {
+    outline: solid var(--amber-7) 4px;
   }
 }

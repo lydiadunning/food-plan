@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import AllExposures from './AllExposures.jsx'
 import { DeleteKid } from './DeleteKid.jsx'
-import { Button, Card, Heading, Flex } from '@radix-ui/themes'
+import { Card, Heading, Flex } from '@radix-ui/themes'
 import { useNavigate } from 'react-router-dom'
 import EditKid from './EditKid.jsx'
 import AddExposure from './exposureForms/AddExposure.jsx'
@@ -13,14 +13,13 @@ const Kid = ({ kid, setKid }) => {
 
   return (
     <Card className='swipeable'>
-      <Flex direction='column' p='6'>
-        <Flex justify='between'>
-          <Heading>{kid.name}</Heading>
-          <Flex gap='2'>
-            <EditKid kid={kid} setKid={setKid} /> {/*button w/ dialog*/}
-            <DeleteKid kid={kid} closeKid={() => navigate(-1)} />
-          </Flex>
+      <Flex direction='column' p='6' className='kid-size'>
+      <Heading>{kid.name}</Heading>
+        <Flex gap='2' justify='end'>
+          <EditKid kid={kid} setKid={setKid} /> {/*button w/ dialog*/}
+          <DeleteKid kid={kid} closeKid={() => navigate(-1)} />
         </Flex>
+        
         <AddExposure kid={kid} />
         {/* <Button 
             size='3'
