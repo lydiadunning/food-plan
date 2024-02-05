@@ -1,3 +1,6 @@
+@import '@radix-ui/colors/amber.css';
+@import '@radix-ui/colors/sand.css';
+
 /* #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -78,6 +81,11 @@ ul {
   padding: 0;
 } */
 
+body {
+  height: 100dvh;
+  background-color: var(--sand-2);
+}
+
 .swipe-container {
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
@@ -98,4 +106,33 @@ ul {
 
 .swipeable:last-child {
   margin-right: 30%;
+}
+
+.loading {
+  width: 50%;
+  aspect-ratio: 1/1;
+  outline: solid var(--amber-7) 5px;
+  border-radius: 10%;
+  margin: auto;
+  animation-duration: 3s;
+  animation-name: fluctuate;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fluctuate {
+  10% {
+    outline: solid var(--amber-7) 4px;
+  }
+  20% {
+    outline: solid var(--amber-7) 3px;
+  }
+  30% {
+    outline: solid var(--amber-7) 2px;
+  }
+  40% {
+    outline: solid var(--amber-7) 1px;
+  }
+  50% {
+    outline: solid var(--amber-7) .5px;
+  }
 }
