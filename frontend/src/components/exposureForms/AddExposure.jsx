@@ -39,7 +39,7 @@ const AddExposure = ({ kid }) => {
             </Dialog.Close>
           </Flex>
           <Form.Root onSubmit={handleSubmit(submit)}>
-            <Flex direction='column' gap='2' align='stretch' p='6'>
+            <Flex direction='column' gap='2' align='stretch'>
               <Form.Field>
                 <Flex direction='column' justify='between'>
                   <Form.Label>food</Form.Label>
