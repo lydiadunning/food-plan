@@ -15,8 +15,9 @@
 }
 
 .kid-size {
-  width: 220px;
-
+  width: min(360px, 70vw);
+  min-width: 195px;
+  max-width: 500px;
 }
 
 .swipeable:first-child {
@@ -25,7 +26,6 @@
 
 .swipeable:last-child {
   margin-right: 50%;
-  align-self: center;
 }
 
 .loading {

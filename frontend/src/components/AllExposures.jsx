@@ -47,7 +47,7 @@ const AllExposures = ({ kid }) => {
           </Collapsible.Content>
         ))}
         <Collapsible.Trigger asChild>
-          <Button size='3'>See All</Button>
+          <Button size='3' variant='outline'>{open ? 'Hide' : 'See All'}</Button>
         </Collapsible.Trigger>
       </Flex>
     </Collapsible.Root>

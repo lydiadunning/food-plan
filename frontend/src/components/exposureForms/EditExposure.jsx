@@ -31,7 +31,7 @@ const EditExposure = ({ kid, exposure, closeEditExposure }) => {
       </Flex>
 
       <Form.Root onSubmit={handleSubmit(onSubmit)}>
-        <Flex direction='column' gap='2' align='stretch' p='6'>
+        <Flex direction='column' gap='2' align='stretch' p='2'>
           <Form.Field>
             <Flex direction='column' justify='between'>
               <Form.Label>food</Form.Label>

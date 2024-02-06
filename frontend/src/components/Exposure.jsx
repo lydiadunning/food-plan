@@ -10,9 +10,14 @@ const Exposure = ({ exposure, openEditExposures }) => {
 
   return (
     <Card>
+      <Flex justify='between'>
+        <p>{exposure.food}</p>
+        <IconButton onClick={() => openEditExposures(exposure)}>
+          {pencil}
+        </IconButton>
+      </Flex>
       <Flex gap='2'>
         <Flex direction='column'>
-          <p>{exposure.food}</p>
           {exposure.meal && <p>{exposure.meal}</p>}
           {exposure.date && <p>{date.toDateString()}</p>}
         </Flex>
@@ -20,12 +25,7 @@ const Exposure = ({ exposure, openEditExposures }) => {
           <p>{exposure.description}</p>
         </Flex>
       </Flex>
-      <Flex justify='between'>
-        {exposure.outcomes.length > 0 && <p>{exposure.outcomes.join(', ')}</p>}
-        <IconButton onClick={() => openEditExposures(exposure)}>
-          {pencil}
-        </IconButton>
-      </Flex>
+      {exposure.outcomes.length > 0 && <p>{exposure.outcomes.join(', ')}</p>}
     </Card>
   )
 }

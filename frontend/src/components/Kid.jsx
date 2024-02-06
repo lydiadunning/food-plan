@@ -13,7 +13,7 @@ const Kid = ({ kid, setKid }) => {
 
   return (
     <Card className='swipeable'>
-      <Flex direction='column' p='6' className='kid-size'>
+      <Flex direction='column' p='5' className='kid-size'>
       <Heading>{kid.name}</Heading>
         <Flex gap='2' justify='end'>
           <EditKid kid={kid} setKid={setKid} /> {/*button w/ dialog*/}
