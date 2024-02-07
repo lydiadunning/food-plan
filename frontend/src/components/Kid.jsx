@@ -5,9 +5,15 @@ import { Card, Heading, Flex } from '@radix-ui/themes'
 import EditKid from './EditKid.jsx'
 import AddEntry from './entryForms/AddEntry.jsx'
 import { useDeleteKid } from '../serverStore/mutations.jsx'
+import {useRef} from 'react'
 
 const Kid = ({ kid, makeMessage }) => {
   console.log('kid in Kid', kid)
+
+  const ref = useRef(null);
+  const handleScroll = () => {
+    ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  };
 
   const deleteKid = useDeleteKid(kid.id)
   const deleteKidAction = () => {
@@ -16,7 +22,7 @@ const Kid = ({ kid, makeMessage }) => {
   }
 
   return (
-    <Card className='swipeable'>
+    <Card className='swipeable' ref={ref} onClick={handleScroll}>
       <Flex direction='column' p='5' className='kid-size'>
       <Heading>{kid.name}</Heading>
         <Flex gap='2' justify='end'>
