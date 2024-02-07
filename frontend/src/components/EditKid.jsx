@@ -8,7 +8,7 @@ import * as Form from '@radix-ui/react-form'
 import { pencil } from '../assets/svgImages.jsx'
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden'
 
-const EditKid = ({ kid, setKid }) => {
+const EditKid = ({ kid }) => {
   const [outcomes, setOutcomes] = useState([...kid.outcomeOptions])
   const [name, setName] = useState(kid.name)
 
@@ -28,12 +28,6 @@ const EditKid = ({ kid, setKid }) => {
       }),
     }
     updateKid.mutate(newKid)
-    setKid({
-      id: kid.id,
-      exposures: kid.exposures,
-      outcomeOptions: outcomes,
-      name: newKid.name,
-    })
   }
 
   return (

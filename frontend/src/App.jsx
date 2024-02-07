@@ -11,7 +11,6 @@ import { checkForLogin } from './components/userAuth/userHooks.jsx'
 import MessageToast from './components/Toast.jsx'
 
 function App() {
-  const [kid, setKid] = useState(null)
   const [message, setMessage] = useState(null)
 
   // react-query used here. Comments stay until I'm more familiar with using the technology.
@@ -63,7 +62,7 @@ function App() {
         <Route path='/addkid' element={<AddKid />} />
         <Route
           path='/kidlist'
-          element={<KidList kidData={kids} setKid={setKid} makeMessage={makeMessage} />}
+          element={<KidList kidData={kids} makeMessage={makeMessage} />}
         />
 
       </Routes>

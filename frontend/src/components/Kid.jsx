@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import EditKid from './EditKid.jsx'
 import AddExposure from './exposureForms/AddExposure.jsx'
 
-const Kid = ({ kid, setKid, makeMessage }) => {
+const Kid = ({ kid, makeMessage }) => {
   // const kid = useParams()
   console.log('kid in Kid', kid)
   const navigate = useNavigate()
@@ -16,7 +16,7 @@ const Kid = ({ kid, setKid, makeMessage }) => {
       <Flex direction='column' p='5' className='kid-size'>
       <Heading>{kid.name}</Heading>
         <Flex gap='2' justify='end'>
-          <EditKid kid={kid} setKid={setKid} /> {/*button w/ dialog*/}
+          <EditKid kid={kid} /> {/*button w/ dialog*/}
           <DeleteKid kid={kid} closeKid={() => navigate(-1)} />
         </Flex>
         

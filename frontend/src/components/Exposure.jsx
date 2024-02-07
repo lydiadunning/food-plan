@@ -12,6 +12,7 @@ const Exposure = ({ exposure, openEditExposures }) => {
     <Card>
       <Flex justify='between'>
         <p>{exposure.food}</p>
+
         <IconButton onClick={() => openEditExposures(exposure)}>
           {pencil}
         </IconButton>

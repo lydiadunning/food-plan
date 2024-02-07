@@ -125,3 +125,16 @@ export const useDeleteKid = () => {
     },
   })
 }
+
+export const useDeleteExposure = (kidId, exposureId) => {
+  const config = getUserConfig()
+  const queryClient = useQueryClient()
+  const url = kidUrl.concat(kidId, '/exposure/', exposureId, '/')
+
+  return useMutation({
+    mutationFn: () => axios.delete(url, config),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(['kids'])
+    }
+  })
+}

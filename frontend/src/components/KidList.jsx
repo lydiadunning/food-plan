@@ -4,7 +4,7 @@ import { plus } from '../assets/svgImages.jsx'
 import { useNavigate } from 'react-router-dom'
 import Loader from './Loader.jsx'
 
-export const KidList = ({ kidData, setKid, makeMessage }) => {
+export const KidList = ({ kidData, makeMessage }) => {
   const navigate = useNavigate()
 
   console.log({ kidData })
@@ -16,7 +16,7 @@ export const KidList = ({ kidData, setKid, makeMessage }) => {
       { kidData ?
         <Flex className='swipe-container' direction='row' gap='4' align='start'>
           {kidData?.map((kid) => (
-            <Kid key={kid.id} kid={kid} setKid={setKid} makeMessage={makeMessage} />
+            <Kid key={kid.id} kid={kid} makeMessage={makeMessage} />
           ))}
           <Card className='swipeable' size='5'>
             <IconButton size='3' onClick={() => navigate('/addkid')}>
