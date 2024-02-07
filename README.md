@@ -54,7 +54,7 @@ Node.js with Express. Uses mongoose to access MongoDB. Manages password encrypti
 
 #### Frontend
 
-React.js, no framework, build with Vite. Accesses backend with axios and manages server state with react-query. Manages forms with react-hook-form. Styled with Radix UI themes and primitives.
+React.js, build with Vite. Accesses backend with axios and manages server state with react-query. Manages forms with react-hook-form. Styled with Radix UI themes and primitives.
 
 ## Next Steps in Development
 
@@ -62,15 +62,16 @@ React.js, no framework, build with Vite. Accesses backend with axios and manages
 
 ### Next
 
-- Make sure deleting or editing one kid doesn't remove other kids.
-- Ensure login functionality works properly
-  - Test edgecases and improve error detection
+- figure out how to display how many of a kid's entries have the same food - can I do this without backend changes?
+- add toast with message decribing change - start with how many times the current food has been offered
+- add filter for entries- by food
+- add functionality to delete entries
+- change exposure to entry
 - Fix app getting lost on refresh
 
 ### For Later
 
 - Review responses: correct HTTP code? enough information?
-
 - Improve input validation in endpoints.
 
 - On frontend, filter outcomes by active and inactive, and make sure inactive outcomes that have been used in an exposure are not deleted.
@@ -78,3 +79,9 @@ React.js, no framework, build with Vite. Accesses backend with axios and manages
 - use fuzzy searching, maybe incorporate soundex. Find some solution to repeating words with different capitalization, pluralization, or spelling.
 
 - list values and goals to guide the design process.
+
+- Make sure deleting or editing one kid doesn't remove other kids.
+- Ensure login functionality works properly
+  - Test edgecases and improve error detection
+
+  - change entry inputs to a sentence? 
