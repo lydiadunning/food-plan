@@ -8,7 +8,7 @@ import { x } from '../../assets/svgImages'
 const AddEntry = ({ kid, makeMessage }) => {
   const today = new Date().toISOString().substring(0, 10)
 
-  const { register, handleSubmit, watch } = useForm({
+  const { register, handleSubmit, watch, reset } = useForm({
     defaultValues: {
       date: today,
     },
@@ -20,6 +20,7 @@ const AddEntry = ({ kid, makeMessage }) => {
     const foodCount = kid.entries.filter(entry => entry.food == data.food).length + 1 // acts on state before kid query returns new entry
     const message = foodCount === 1 ?  `${kid.name} tried ${data.food}!` : `${kid.name} has tried ${data.food} ${foodCount + 1} times!`
     makeMessage(message)
+    reset(undefined, {keepDefaultValues: true})
   }
 
   return (
