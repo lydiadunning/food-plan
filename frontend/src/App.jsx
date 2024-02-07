@@ -5,15 +5,14 @@ import { useKids } from './serverStore/queries'
 import TopBar from './components/TopBar.jsx'
 import { Container } from '@radix-ui/themes'
 import AddKid from './components/AddKid.jsx'
-import AddExposure from './components/exposureForms/AddExposure.jsx'
-import Kid from './components/Kid'
-import EditKid from './components/EditKid.jsx'
 import { KidList } from './components/KidList'
 import { LoginForm } from './components/userAuth/LoginForm.jsx'
 import { checkForLogin } from './components/userAuth/userHooks.jsx'
+import MessageToast from './components/Toast.jsx'
 
 function App() {
   const [kid, setKid] = useState(null)
+  const [message, setMessage] = useState(null)
 
   // react-query used here. Comments stay until I'm more familiar with using the technology.
   // using react-query and axios to simplify state management for values retrieved from the server.
@@ -29,9 +28,19 @@ function App() {
   const kids = data.data
   // end of react-query behavior
 
+  console.log({message})
+
+  const makeMessage = (message) => {
+    setMessage(message)
+    setTimeout(() => {
+      setMessage(null)
+    },
+    10000)
+  }
+
   return (
     <Container
-      style={{ backgroundColor: 'var(--sand-3)' }}
+      style={{ backgroundColor: 'var(--sand-3)'}}
       size='1'
       className='app'
       py='1'
@@ -54,19 +63,11 @@ function App() {
         <Route path='/addkid' element={<AddKid />} />
         <Route
           path='/kidlist'
-          element={<KidList kidData={kids} setKid={setKid} />}
+          element={<KidList kidData={kids} setKid={setKid} makeMessage={makeMessage} />}
         />
 
-        {/* link to specific kid in the list */}
-        <Route
-          path='/kid/:kidid/editkid'
-          element={<EditKid kid={kid} setKid={setKid} />}
-        />
-        <Route
-          path='/kid/:kidid/addexposure'
-          element={<AddExposure kid={kid} />}
-        />
       </Routes>
+    {message && <MessageToast message={message} />}
     </Container>
   )
 }

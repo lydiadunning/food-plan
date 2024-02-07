@@ -59,15 +59,15 @@ React.js, build with Vite. Accesses backend with axios and manages server state 
 ## Next Steps in Development
 
 ### Now
+- add functionality to delete entries
 
 ### Next
 
-- figure out how to display how many of a kid's entries have the same food - can I do this without backend changes?
-- add toast with message decribing change - start with how many times the current food has been offered
 - add filter for entries- by food
-- add functionality to delete entries
 - change exposure to entry
+- clear form fields after submission
 - Fix app getting lost on refresh
+- check for date not appearing on first load - fix
 
 ### For Later
 
