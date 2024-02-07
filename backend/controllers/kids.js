@@ -3,6 +3,12 @@ const User = require("../models/user.js");
 const kidRouter = require("express").Router();
 const logger = require("../utils/logger.js");
 
+kidRouter.post("/entries", async (request, response) => {
+  await Kid.updateMany({$rename: { 'exposures': 'entries'}})
+  const kids = await Kid.find();
+  response.json(kids);
+})
+
 kidRouter.get("/", async (request, response) => {
   const kids = await Kid.find({ users: request.user });
   kids.forEach((kid) => {
