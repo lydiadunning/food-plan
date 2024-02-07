@@ -3,13 +3,11 @@ import { useForm } from 'react-hook-form'
 import { Button, Heading, Flex, Dialog, IconButton } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form'
 import OutcomeOptionPicker from './OutcomeOptionPicker'
-import { useNavigate } from 'react-router-dom'
 import { x } from '../../assets/svgImages'
 
 const AddExposure = ({ kid }) => {
   const today = new Date().toISOString().substring(0, 10)
 
-  const navigate = useNavigate()
   const { register, handleSubmit, watch } = useForm({
     defaultValues: {
       date: today,
@@ -19,8 +17,6 @@ const AddExposure = ({ kid }) => {
   const createExposure = useCreateExposure(kid.id)
   const submit = (data) => {
     createExposure.mutate(data)
-
-    navigate(-1)
   }
 
   return (
@@ -94,10 +90,11 @@ const AddExposure = ({ kid }) => {
                 register={register}
                 watch={watch}
               />
-
-              <Form.Submit asChild>
-                <Button type='submit'>submit</Button>
-              </Form.Submit>
+              <Dialog.Close>
+                <Form.Submit asChild>
+                  <Button type='submit'>submit</Button>
+                </Form.Submit>
+              </Dialog.Close >
             </Flex>
           </Form.Root>
         </Flex>
