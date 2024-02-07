@@ -12,6 +12,7 @@ const Kid = ({ kid, makeMessage }) => {
   const deleteKid = useDeleteKid(kid.id)
   const deleteKidAction = () => {
     deleteKid.mutate()
+    makeMessage(`${kid.name} has been deleted`)
   }
 
   return (
