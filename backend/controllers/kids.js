@@ -3,17 +3,13 @@ const User = require("../models/user.js");
 const kidRouter = require("express").Router();
 const logger = require("../utils/logger.js");
 
-kidRouter.post("/entries", async (request, response) => {
-  await Kid.updateMany({$rename: { 'exposures': 'entries'}})
-  const kids = await Kid.find();
-  response.json(kids);
-})
-
 kidRouter.get("/", async (request, response) => {
   const kids = await Kid.find({ users: request.user });
+  console.log({kids})
   kids.forEach((kid) => {
+    console.log('kid.entries', kid.entries)
     // inefficient. alternative approach to sorting here is keeping the list in order.
-    kid.exposures.sort((a, b) => {
+    kid.entries.sort((a, b) => {
       return b.date.valueOf() - a.date.valueOf();
     });
   });
@@ -146,67 +142,67 @@ kidRouter.get("/:kidId/outcomeOptions", async (request, response) => {
   }
 });
 
-kidRouter.get("/:kidId/exposure", async (request, response) => {
+kidRouter.get("/:kidId/entry", async (request, response) => {
   const kid = await Kid.findById(request.params.kidId)
-    .populate("exposures")
+    .populate("entries")
     .sort({ date: 1 });
   if (kid) {
-    response.json(kid.exposures);
+    response.json(kid.entries);
   } else {
     response.status(404).end();
   }
 });
 
-kidRouter.patch("/:kidId/exposure", async (request, response) => {
+kidRouter.patch("/:kidId/entry", async (request, response) => {
   const kid = await Kid.findById(request.params.kidId);
   if (kid) {
     const date = new Date();
-    const exposure = { ...request.body, date: date };
+    const entry = { ...request.body, date: date };
     // return 400 error if request body missing vital info
-    kid.exposures.push(exposure);
+    kid.entries.push(entry);
     const result = await kid.save();
-    response.status(201).json(exposure);
+    response.status(201).json(entry);
   } else {
     logger.info("kid not found");
     response.status(404).end();
   }
 });
 
-kidRouter.get("/:kidId/exposure/:id", async (request, response) => {
+kidRouter.get("/:kidId/entry/:id", async (request, response) => {
   const kid = await Kid.findById(request.params.kidId);
-  const exposure = kid.exposures.find(
-    (exposure) => exposure.id === request.params.id,
+  const entry = kid.entries.find(
+    (entry) => entry.id === request.params.id,
   );
 
-  if (exposure) {
-    response.json(exposure);
+  if (entry) {
+    response.json(entry);
   } else {
     response.status(404).end();
   }
 });
 
-kidRouter.patch("/:kidId/exposure/:id", async (request, response) => {
+kidRouter.patch("/:kidId/entry/:id", async (request, response) => {
   const kid = await Kid.findById(request.params.kidId);
-  const exposureIndex = kid.exposures.findIndex(
-    (exposure) => exposure.id === request.params.id,
+  const entryIndex = kid.entries.findIndex(
+    (entry) => entry.id === request.params.id,
   );
 
-  if (exposureIndex >= 0) {
+  if (entryIndex >= 0) {
     Object.keys(request.body).forEach((key) => {
-      kid.exposures[exposureIndex][key] = request.body[key];
+      kid.entries[entryIndex][key] = request.body[key];
     });
     await kid.save();
 
-    response.json(kid.exposures[exposureIndex]);
+    response.json(kid.entries[entryIndex]);
   } else {
     response.status(404).end();
   }
 });
 
-kidRouter.delete("/:kidId/exposure/:id", async (request, response) => {
+kidRouter.delete("/:kidId/entry/:id", async (request, response) => {
   const kid = await Kid.findById(request.params.kidId);
-  kid.exposures = kid.exposures.filter(
-    (exposure) => exposure.id !== request.params.id,
+  kid.entries = kid.entries.filter(
+    (entry) => entry.id !== request.params.id,
   );
   await kid.save();
   response.status(204).end();

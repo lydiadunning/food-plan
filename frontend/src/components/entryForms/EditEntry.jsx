@@ -1,4 +1,4 @@
-import { useUpdateExposure, useDeleteExposure } from '../../serverStore/mutations'
+import { useUpdateEntry, useDeleteEntry } from '../../serverStore/mutations'
 import { useForm } from 'react-hook-form'
 import { Button, Flex, Heading, IconButton, Card } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form'
@@ -6,36 +6,36 @@ import { x } from '../../assets/svgImages'
 import OutcomeOptionPicker from './OutcomeOptionPicker'
 import { Delete } from '../Delete'
 
-const EditExposure = ({ kid, exposure, closeEditExposure }) => {
+const EditEntry = ({ kid, entry, closeEditEntry }) => {
   const { register, handleSubmit, watch } = useForm({
     defaultValues: {
-      food: exposure.food,
-      description: exposure.description,
-      outcomes: exposure.outcomes,
-      meal: exposure.meal,
-      date: exposure.date?.slice(0, 10),
+      food: entry.food,
+      description: entry.description,
+      outcomes: entry.outcomes,
+      meal: entry.meal,
+      date: entry.date?.slice(0, 10),
     },
   })
 
-  const updateExposure = useUpdateExposure(kid.id, exposure.id)
-  const deleteExposure = useDeleteExposure(kid.id, exposure.id)
+  const updateEntry = useUpdateEntry(kid.id, entry.id)
+  const deleteEntry = useDeleteEntry(kid.id, entry.id)
 
   const onSubmit = (data) => {
-    updateExposure.mutate(data)
-    closeEditExposure()
+    updateEntry.mutate(data)
+    closeEditEntry()
   }
 
-  const deleteExposureAction = () => {
-    deleteExposure.mutate()
-    closeEditExposure()
+  const deleteEntryAction = () => {
+    deleteEntry.mutate()
+    closeEditEntry()
   }
 
   return (
     <Card>
       <Flex justify='between'>
         <Heading>Editing</Heading>
-        <Delete action={deleteExposureAction}/>
-        <IconButton onClick={closeEditExposure}>{x}</IconButton>
+        <Delete action={deleteEntryAction}/>
+        <IconButton onClick={closeEditEntry}>{x}</IconButton>
       </Flex>
 
       <Form.Root onSubmit={handleSubmit(onSubmit)}>
@@ -96,4 +96,4 @@ const EditExposure = ({ kid, exposure, closeEditExposure }) => {
   )
 }
 
-export default EditExposure
+export default EditEntry

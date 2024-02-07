@@ -1,11 +1,11 @@
-import { useCreateExposure } from '../../serverStore/mutations'
+import { useCreateEntry } from '../../serverStore/mutations'
 import { useForm } from 'react-hook-form'
 import { Button, Heading, Flex, Dialog, IconButton } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form'
 import OutcomeOptionPicker from './OutcomeOptionPicker'
 import { x } from '../../assets/svgImages'
 
-const AddExposure = ({ kid, makeMessage }) => {
+const AddEntry = ({ kid, makeMessage }) => {
   const today = new Date().toISOString().substring(0, 10)
 
   const { register, handleSubmit, watch } = useForm({
@@ -14,10 +14,10 @@ const AddExposure = ({ kid, makeMessage }) => {
     },
   })
 
-  const createExposure = useCreateExposure(kid.id)
+  const createEntry = useCreateEntry(kid.id)
   const submit = (data) => {
-    createExposure.mutate(data)
-    const foodCount = kid.exposures.filter(exposure => exposure.food == data.food).length + 1 // acts on state before kid query returns new entry
+    createEntry.mutate(data)
+    const foodCount = kid.entries.filter(entry => entry.food == data.food).length + 1 // acts on state before kid query returns new entry
     const message = foodCount === 1 ?  `${kid.name} tried ${data.food}!` : `${kid.name} has tried ${data.food} ${foodCount + 1} times!`
     makeMessage(message)
   }
@@ -106,4 +106,4 @@ const AddExposure = ({ kid, makeMessage }) => {
   )
 }
 
-export default AddExposure
+export default AddEntry

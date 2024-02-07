@@ -58,13 +58,13 @@ export const useCreateKid = () => {
  *
  * @returns mutation object with method mutate
  */
-export const useCreateExposure = (kidId) => {
+export const useCreateEntry = (kidId) => {
   const config = getUserConfig()
-  const url = kidUrl.concat(kidId, '/exposure/')
+  const url = kidUrl.concat(kidId, '/entry/')
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (exposure) => axios.patch(url, exposure, config),
+    mutationFn: (entry) => axios.patch(url, entry, config),
     onSuccess: async (data) => {
       console.log('success')
       await queryClient.invalidateQueries(['kids'])
@@ -93,13 +93,13 @@ export const useUpdateKid = (kidId) => {
  *
  * @returns mutation object with method mutate
  */
-export const useUpdateExposure = (kidId, exposureId) => {
+export const useUpdateEntry = (kidId, entryId) => {
   const config = getUserConfig()
-  const url = kidUrl.concat(kidId, '/exposure/', exposureId, '/')
+  const url = kidUrl.concat(kidId, '/entry/', entryId, '/')
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (exposure) => axios.patch(url, exposure, config),
+    mutationFn: (entry) => axios.patch(url, entry, config),
     onSuccess: async (data) => {
       console.log('success')
       await queryClient.invalidateQueries(['kids'])
@@ -126,10 +126,10 @@ export const useDeleteKid = (kidId) => {
   })
 }
 
-export const useDeleteExposure = (kidId, exposureId) => {
+export const useDeleteEntry = (kidId, entryId) => {
   const config = getUserConfig()
   const queryClient = useQueryClient()
-  const url = kidUrl.concat(kidId, '/exposure/', exposureId, '/')
+  const url = kidUrl.concat(kidId, '/entry/', entryId, '/')
 
   return useMutation({
     mutationFn: () => axios.delete(url, config),

@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app.js')
 const OutcomeTipArray = require('../models/outcomeTipArray.js')
-// const Exposure = require('../models/exposure.js')
+// const Entry = require('../models/entry.js')
 const User = require('../models/user.js')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -408,10 +408,10 @@ describe('With kid profiles in the database', () => {
 //   })
 // })
 
-// describe('with a kid with several exposures in the db', () => {
+// describe('with a kid with several entries in the db', () => {
 //   let kidId = ''
 //   let outcomeId = ''
-//   const testExposures = [{    
+//   const testEntries = [{    
 //     'food': 'squash',
 //     'description': 'roasted with salt',
 //   }, {    
@@ -427,8 +427,8 @@ describe('With kid profiles in the database', () => {
 //     const newOutcome = new Outcome({ outcome: 'smell' })
 //     const savedOutcomes = await newOutcome.save()
 //     outcomeId = savedOutcomes.id
-//     testExposures[0].outcome = outcomeId
-//     testExposures[1].outcome = outcomeId
+//     testEntries[0].outcome = outcomeId
+//     testEntries[1].outcome = outcomeId
 
 //     console.log('outcome created')
 
@@ -442,61 +442,61 @@ describe('With kid profiles in the database', () => {
 
 //     console.log('kid created')
 
-//     const exposures = await Promise.all(
-//       testExposures.map(async (obj) => {
-//         return await new Exposure(obj).save()
+//     const entries = await Promise.all(
+//       testEntries.map(async (obj) => {
+//         return await new Entry(obj).save()
 //       })
 //     )
 
-//     console.log('exposures inserted')
+//     console.log('entries inserted')
 
-//     await Kid.findByIdAndUpdate(kidId, {$push: {'exposures': exposures}}, {upsert: true})
+//     await Kid.findByIdAndUpdate(kidId, {$push: {'entries': entries}}, {upsert: true})
 //   })
 
-//   test("the kid's exposures can be retrieved", async () => {
+//   test("the kid's entries can be retrieved", async () => {
 //     const response = await api
-//       .get(`/api/kid/${kidId}/exposure`)
+//       .get(`/api/kid/${kidId}/entry`)
 //       .expect(200)
 //     expect(response.body)
 //     expect(response.body).toHaveLength(2)
 //   })
 
-//   test("getting a nonexistant kid's exposures works as expected", async () => {
+//   test("getting a nonexistant kid's entries works as expected", async () => {
 //     const response = await api
-//       .get(`/api/kid/${idNotInDb}/exposure`)
+//       .get(`/api/kid/${idNotInDb}/entry`)
 //       .expect(404)
 //   })
 
-//   test("a new exposure can be added to the kid's exposures",  async() => {
-//     const newExposure = {
+//   test("a new entry can be added to the kid's entries",  async() => {
+//     const newEntry = {
 //       'food': 'green beans', 
 //       'description': 'steamed',
 //       'outcome': outcomeId
 //     }
 
 //     const response = await api
-//       .post(`/api/kid/${kidId}/exposure`)
-//       .send(newExposure)
+//       .post(`/api/kid/${kidId}/entry`)
+//       .send(newEntry)
 //       .expect(201)
 //       .expect('Content-Type', /application\/json/)
       
-//     const kid = await Kid.findById(kidId).populate('exposures', { food: 1, description: 1, outcome: 1})
+//     const kid = await Kid.findById(kidId).populate('entries', { food: 1, description: 1, outcome: 1})
     
-//     const exposuresNoId = kid.exposures.map(x => {
+//     const entriesNoId = kid.entries.map(x => {
 //       return {
 //         'food': x.food,
 //         'description': x.description,
 //         'outcome': outcomeId
 //       }
 //     })
-//     expect(exposuresNoId).toContainEqual(
-//       newExposure
+//     expect(entriesNoId).toContainEqual(
+//       newEntry
 //     )
 //   })
 // })
 
 
-// describe('creating an exposure', () => {
+// describe('creating an entry', () => {
 //   let kidId = ''
 //   let outcomeId = ''
 //   const idNotInDb = '65336ffee3700a6cd0040889'
@@ -518,111 +518,111 @@ describe('With kid profiles in the database', () => {
 //   })
 
 //   beforeEach(async () => {
-//     await Exposure.deleteMany({})
+//     await Entry.deleteMany({})
 //   })
 
-//   test('a new exposure can be added correctly', async () => {
-//     const newExposure = {
+//   test('a new entry can be added correctly', async () => {
+//     const newEntry = {
 //       'food': 'broccoli', 
 //       'description': 'roasted with salt',
 //     }
 
 //     await api
-//       .post(`/api/kid/${kidId}/exposure`)
-//       .send(newExposure)
+//       .post(`/api/kid/${kidId}/entry`)
+//       .send(newEntry)
 //       .expect(201)
 //       .expect('Content-Type', /application\/json/)
   
-//     const exposuresFromDB = await Exposure.find({})
-//     const exposures = exposuresFromDB.map(exposure => exposure.toJSON())
+//     const entriesFromDB = await Entry.find({})
+//     const entries = entriesFromDB.map(entry => entry.toJSON())
   
-//     const expectedExposureCount = 1
+//     const expectedEntryCount = 1
   
-//     expect(exposures).toHaveLength(expectedExposureCount)
+//     expect(entries).toHaveLength(expectedEntryCount)
   
-//     const exposuresNoId = exposures.map(x => {
+//     const entriesNoId = entries.map(x => {
 //       return {
 //         'food': x.food,
 //         'description': x.description,
 //       }
 //     })
-//     expect(exposuresNoId).toContainEqual(
-//       newExposure
+//     expect(entriesNoId).toContainEqual(
+//       newEntry
 //     )
 //   })
 
-//   test('a new exposure will not be added to a nonexistant kid', async () => {
-//     const newExposure = {
+//   test('a new entry will not be added to a nonexistant kid', async () => {
+//     const newEntry = {
 //       'food': 'broccoli', 
 //       'description': 'roasted with salt',
 //     }
 
 //     await api
-//       .post(`/api/kid/${idNotInDb}/exposure`)
-//       .send(newExposure)
+//       .post(`/api/kid/${idNotInDb}/entry`)
+//       .send(newEntry)
 //       .expect(404)
 //   })
 
-//   test('a new exposure will default to the current date', async () => {
+//   test('a new entry will default to the current date', async () => {
 //     const date = new Date()
 
-//     const newExposure = {
+//     const newEntry = {
 //       'food': 'squash',
 //       'description': 'roasted with salt',
 //     }
 
 //     await api
-//       .post(`/api/kid/${kidId}/exposure`)
-//       .send(newExposure)
+//       .post(`/api/kid/${kidId}/entry`)
+//       .send(newEntry)
 //       .expect(201)
 //       .expect('Content-Type', /application\/json/)
   
-//     const exposuresFromDB = await Exposure.find({})
-//     const exposures = exposuresFromDB.map(exposure => exposure.toJSON())
+//     const entriesFromDB = await Entry.find({})
+//     const entries = entriesFromDB.map(entry => entry.toJSON())
   
-//     const recentExposure = exposures.filter(x => x.food === 'squash')[0]
-//     expect(recentExposure.date.getFullYear()).toEqual(
+//     const recentEntry = entries.filter(x => x.food === 'squash')[0]
+//     expect(recentEntry.date.getFullYear()).toEqual(
 //       date.getFullYear()
 //     )
-//     expect(recentExposure.date.getDate()).toEqual(
+//     expect(recentEntry.date.getDate()).toEqual(
 //       date.getDate()
 //     )
-//     expect(recentExposure.date.getMonth()).toEqual(
+//     expect(recentEntry.date.getMonth()).toEqual(
 //       date.getMonth()
 //     )
 //   })
 
-//   // outcome here not specific to kid. No relationship between a kid's outcomes and the outcomes in their exposures
-//   test('a new exposure can be added with a outcome', async () => {
+//   // outcome here not specific to kid. No relationship between a kid's outcomes and the outcomes in their entries
+//   test('a new entry can be added with a outcome', async () => {
 //     const date = new Date()
 
-//     const newExposure = {
+//     const newEntry = {
 //       'food': 'broccoli', 
 //       'description': 'roasted with salt',
 //       'outcome': outcomeId
 //     }
 
 //     await api
-//       .post(`/api/kid/${kidId}/exposure`)
-//       .send(newExposure)
+//       .post(`/api/kid/${kidId}/entry`)
+//       .send(newEntry)
 //       .expect(201)
 //       .expect('Content-Type', /application\/json/)
   
-//     const exposuresFromDB = await Exposure.find({})
-//     const exposures = exposuresFromDB.map(exposure => exposure.toJSON())
+//     const entriesFromDB = await Entry.find({})
+//     const entries = entriesFromDB.map(entry => entry.toJSON())
   
-//     const expectedExposureCount = 1
+//     const expectedEntryCount = 1
   
-//     expect(exposures).toHaveLength(expectedExposureCount)
-//     const exposuresNoId = exposures.map(x => {
+//     expect(entries).toHaveLength(expectedEntryCount)
+//     const entriesNoId = entries.map(x => {
 //       return {
 //         'food': x.food,
 //         'description': x.description,
 //         'outcome': x.outcome
 //       }
 //     })
-//     expect(exposuresNoId).toContainEqual(
-//       newExposure
+//     expect(entriesNoId).toContainEqual(
+//       newEntry
 //     )
 //   })
 

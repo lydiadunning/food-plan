@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import AllExposures from './AllExposures.jsx'
+import AllEntries from './AllEntries.jsx'
 import { Delete } from './Delete.jsx'
 import { Card, Heading, Flex } from '@radix-ui/themes'
 import EditKid from './EditKid.jsx'
-import AddExposure from './exposureForms/AddExposure.jsx'
+import AddEntry from './entryForms/AddEntry.jsx'
 import { useDeleteKid } from '../serverStore/mutations.jsx'
 
 const Kid = ({ kid, makeMessage }) => {
@@ -23,8 +23,8 @@ const Kid = ({ kid, makeMessage }) => {
           <EditKid kid={kid} /> 
           <Delete action={deleteKidAction} />
         </Flex>
-        <AddExposure kid={kid} makeMessage={makeMessage} />
-        <AllExposures kid={kid} />
+        <AddEntry kid={kid} makeMessage={makeMessage} />
+        <AllEntries kid={kid} />
       </Flex>
     </Card>
   )

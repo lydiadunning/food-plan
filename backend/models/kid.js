@@ -22,7 +22,7 @@ outcomeSchema.set("toJSON", {
   },
 });
 
-const exposureSchema = new Schema({
+const entrySchema = new Schema({
   food: {
     type: String,
     required: true,
@@ -48,7 +48,7 @@ const exposureSchema = new Schema({
   },
 });
 
-exposureSchema.set("toJSON", {
+entrySchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
@@ -62,7 +62,7 @@ const kidSchema = new Schema({
     required: true,
   },
 
-  exposures: [exposureSchema],
+  entries: [entrySchema],
   outcomeOptions: [outcomeSchema],
   users: [
     {

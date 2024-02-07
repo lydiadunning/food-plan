@@ -8,11 +8,11 @@
   * can be created with an array of custom outcomes, added as ObjectId strings
   * can be created with an array of outcome hints
   * cannot be created with no name
-  * with exposures
-    * can add exposures
-    * a kid that doesn't exist can't add an exposure
-    * an exposure will default to the current date
-    * an exposure can be added with a outcome
+  * with entries
+    * can add entries
+    * a kid that doesn't exist can't add an entry
+    * an entry will default to the current date
+    * an entry can be added with a outcome
 
 #### GET: verifies kid profiles can be returned
   * with only a name in the profile / base case
@@ -22,8 +22,8 @@
   * kids will not be returned if none in database
   * response when specific kid not in database
   * response when getting outcomes for nonexistant kid
-  * the kid's exposures can be returned
-  * response when querying nonexistant kid's exposures
+  * the kid's entries can be returned
+  * response when querying nonexistant kid's entries
   
 #### DELETE: verifies a kid profile can be deleted
   * the correct profile is deleted
@@ -37,15 +37,15 @@
   * response when updating nonexistant kid
   * cannot update kid with invalid data
 
-## exposureApi.test.js
+## entryApi.test.js
 
 #### POST: none
 
-#### GET: verifies exposures can be read
+#### GET: verifies entries can be read
   * correctly
-  * a nonexistant exposure doesn't cause problems
+  * a nonexistant entry doesn't cause problems
 
-#### DELETE: verifies the exposure can be deleted
+#### DELETE: verifies the entry can be deleted
   * correctly
 
 #### PUT: none
@@ -77,11 +77,11 @@
 | /kid/:id | PUT | yes | yes | yes
 | /kid/:id/outcomes | GET | yes | yes | -
 | /kid/:id/outcomes/ | PUT | yes | yes |
-| /kid/:id/exposure/ | POST | yes | yes | 
-| /kid/:id/exposure | GET | yes | yes | -
-| /exposure/ | GET | yes | yes | -
-| /exposure/:id | DELETE |  | - | -
-| /exposure/:id | PUT | | |
+| /kid/:id/entry/ | POST | yes | yes | 
+| /kid/:id/entry | GET | yes | yes | -
+| /entry/ | GET | yes | yes | -
+| /entry/:id | DELETE |  | - | -
+| /entry/:id | PUT | | |
 | /outcome | GET | yes | | -
 | /outcome/:id | GET | yes | | -
 | /outcome/:id | DELETE | yes | | -
@@ -93,7 +93,7 @@ Only happy path so far.
 To improve error handling:
 Add tests for querying items that aren't in the database  
 Add tests where the request body lacks essential data   
-| kid | exposure | outcome |
+| kid | entry | outcome |
 |--|--|--|
 | no name | no food | no outcome
 | | no description | 

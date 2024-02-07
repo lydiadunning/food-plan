@@ -25,7 +25,7 @@ const api = supertest(app)
  * doesn't add a profile missing required properties
  * doesn't allow update to a profile missing required properties
  * allows update to profile with required properties
- * after a kid has exposureductions, an update to the kid's profile does not alter the exposureduction history
+ * after a kid has entryductions, an update to the kid's profile does not alter the entryduction history
  * a kid's tries can be changed to add a new outcomeTip
  * a kid's tries can be changed to remove a outcomeTip
  *  * a kid's tries can be changed to add a new outcome string

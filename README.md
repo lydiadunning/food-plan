@@ -59,7 +59,6 @@ React.js, build with Vite. Accesses backend with axios and manages server state 
 ## Next Steps in Development
 
 ### Now
-- change exposure to entry
 
 ### Next
 
@@ -73,7 +72,7 @@ React.js, build with Vite. Accesses backend with axios and manages server state 
 - Review responses: correct HTTP code? enough information?
 - Improve input validation in endpoints.
 
-- On frontend, filter outcomes by active and inactive, and make sure inactive outcomes that have been used in an exposure are not deleted.
+- On frontend, filter outcomes by active and inactive, and make sure inactive outcomes that have been used in an entry are not deleted.
 
 - use fuzzy searching, maybe incorporate soundex. Find some solution to repeating words with different capitalization, pluralization, or spelling.
 

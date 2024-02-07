@@ -16,7 +16,7 @@ export const sampleKids = (userId) => [
       { outcome: 'tasted it' },
       { outcome: 'ate it' }
     ],
-    exposures: [
+    entries: [
       {
         food: 'Spinach',
         description: 'raw, dipped in dressing',
@@ -66,7 +66,7 @@ export const sampleKids = (userId) => [
       { outcome: 'sniffed it' },
       { outcome: 'tasted it' },
     ],
-    exposures: [
+    entries: [
       {
         food: 'Spinach',
         description: 'raw, with dressing',

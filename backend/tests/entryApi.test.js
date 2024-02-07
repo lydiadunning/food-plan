@@ -51,25 +51,25 @@ describe('With kid profiles in the database', () => {
 
     token = result.body.token
   })
-  test('a new exposure with only required data can be added to a kid profile', async () => {
-    const exposure = {
+  test('a new entry with only required data can be added to a kid profile', async () => {
+    const entry = {
       food: 'Olives',
     }
 
     const response = await api
-      .patch(`/api/kid/${kidId}/exposure`)
+      .patch(`/api/kid/${kidId}/entry`)
       .set('Authorization', `Bearer ${token}`)
-      .send(exposure)
+      .send(entry)
       .expect(201)
 
 
     const kid = await Kid.findById(kidId)
-    console.log(kid.exposures)
-    expect(kid.exposures[0]).toHaveProperty('food')
-    expect(kid.exposures[0].food).toEqual('Olives')
+    console.log(kid.entries)
+    expect(kid.entries[0]).toHaveProperty('food')
+    expect(kid.entries[0].food).toEqual('Olives')
   })
-  test('a new exposure can be added to a kid profile', async () => {
-    const exposure = {
+  test('a new entry can be added to a kid profile', async () => {
+    const entry = {
       food: 'Beans',
       description: 'Many different beans',
       outcomes: ['ate a bite'],
@@ -77,76 +77,76 @@ describe('With kid profiles in the database', () => {
     }
 
     const response = await api
-      .patch(`/api/kid/${kidId}/exposure`)
+      .patch(`/api/kid/${kidId}/entry`)
       .set('Authorization', `Bearer ${token}`)
-      .send(exposure)
+      .send(entry)
       .expect(201)
 
       console.log(response.body)
     const kid = await Kid.findById(kidId)
-    expect(kid.exposures[0]).toHaveProperty('food')
-    expect(kid.exposures[0].food).toEqual('Beans')
-    expect(kid.exposures[0].description).toEqual('Many different beans')
-    expect(kid.exposures[0].outcomes).toHaveLength(1)
-    expect(kid.exposures[0].outcomes[0]).toEqual('ate a bite')
-    expect(kid.exposures[0].meal).toEqual('dinner')
+    expect(kid.entries[0]).toHaveProperty('food')
+    expect(kid.entries[0].food).toEqual('Beans')
+    expect(kid.entries[0].description).toEqual('Many different beans')
+    expect(kid.entries[0].outcomes).toHaveLength(1)
+    expect(kid.entries[0].outcomes[0]).toEqual('ate a bite')
+    expect(kid.entries[0].meal).toEqual('dinner')
   })
  
-  test('a new exposure with no date will default to the correct date', async () => {
-    const exposure = {
+  test('a new entry with no date will default to the correct date', async () => {
+    const entry = {
       food: 'Beans',
     }
 
     const response = await api
-      .patch(`/api/kid/${kidId}/exposure`)
+      .patch(`/api/kid/${kidId}/entry`)
       .set('Authorization', `Bearer ${token}`)
-      .send(exposure)
+      .send(entry)
       .expect(201)
 
     const dateToday = new Date()
     const kid = await Kid.findById(kidId)
-    expect(kid.exposures[0]).toHaveProperty('date')
-    const dbDate = kid.exposures[0].date
+    expect(kid.entries[0]).toHaveProperty('date')
+    const dbDate = kid.entries[0].date
     expect(dbDate.getDate()).toEqual(dateToday.getDate())
     expect(dbDate.getDay()).toEqual(dateToday.getDay())
     expect(dbDate.getMonth()).toEqual(dateToday.getMonth())
     expect(dbDate.getYear()).toEqual(dateToday.getYear())
   })
   test('the api returns the correct date', async () => {
-    const exposure = {
+    const entry = {
       food: 'Beans',
     }
 
     const response = await api
-      .patch(`/api/kid/${kidId}/exposure`)
+      .patch(`/api/kid/${kidId}/entry`)
       .set('Authorization', `Bearer ${token}`)
-      .send(exposure)
+      .send(entry)
       .expect(201)
 
     const kid = await Kid.findById(kidId)
-    expect(kid.exposures[0]).toHaveProperty('date')
-    console.log(kid.exposures[0].date)
+    expect(kid.entries[0]).toHaveProperty('date')
+    console.log(kid.entries[0].date)
     const dateToday = new Date().toJSON()
     const apiDate = response.body.date
     const dateLength = 10
     expect(apiDate.slice(0, dateLength)).toEqual(dateToday.slice(0, dateLength))
   })
-  test('an exposure that is not in the db cannot be retrieved', async () => {
+  test('an entry that is not in the db cannot be retrieved', async () => {
     const idNotInDb = '65336ffee3700a6cd0040889'
     const response = await api
-      .get(`/api/kid/${kidId}/exposure/${idNotInDb}`)
+      .get(`/api/kid/${kidId}/entry/${idNotInDb}`)
       .set('Authorization', `Bearer ${token}`)
       .expect(404)
   })
 })
 
-describe('With two exposures in the database', () => {
+describe('With two entries in the database', () => {
   let kidId = ''
   let token = ''
   let userId = null
   const idNotInDb = '65336ffee3700a6cd0040889'
-  let exposureId = null
-  let dbExposure = null
+  let entryId = null
+  let dbEntry = null
   beforeAll(async () => {
     await User.deleteMany({})
     await Kid.deleteMany({})
@@ -166,7 +166,7 @@ describe('With two exposures in the database', () => {
     const kid = {
       'name': 'one',
       'users': [createdUser.id],
-      exposures: [{
+      entries: [{
         food: 'Pear',
         description: 'whole',
         outcomes: [
@@ -188,10 +188,10 @@ describe('With two exposures in the database', () => {
     const savedKid = await kidObject.save()
     console.log({savedKid})
     kidId = savedKid.id
-    dbExposure = savedKid.exposures[0]
-    exposureId = savedKid.exposures[0].id
-    console.log({dbExposure})
-    console.log({exposureId})
+    dbEntry = savedKid.entries[0]
+    entryId = savedKid.entries[0].id
+    console.log({dbEntry})
+    console.log({entryId})
 
     user.kids = [kidId]
     await user.save()
@@ -207,98 +207,98 @@ describe('With two exposures in the database', () => {
 
     token = result.body.token
   })
-  test('an exposure is returned correctly when queried', async () => {
+  test('an entry is returned correctly when queried', async () => {
     const response = await api
-      .get(`/api/kid/${kidId}/exposure/${exposureId}`)
+      .get(`/api/kid/${kidId}/entry/${entryId}`)
       .set('Authorization', `Bearer ${token}`)
       .expect(200)
 
     const {food, description, outcomes, meal, date} = response.body
-    expect(food).toEqual(dbExposure.food)
-    expect(description).toEqual(dbExposure.description)
-    expect(outcomes[0]).toEqual(dbExposure.outcomes[0])
-    expect(outcomes[1]).toEqual(dbExposure.outcomes[1])
-    expect(meal).toEqual(dbExposure.meal)
-    expect(date).toEqual(dbExposure.date.toJSON())
+    expect(food).toEqual(dbEntry.food)
+    expect(description).toEqual(dbEntry.description)
+    expect(outcomes[0]).toEqual(dbEntry.outcomes[0])
+    expect(outcomes[1]).toEqual(dbEntry.outcomes[1])
+    expect(meal).toEqual(dbEntry.meal)
+    expect(date).toEqual(dbEntry.date.toJSON())
 
   })
-  test('getting a nonexistant exposure resolves gracefully', async () => {
+  test('getting a nonexistant entry resolves gracefully', async () => {
     const idNotInDb = '65336ffee3700a6cd0040889'
     const response = await api
-      .get(`/api/kid/${kidId}/exposure/${idNotInDb}`)
+      .get(`/api/kid/${kidId}/entry/${idNotInDb}`)
       .set('Authorization', `Bearer ${token}`)
       .expect(404)
   })
-  test('an exposure can be changed and returns the updated data', async () => {
-    const testExposure = {    
+  test('an entry can be changed and returns the updated data', async () => {
+    const testEntry = {    
       'food': 'squash',
       'description': 'roasted with salt',
     }
     const response = await api
-      .patch(`/api/kid/${kidId}/exposure/${exposureId}`)
+      .patch(`/api/kid/${kidId}/entry/${entryId}`)
       .set('Authorization', `Bearer ${token}`)
-      .send(testExposure)
+      .send(testEntry)
       .expect(200)
 
       console.log(response.body)
     const {food, description, outcomes, meal, date} = response.body
-    expect(food).toEqual(testExposure.food)
-    expect(description).toEqual(testExposure.description)
-    expect(outcomes[0]).toEqual(dbExposure.outcomes[0])
-    expect(outcomes[1]).toEqual(dbExposure.outcomes[1])
-    expect(meal).toEqual(dbExposure.meal)
-    expect(date).toEqual(dbExposure.date.toJSON())
+    expect(food).toEqual(testEntry.food)
+    expect(description).toEqual(testEntry.description)
+    expect(outcomes[0]).toEqual(dbEntry.outcomes[0])
+    expect(outcomes[1]).toEqual(dbEntry.outcomes[1])
+    expect(meal).toEqual(dbEntry.meal)
+    expect(date).toEqual(dbEntry.date.toJSON())
 
   }, 10000)
-  test('an exposure can be changed in the db', async () => {
-    const testExposure = {    
+  test('an entry can be changed in the db', async () => {
+    const testEntry = {    
       'food': 'Peas',
       'description': 'frozen',
       'outcomes': ['sniffed']
     }
     const response = await api
-      .patch(`/api/kid/${kidId}/exposure/${exposureId}`)
+      .patch(`/api/kid/${kidId}/entry/${entryId}`)
       .set('Authorization', `Bearer ${token}`)
-      .send(testExposure)
+      .send(testEntry)
       .expect(200)
       
     const kid = await Kid.findOne()
-    const {food, description, outcomes, meal, date} = kid.exposures[0]
+    const {food, description, outcomes, meal, date} = kid.entries[0]
     console.log({food, description, outcomes, meal, date})
-    expect(food).toEqual(testExposure.food)
-    expect(description).toEqual(testExposure.description)
+    expect(food).toEqual(testEntry.food)
+    expect(description).toEqual(testEntry.description)
     expect(outcomes).toHaveLength(1)
-    expect(outcomes[0]).toEqual(testExposure.outcomes[0])
-    expect(meal).toEqual(dbExposure.meal)
-    expect(date).toEqual(dbExposure.date)
+    expect(outcomes[0]).toEqual(testEntry.outcomes[0])
+    expect(meal).toEqual(dbEntry.meal)
+    expect(date).toEqual(dbEntry.date)
 
   })
-  test('changing a nonexistant exposure resolves gracefully', async () => {
+  test('changing a nonexistant entry resolves gracefully', async () => {
     const idNotInDb = '65336ffee3700a6cd0040889'
-    const testExposure = {    
+    const testEntry = {    
       'food': 'Parsley',
       'description': 'leaf',
       'outcomes': ['sniffed']
     }
     const response = await api
-      .patch(`/api/kid/${kidId}/exposure/${idNotInDb}`)
+      .patch(`/api/kid/${kidId}/entry/${idNotInDb}`)
       .set('Authorization', `Bearer ${token}`)
-      .send(testExposure)
+      .send(testEntry)
       .expect(404)
   })
-  test('an exposure can be deleted', async () => {
+  test('an entry can be deleted', async () => {
     const response = await api
-      .delete(`/api/kid/${kidId}/exposure/${exposureId}`)
+      .delete(`/api/kid/${kidId}/entry/${entryId}`)
       .set('Authorization', `Bearer ${token}`)
       .expect(204)
 
     const kid = await Kid.findOne()
-    expect(kid.exposures).toHaveLength(1)
+    expect(kid.entries).toHaveLength(1)
   })
 })
 
-// describe('with an exposure in the database', () => {
-//   const testExposure = {    
+// describe('with an entry in the database', () => {
+//   const testEntry = {    
 //     'food': 'squash',
 //     'description': 'roasted with salt',
 //   }
@@ -306,13 +306,13 @@ describe('With two exposures in the database', () => {
 //   let id = ''
 
 //   beforeAll(async () => {
-//     await Exposure.deleteMany({})
-//     const exposure = new Exposure(testExposure)
-//     let id = await exposure.save()
+//     await Entry.deleteMany({})
+//     const entry = new Entry(testEntry)
+//     let id = await entry.save()
 //   })
-//   test('the exposure can be retrieved', async () => {
+//   test('the entry can be retrieved', async () => {
 //     const response = await api
-//     .get(`/api/exposure`)
+//     .get(`/api/entry`)
 //     .expect(200)
     
 //     expect(response.body)
@@ -322,16 +322,16 @@ describe('With two exposures in the database', () => {
 
 //   })
 
-//   test('the exposure can be deleted', async () => {
+//   test('the entry can be deleted', async () => {
 //     const response = await api
-//       .delete(`/api/exposure/`)
+//       .delete(`/api/entry/`)
 //   })
   
 
   
-//   test('getting a nonexistant exposure will not cause problems', async () => {
+//   test('getting a nonexistant entry will not cause problems', async () => {
 //     const response = await api
-//     .get(`/api/exposure/${idNotInDb}`)
+//     .get(`/api/entry/${idNotInDb}`)
 //     .expect(404)
 //   })
 

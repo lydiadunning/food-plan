@@ -40,7 +40,7 @@ app.get(config.PORT, cors(), function (req, res, next) {
   res.json({ msg: "This is CORS-enabled for a Single Route" });
 });
 
-app.use("/api/kid",/* userExtractor,*/ kidRouter);
+app.use("/api/kid", userExtractor, kidRouter);
 app.use("/api/outcometips", outcomeTipRouter);
 app.use("/api/user", userRouter);
 app.use("/api/login", loginRouter);
