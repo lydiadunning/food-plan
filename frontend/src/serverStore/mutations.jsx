@@ -113,12 +113,12 @@ export const useUpdateExposure = (kidId, exposureId) => {
  *
  * @returns mutation object with method mutate
  */
-export const useDeleteKid = () => {
+export const useDeleteKid = (kidId) => {
   const config = getUserConfig()
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (kid) => axios.delete(kidUrl.concat(kid.id), config),
+    mutationFn: () => axios.delete(kidUrl.concat(kidId), config),
     onSuccess: async (data, variables, context) => {
       console.log('success')
       await queryClient.invalidateQueries(['kids'])

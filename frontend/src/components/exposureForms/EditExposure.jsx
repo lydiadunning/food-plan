@@ -2,8 +2,9 @@ import { useUpdateExposure, useDeleteExposure } from '../../serverStore/mutation
 import { useForm } from 'react-hook-form'
 import { Button, Flex, Heading, IconButton, Card } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form'
-import { x, trashcan } from '../../assets/svgImages'
+import { x } from '../../assets/svgImages'
 import OutcomeOptionPicker from './OutcomeOptionPicker'
+import { Delete } from '../Delete'
 
 const EditExposure = ({ kid, exposure, closeEditExposure }) => {
   const { register, handleSubmit, watch } = useForm({
@@ -24,7 +25,7 @@ const EditExposure = ({ kid, exposure, closeEditExposure }) => {
     closeEditExposure()
   }
 
-  const deleteThis = () => {
+  const deleteExposureAction = () => {
     deleteExposure.mutate()
     closeEditExposure()
   }
@@ -33,7 +34,7 @@ const EditExposure = ({ kid, exposure, closeEditExposure }) => {
     <Card>
       <Flex justify='between'>
         <Heading>Editing</Heading>
-        <IconButton onClick={deleteThis}>{trashcan}</IconButton>
+        <Delete action={deleteExposureAction}/>
         <IconButton onClick={closeEditExposure}>{x}</IconButton>
       </Flex>
 
