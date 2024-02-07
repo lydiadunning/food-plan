@@ -59,12 +59,11 @@ React.js, build with Vite. Accesses backend with axios and manages server state 
 ## Next Steps in Development
 
 ### Now
-- add functionality to delete entries
+- change exposure to entry
 
 ### Next
 
 - add filter for entries- by food
-- change exposure to entry
 - clear form fields after submission
 - Fix app getting lost on refresh
 - check for date not appearing on first load - fix
