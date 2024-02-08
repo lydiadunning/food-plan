@@ -63,7 +63,6 @@ React.js, build with Vite. Accesses backend with axios and manages server state 
 ### Next
 
 - add filter for entries- by food
-- clear form fields after submission
 - Fix app getting lost on refresh
 - check for date not appearing on first load - fix
 
