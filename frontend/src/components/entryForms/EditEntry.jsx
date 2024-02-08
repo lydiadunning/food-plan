@@ -34,8 +34,11 @@ const EditEntry = ({ kid, entry, closeEditEntry }) => {
     <Card>
       <Flex justify='between'>
         <Heading>Editing</Heading>
-        <Delete action={deleteEntryAction}/>
-        <IconButton onClick={closeEditEntry}>{x}</IconButton>
+        <Flex gap='2'>
+          <Delete action={deleteEntryAction}/>
+          <IconButton onClick={closeEditEntry}>{x}</IconButton>
+        </Flex>
+        
       </Flex>
 
       <Form.Root onSubmit={handleSubmit(onSubmit)}>
@@ -67,7 +70,11 @@ const EditEntry = ({ kid, entry, closeEditEntry }) => {
               <Flex direction='column' justify='between'>
                 <Form.Label>meal</Form.Label>
                 <Form.Control asChild>
-                  <input size='10' type='text' {...register('meal')}></input>
+                  <input 
+                    size='10' 
+                    type='text' 
+                    {...register('meal')}
+                  ></input>
                 </Form.Control>
               </Flex>
             </Form.Field>
