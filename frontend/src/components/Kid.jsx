@@ -12,7 +12,7 @@ const Kid = ({ kid, makeMessage }) => {
 
   const ref = useRef(null);
   const handleScroll = () => {
-    ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    ref.current.scrollIntoView({ behavior: 'smooth', inline: 'center' })
   };
 
   const deleteKid = useDeleteKid(kid.id)
