@@ -4,13 +4,14 @@ import { Button, Heading, Flex, Dialog, IconButton } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form'
 import OutcomeOptionPicker from './OutcomeOptionPicker'
 import { x } from '../../assets/svgImages'
+import { useEffect } from 'react'
 
 const AddEntry = ({ kid, makeMessage }) => {
-  const today = new Date().toISOString().substring(0, 10)
+  const today = new Date().toISOString()
 
-  const { register, handleSubmit, watch, reset } = useForm({
+  const { register, handleSubmit, watch, reset, formState:{isSubmitSuccessful}} = useForm({
     defaultValues: {
-      date: today,
+      date: today.slice(0, 10),
     },
   })
 
@@ -19,10 +20,11 @@ const AddEntry = ({ kid, makeMessage }) => {
     createEntry.mutate(data)
     const foodCount = kid.entries.filter(entry => entry.food == data.food).length + 1 // acts on state before kid query returns new entry
     const message = foodCount === 1 ?  `${kid.name} tried ${data.food}!` : `${kid.name} has tried ${data.food} ${foodCount} times!`
-
     makeMessage(message)
-    reset(undefined, {keepDefaultValues: true})
   }
+  useEffect(() => {
+    reset(undefined, {keepDefaultValues: true})
+  }, [isSubmitSuccessful, reset])
 
   return (
     <Dialog.Root>
