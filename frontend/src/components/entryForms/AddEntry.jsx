@@ -18,7 +18,8 @@ const AddEntry = ({ kid, makeMessage }) => {
   const submit = (data) => {
     createEntry.mutate(data)
     const foodCount = kid.entries.filter(entry => entry.food == data.food).length + 1 // acts on state before kid query returns new entry
-    const message = foodCount === 1 ?  `${kid.name} tried ${data.food}!` : `${kid.name} has tried ${data.food} ${foodCount + 1} times!`
+    const message = foodCount === 1 ?  `${kid.name} tried ${data.food}!` : `${kid.name} has tried ${data.food} ${foodCount} times!`
+
     makeMessage(message)
     reset(undefined, {keepDefaultValues: true})
   }
