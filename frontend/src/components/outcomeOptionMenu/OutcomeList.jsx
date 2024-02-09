@@ -60,6 +60,7 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
   return (
     <ol>
       <Flex gap='3' direction='column'>
+        <p style={{fontSize: '0.8rem'}}>The littlest win</p>
         {outcomes.length > 0 ? (
           outcomes.map((x, i) => (
             <Outcome
@@ -75,6 +76,7 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
         ) : (
           <p>Add a new outcome</p>
         )}
+        <p style={{fontSize: '0.8rem'}}>The biggest win</p>
       </Flex>
     </ol>
   )

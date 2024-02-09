@@ -22,13 +22,13 @@ const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
 
   return (
     <Card size='1' my='3'>
+      <p><i>Using a past tense verb works well here.</i></p>
       <Box>
         <OutcomeList
           outcomes={outcomes}
           setOutcomes={setOutcomes}
           showOutcomeHints={showOutcomeHints}
         />
-
         <Form.Root onSubmit={handleSubmit(submitHandler)}>
           <Flex mt='3' justify='between' align='center'>
             <Form.Field>

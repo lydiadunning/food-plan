@@ -76,7 +76,6 @@ const AddKid = () => {
         {showOutcomes && (
           <>
             <Heading>Choose {kidName +"'s"} outcome options</Heading>
-            <p>Using a past tense verb works well here.</p>
             <OutcomeMenu
               outcomes={outcomes}
               setOutcomes={setOutcomes}

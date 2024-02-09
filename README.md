@@ -73,6 +73,7 @@ React.js, build with Vite. Accesses backend with axios and manages server state 
 - allow a user to turn off outcome options in a user setting
 - add a default 'was offered' outcome option
 - improve user flow around creating a child profile
+- improve adding outcome options to an existing kid with no outcome options
 
 ### For Later
 
