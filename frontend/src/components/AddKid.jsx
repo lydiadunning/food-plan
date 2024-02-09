@@ -53,6 +53,11 @@ const AddKid = () => {
             <Heading>
               Do you want to record how {kidName} responds to foods?
             </Heading>
+            <p>
+              Keeping track of how a child responds to foods can help you see whether offering your child new foods is having an impact. 
+              Choosing not to record how a child responds can help keep the focus on your actions, which you can control. 
+              You can add or remove these later.
+            </p>
             <Flex gap='2'>
               <Button
                 size='3'
@@ -70,6 +75,8 @@ const AddKid = () => {
         )}
         {showOutcomes && (
           <>
+            <Heading>Choose {kidName +"'s"} outcome options</Heading>
+            <p>Using a past tense verb works well here.</p>
             <OutcomeMenu
               outcomes={outcomes}
               setOutcomes={setOutcomes}

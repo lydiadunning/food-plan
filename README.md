@@ -59,12 +59,20 @@ React.js, build with Vite. Accesses backend with axios and manages server state 
 ## Next Steps in Development
 
 ### Now
+- improve prompts for selecting outcome options
+- trial entry as a sentence
 
 ### Next
 
 - add filter for entries- by food
-- Fix app getting lost on refresh
-- check for date not appearing on first load - fix
+- figure out default date disappearing after closing dialog
+- improve frontend folder structure
+- build a dashboard - one for the user, one for kids
+- create a goal-setting interface, with both trackable and non-trackable goals.
+- figure out routing and refresh on live site
+- allow a user to turn off outcome options in a user setting
+- add a default 'was offered' outcome option
+- improve user flow around creating a child profile
 
 ### For Later
 
@@ -77,7 +85,6 @@ React.js, build with Vite. Accesses backend with axios and manages server state 
 
 - list values and goals to guide the design process.
 
-- Make sure deleting or editing one kid doesn't remove other kids.
 - Ensure login functionality works properly
   - Test edgecases and improve error detection
 
