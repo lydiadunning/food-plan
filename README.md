@@ -59,7 +59,11 @@ React.js, build with Vite. Accesses backend with axios and manages server state 
 ## Next Steps in Development
 
 ### Now
-- improve prompts for selecting outcome options
+- allow a user to turn off outcome options in a user setting
+- improve adding outcome options to an existing kid with no outcome options
+- change default outcome options to past tense -or- change prompt text
+- move outcome options from db to JSON file
+
 - trial entry as a sentence
 
 ### Next
@@ -70,10 +74,7 @@ React.js, build with Vite. Accesses backend with axios and manages server state 
 - build a dashboard - one for the user, one for kids
 - create a goal-setting interface, with both trackable and non-trackable goals.
 - figure out routing and refresh on live site
-- allow a user to turn off outcome options in a user setting
-- add a default 'was offered' outcome option
 - improve user flow around creating a child profile
-- improve adding outcome options to an existing kid with no outcome options
 
 ### For Later
 
@@ -90,3 +91,4 @@ React.js, build with Vite. Accesses backend with axios and manages server state 
   - Test edgecases and improve error detection
 
   - change entry inputs to a sentence? 
+  - when displaying all entries as data, give all empty outcomes the default value 'was offered'
