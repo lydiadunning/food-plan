@@ -27,9 +27,11 @@ export const useKids = () => {
 /**
  * @returns { isLoading, error, data }
  */
-export const useOutcomeTips = () => {
+export const useOutcomeTips = (needOutcomes) => {
+
   return useQuery({
     queryKey: ['outcomeTips'],
     queryFn: () => axios.get(baseUrl.concat('outcometips/')),
+    enabled: needOutcomes // condition required for query call
   })
 }
