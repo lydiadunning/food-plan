@@ -1,11 +1,11 @@
-const OutcomeTipArray = require("../models/outcomeTipArray.js");
+// const OutcomeTipArray = require("../models/outcomeTipArray.js");
 const outcomeTipRouter = require("express").Router();
+const tips = require("../models/outcomeTipArray.js")
 
 // get all active outcome tips in OutcomeTipArray
 outcomeTipRouter.get("/", async (request, response) => {
-  const tips = await OutcomeTipArray.findOne();
-  //.populate('outcomeTips')
-
+  // const tips = await OutcomeTipArray.findOne();
+  console.log('tips', tips)
   response.json(tips);
 });
 
