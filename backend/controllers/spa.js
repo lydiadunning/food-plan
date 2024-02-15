@@ -2,8 +2,8 @@
 const spaRouter = require("express").Router();
 const path = require('path')
 
-spaRouter.get('*', (request, resolve) => {
-  resolve.sendFile(path.resolve(process.cwd(), 'index.html'))
+spaRouter.get('*', (request, response) => {
+  response.redirect('/')
 })
 
 module.exports = spaRouter
