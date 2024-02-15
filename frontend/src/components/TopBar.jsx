@@ -11,7 +11,8 @@ const TopBar = () => {
   const navigate = useNavigate()
   const matchLogin = useMatch('/login')
   const matchKidList = useMatch('/kidlist')
-  const showBack = !matchLogin && !matchKidList
+  const match404 = useMatch('/404')
+  const showBack = !matchLogin && !matchKidList && !match404
 
   const queryClient = useQueryClient()
 
@@ -22,7 +23,8 @@ const TopBar = () => {
     setOpen(false)
   }
 
-  return (
+  // note - reversed
+  return ( 
     <Flex justify='between' direction='row-reverse' mb='3'>
       <Popover.Root open={open} onOpenChange={setOpen}>
         <Popover.Content className='popover' style={{ zIndex: '200' }}>

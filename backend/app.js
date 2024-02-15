@@ -15,8 +15,10 @@ const {
 } = require("./utils/middleware.js");
 const userRouter = require("./controllers/users.js");
 const loginRouter = require("./controllers/login.js");
+const spaRouter = require('./controllers/spa.js')
 
 const app = express();
+
 app.use(express.static("dist")); // serves static files, in this case the frontend build, in a directory called dist.
 app.use(express.json()); // enables json parsing middleware
 app.use(requestLogger);
@@ -44,6 +46,7 @@ app.use("/api/kid", userExtractor, kidRouter);
 app.use("/api/outcometips", outcomeTipRouter);
 app.use("/api/user", userRouter);
 app.use("/api/login", loginRouter);
+app.use("*", spaRouter)
 
 app.use(unknownEndpoint);
 app.use(errorHandler);

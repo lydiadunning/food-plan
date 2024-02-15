@@ -9,6 +9,7 @@ import { KidList } from './components/KidList'
 import { LoginForm } from './components/userAuth/LoginForm.jsx'
 import { checkForLogin } from './components/userAuth/userHooks.jsx'
 import MessageToast from './components/Toast.jsx'
+import PageNotFound from './components/PageNotFound.jsx'
 
 function App() {
   const [message, setMessage] = useState(null)
@@ -64,7 +65,8 @@ function App() {
           path='/kidlist'
           element={<KidList kidData={kids} makeMessage={makeMessage} />}
         />
-
+        <Route path='/404' element={<PageNotFound />} />
+        <Route path='*' element={<Navigate to='/404' replace={true} />} />
       </Routes>
     {message && <MessageToast message={message} />}
     </Container>
