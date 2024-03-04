@@ -1,4 +1,4 @@
-import { IconButton, Card, Flex } from '@radix-ui/themes'
+import { IconButton, Card, Flex, Tooltip } from '@radix-ui/themes'
 import { pencil } from '../assets/svgImages'
 
 const Entry = ({ entry, openEditEntries }) => {
@@ -13,9 +13,11 @@ const Entry = ({ entry, openEditEntries }) => {
       <Flex justify='between'>
         <p>{entry.food}</p>
 
-        <IconButton onClick={() => openEditEntries(entry)}>
-          {pencil}
-        </IconButton>
+        <Tooltip content='edit entry'>
+          <IconButton onClick={() => openEditEntries(entry)}>
+            {pencil}
+          </IconButton>
+        </Tooltip>
       </Flex>
       <Flex gap='2'>
         <Flex direction='column'>

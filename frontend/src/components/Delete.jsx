@@ -1,4 +1,4 @@
-import { Button, IconButton, Card } from '@radix-ui/themes'
+import { Button, IconButton, Card, Tooltip } from '@radix-ui/themes'
 import * as Popover from '@radix-ui/react-popover'
 import { trashcan, x } from '../assets/svgImages'
 
@@ -22,7 +22,9 @@ export const Delete = ({ action }) => {
         </Card>
       </Popover.Content>
       <Popover.Trigger asChild>
-        <IconButton>{trashcan}</IconButton>
+        <Tooltip content='delete'>
+          <IconButton>{trashcan}</IconButton>
+        </Tooltip>
       </Popover.Trigger>
     </Popover.Root>
   )

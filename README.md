@@ -59,7 +59,6 @@ React.js, build with Vite. Accesses backend with axios and manages server state 
 ## Next Steps in Development
 
 ### Now
-- figure out routing and refresh on live site
 
 ### Next
 
@@ -69,6 +68,7 @@ React.js, build with Vite. Accesses backend with axios and manages server state 
 - build a dashboard - one for the user, one for kids
 - create a goal-setting interface, with both trackable and non-trackable goals.
 - improve user flow around creating a child profile
+- improve url routing on live site 
 
 ### For Later
 

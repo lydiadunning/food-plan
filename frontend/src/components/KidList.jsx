@@ -1,5 +1,5 @@
 import Kid from './Kid.jsx'
-import { IconButton, Flex, Heading, Card } from '@radix-ui/themes'
+import { IconButton, Flex, Heading, Card, Tooltip } from '@radix-ui/themes'
 import { plus } from '../assets/svgImages.jsx'
 import { useNavigate } from 'react-router-dom'
 import Loader from './Loader.jsx'
@@ -25,9 +25,11 @@ export const KidList = ({ kidData, makeMessage }) => {
             <Kid key={kid.id} kid={kid} makeMessage={makeMessage} />
           ))}
           <Card className='swipeable' size='5' ref={ref} onClick={handleScroll} >
-            <IconButton size='3' onClick={() => navigate('/addkid')} >
-              {plus}
-            </IconButton>
+            <Tooltip content='add a child'>
+              <IconButton size='3' onClick={() => navigate('/addkid')} >
+                {plus}
+              </IconButton>
+            </Tooltip>
           </Card>
         </Flex>
         : <Loader/>

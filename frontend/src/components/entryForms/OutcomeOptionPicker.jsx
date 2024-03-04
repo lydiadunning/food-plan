@@ -1,4 +1,6 @@
 import { Flex, Card, Inset, Box } from '@radix-ui/themes'
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
+
 
 const OutcomeOptionPicker = ({ kid, register, watch }) => {
   const watchOutcomes = watch(['outcomes'])
@@ -27,14 +29,17 @@ const OutcomeOptionPicker = ({ kid, register, watch }) => {
                     htmlFor={option.outcome}
                   >
                     {option.outcome}
-                    <input
-                      type='checkbox'
-                      name='outcome'
-                      id={option.outcome}
-                      value={option.outcome}
-                      style={{ visibility: 'hidden' }}
-                      {...register('outcomes')}
-                    />
+                    <VisuallyHidden.Root>
+                      <input
+                        type='checkbox'
+                        name='outcome'
+                        id={option.outcome}
+                        value={option.outcome}
+                        // style={{ visibility: 'hidden' }}
+                        tabIndex='0'
+                        {...register('outcomes')}
+                      />
+                    </VisuallyHidden.Root>
                   </label>
                 ))}
               </Flex>

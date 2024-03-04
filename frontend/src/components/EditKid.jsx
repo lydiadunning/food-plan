@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useUpdateKid } from '../serverStore/mutations.jsx'
 import OutcomeMenu from './outcomeOptionMenu/OutcomeMenu.jsx'
 import { useForm } from 'react-hook-form'
-import { Button, Flex, IconButton, Dialog } from '@radix-ui/themes'
+import { Button, Flex, IconButton, Dialog, Tooltip } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form'
 import { pencil } from '../assets/svgImages.jsx'
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden'
@@ -33,7 +33,9 @@ const EditKid = ({ kid }) => {
   return (
     <Dialog.Root>
       <Dialog.Trigger>
-        <IconButton>{pencil}</IconButton>
+        <Tooltip content={`edit ${kid.name}`}>
+          <IconButton>{pencil}</IconButton>
+        </Tooltip>
       </Dialog.Trigger>
 
       <Dialog.Content style={{ maxWidth: 450 }}>

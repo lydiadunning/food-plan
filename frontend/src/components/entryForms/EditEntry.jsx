@@ -1,6 +1,6 @@
 import { useUpdateEntry, useDeleteEntry } from '../../serverStore/mutations'
 import { useForm } from 'react-hook-form'
-import { Button, Flex, Heading, IconButton, Card } from '@radix-ui/themes'
+import { Button, Flex, Heading, IconButton, Card, Tooltip } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form'
 import { x } from '../../assets/svgImages'
 import OutcomeOptionPicker from './OutcomeOptionPicker'
@@ -36,7 +36,9 @@ const EditEntry = ({ kid, entry, closeEditEntry }) => {
         <Heading>Editing</Heading>
         <Flex gap='2'>
           <Delete action={deleteEntryAction}/>
-          <IconButton onClick={closeEditEntry}>{x}</IconButton>
+          <Tooltip content='close'>
+            <IconButton onClick={closeEditEntry}>{x}</IconButton>
+          </Tooltip>
         </Flex>
         
       </Flex>

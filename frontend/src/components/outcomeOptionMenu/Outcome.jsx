@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { IconButton, Flex, Box } from '@radix-ui/themes'
+import { IconButton, Flex, Box, Tooltip } from '@radix-ui/themes'
 import { upArrow, downArrow, x } from '../../assets/svgImages'
 
 const Outcome = ({
@@ -15,13 +15,21 @@ const Outcome = ({
       <Flex justify='between'>
         {outcome}
         <Flex gap='3'>
-          {!isFirst && <IconButton onClick={moveThisUp}>{upArrow}</IconButton>}
+          {!isFirst && 
+          <Tooltip content='move down' delayDuration='1000' skipdelayDuration='100'>
+            <IconButton onClick={moveThisUp}>{upArrow}</IconButton>
+          </Tooltip >
+          }
           {!isLast ? (
-            <IconButton onClick={moveThisDown}>{downArrow}</IconButton>
+            <Tooltip content='move down' delayDuration='1000' skipdelayDuration='100'>
+              <IconButton onClick={moveThisDown}>{downArrow}</IconButton>
+            </Tooltip>
           ) : (
             <Box width='6'></Box>
           )}
-          {<IconButton onClick={removeThis}>{x}</IconButton>}
+          <Tooltip content='remove' delayDuration='1000' skipdelayDuration='100'>
+            <IconButton onClick={removeThis}>{x}</IconButton>
+          </Tooltip>
         </Flex>
       </Flex>
     </li>

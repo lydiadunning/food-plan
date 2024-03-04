@@ -1,6 +1,6 @@
 import { useCreateEntry } from '../../serverStore/mutations'
 import { useForm } from 'react-hook-form'
-import { Button, Heading, Flex, Dialog, IconButton } from '@radix-ui/themes'
+import { Button, Heading, Flex, Dialog, IconButton, Tooltip } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form'
 import OutcomeOptionPicker from './OutcomeOptionPicker'
 import { x } from '../../assets/svgImages'
@@ -38,9 +38,11 @@ const AddEntry = ({ kid, makeMessage }) => {
         <Flex direction='column' p='6'>
           <Flex direction='row' justify='between'>
             <Heading>{kid.name}</Heading>
-            <Dialog.Close asChild>
-              <IconButton>{x}</IconButton>
-            </Dialog.Close>
+            <Tooltip content='close'>
+              <Dialog.Close asChild>
+                <IconButton>{x}</IconButton>
+              </Dialog.Close>
+            </Tooltip>
           </Flex>
           <Form.Root onSubmit={handleSubmit(submit)}>
             <Flex direction='column' gap='2' align='stretch'>
