@@ -1,10 +1,11 @@
 import * as Popover from '@radix-ui/react-popover'
 import { browserLogout } from './userAuth/userHooks'
 import { useState } from 'react'
-import { Button, Card, Flex, Link } from '@radix-ui/themes'
+import { Button, Card, Flex, Link, IconButton } from '@radix-ui/themes'
 import { useQueryClient } from '@tanstack/react-query'
 import { triangle, x } from '../assets/svgImages'
 import { useNavigate, useMatch } from 'react-router-dom'
+import { BarChartIcon } from '@radix-ui/react-icons'
 
 const TopBar = () => {
   const [open, setOpen] = useState(false)
@@ -23,6 +24,11 @@ const TopBar = () => {
     setOpen(false)
   }
 
+  const seeData = () => {
+    navigate('/userdata')
+    setOpen(false)
+  }
+
   // note - reversed
   return ( 
     <Flex justify='between' direction='row-reverse' mb='3'>
@@ -30,6 +36,7 @@ const TopBar = () => {
         <Popover.Content className='popover' style={{ zIndex: '200' }}>
           <Card>
             <Button onClick={logout}>log out</Button>
+            <IconButton onClick={seeData}><BarChartIcon/></IconButton>
             <Popover.Close
               style={{
                 padding: '3px 3px 0 3px',

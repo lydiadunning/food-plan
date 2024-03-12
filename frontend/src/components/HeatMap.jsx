@@ -49,7 +49,7 @@ const HeatMap = ({ entries }) => {
         text: function (date, value, dayjsDate) {
           return (
             (value ? value : 'No') +
-            ' contributions on ' +
+            (value === 1 ? ' entry on ' : ' entries on ') +
             dayjsDate.format('dddd, MMMM D, YYYY')
           );
         },
