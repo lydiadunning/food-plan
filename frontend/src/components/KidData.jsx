@@ -7,7 +7,7 @@ import { BarChartIcon } from '@radix-ui/react-icons'
 const KidData = ({ kid }) => {
   return (
     <Dialog.Root>
-      <Tooltip content={`Data for ${kid.name}`}>
+      <Tooltip content={`${kid.name}'s data`}>
         <Dialog.Trigger>
           <IconButton><BarChartIcon/></IconButton>
         </Dialog.Trigger>
