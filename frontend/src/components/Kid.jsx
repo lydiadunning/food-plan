@@ -6,6 +6,7 @@ import EditKid from './EditKid.jsx'
 import AddEntry from './entryForms/AddEntry.jsx'
 import { useDeleteKid } from '../serverStore/mutations.jsx'
 import {useRef} from 'react'
+// import KidData from './KidData.jsx'
 
 const Kid = ({ kid, makeMessage }) => {
   console.log('kid in Kid', kid)
@@ -26,6 +27,7 @@ const Kid = ({ kid, makeMessage }) => {
       <Flex direction='column' p='5' className='kid-size'>
       <Heading>{kid.name}</Heading>
         <Flex gap='2' justify='end'>
+          {/* <KidData kid={kid} /> */}
           <EditKid kid={kid} /> 
           <Delete action={deleteKidAction} />
         </Flex>
