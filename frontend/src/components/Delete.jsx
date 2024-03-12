@@ -21,11 +21,11 @@ export const Delete = ({ action }) => {
           <Popover.Arrow className='popover-arrow' />
         </Card>
       </Popover.Content>
-      <Popover.Trigger asChild>
-        <Tooltip content='delete'>
+      <Tooltip content='delete'>
+        <Popover.Trigger asChild>
           <IconButton>{trashcan}</IconButton>
-        </Tooltip>
-      </Popover.Trigger>
+        </Popover.Trigger>
+      </Tooltip>
     </Popover.Root>
   )
 }
