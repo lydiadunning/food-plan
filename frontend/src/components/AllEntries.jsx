@@ -1,5 +1,4 @@
 import Entry from './Entry.jsx'
-import HeatMap from './heatmap.jsx'
 import * as Collapsible from '@radix-ui/react-collapsible'
 import { useState } from 'react'
 import { Button, Flex } from '@radix-ui/themes'
@@ -19,7 +18,6 @@ const AllEntries = ({ kid }) => {
       open={open}
       onOpenChange={setOpen}
     >
-      <HeatMap entries={entries} />
       <Flex direction='column' gap='3'>
         {entryIDToEdit && entryIDToEdit === latestEntry.id ? (
           <EditEntry
