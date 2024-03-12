@@ -32,11 +32,11 @@ const EditKid = ({ kid }) => {
 
   return (
     <Dialog.Root>
-      <Dialog.Trigger>
-        <Tooltip content={`edit ${kid.name}`}>
+      <Tooltip content={`edit ${kid.name}`}>
+        <Dialog.Trigger>
           <IconButton>{pencil}</IconButton>
-        </Tooltip>
-      </Dialog.Trigger>
+        </Dialog.Trigger>
+      </Tooltip>
 
       <Dialog.Content style={{ maxWidth: 450 }}>
         <Flex direction='column'>
