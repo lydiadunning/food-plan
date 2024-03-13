@@ -35,19 +35,23 @@ const TopBar = () => {
       <Popover.Root open={open} onOpenChange={setOpen}>
         <Popover.Content className='popover' style={{ zIndex: '200' }}>
           <Card>
-            <Button onClick={logout}>log out</Button>
-            <Tooltip content='see user data'>
-              <IconButton onClick={seeData}><BarChartIcon/></IconButton>
-            </Tooltip>
-            <Popover.Close
-              style={{
-                padding: '3px 3px 0 3px',
-                border: 'none',
-                marginLeft: '3px',
-              }}
-            >
-              {x}
-            </Popover.Close>
+            <Flex gap='2' align='start'>
+              <Flex direction='column' gap='2'>
+                <Button onClick={logout}>log out</Button>
+                <Tooltip content='see user data'>
+                  <IconButton onClick={seeData}><BarChartIcon/></IconButton>
+                </Tooltip>
+              </Flex>
+              <Popover.Close
+                style={{
+                  padding: '3px 3px 0 3px',
+                  border: 'none',
+                  marginLeft: '3px',
+                }}
+              >
+                {x}
+              </Popover.Close>
+            </Flex>
             <Popover.Arrow className='popover-arrow' />
           </Card>
         </Popover.Content>
