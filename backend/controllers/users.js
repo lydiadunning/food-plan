@@ -11,7 +11,14 @@ userRouter.get("/", async (request, response) => {
 
 userRouter.post("/", async (request, response, next) => {
   const { username, name, password, email } = request.body;
-  logger.info("from request.body", username, name, password, email);
+
+  if (!username || username.length < 3) {
+    return response.status(400).json({
+      error: username
+        ? "username must be at least 3 characters long"
+        : "username is required",
+    });
+  }
 
   if (!password || password.length < 3) {
     return response.status(400).json({
@@ -20,12 +27,16 @@ userRouter.post("/", async (request, response, next) => {
         : "password is required",
     });
   }
-  logger.info("past if password incorrect");
+
+  const existingUser = User.find({name: username})
+  if (existingUser) {
+    return response.status(400).json({
+      error: `username ${username} already in use`
+    })
+  }
 
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
-
-  logger.info("passwordHash formed");
 
   const user = new User({
     username,
@@ -34,7 +45,6 @@ userRouter.post("/", async (request, response, next) => {
     email,
   });
   try {
-    logger.info("saving user");
     const savedUser = await user.save();
     response.status(201).json(savedUser);
   } catch (error) {
