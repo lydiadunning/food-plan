@@ -1,4 +1,4 @@
-import { Card, Heading } from "@radix-ui/themes"
+import { Box, Card, Heading } from "@radix-ui/themes"
 import Loader from './Loader.jsx'
 import HeatMap from './HeatMap.jsx'
 
@@ -17,10 +17,10 @@ const UserData = ({ kidData }) => {
     <Card>
       {
         kidData ?
-          <>
+          <Box m='1'>
             <Heading>Total daily entries for {makeNameList(kidData.map(kid => kid.name))}</Heading>
             <HeatMap entries={kidData.map(kid => kid.entries).flat()} />
-          </>
+          </Box>
         : <Loader/>
       }
       

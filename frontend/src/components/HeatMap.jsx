@@ -4,6 +4,7 @@ import Tooltip from 'cal-heatmap/plugins/Tooltip';
 import CalendarLabel from 'cal-heatmap/plugins/CalendarLabel';
 import LegendLite from 'cal-heatmap/plugins/LegendLite';
 import { useEffect } from 'react';
+import { Flex } from '@radix-ui/themes';
 
 
 
@@ -25,7 +26,7 @@ const HeatMap = ({ entries }) => {
       groupY: 'count'
     },
     date: { start: new Date('2024-01-01') },
-    range: 4,
+    range: 6,
     scale: {
       color: {
         type: 'threshold',
@@ -85,39 +86,41 @@ const HeatMap = ({ entries }) => {
     <div
       style={{
         borderRadius: '3px',
-        padding: '1rem',
         overflow: 'hidden',
       }}
     >
-      <div id="ex-ghDay" className="margin-bottom--md"></div>
-      <a
-        className="button button--sm button--secondary margin-top--sm"
-        href="#"
-        onClick={e => {
-          e.preventDefault();
-          cal.previous();
-        }}
-      >
-        ← Previous
-      </a>
-      <a
-        className="button button--sm button--secondary margin-top--sm margin-left--xs"
-        href="#"
-        onClick={e => {
-          e.preventDefault();
-          cal.next();
-        }}
-      >
-        Next →
-      </a>
-      <div style={{ float: 'right', fontSize: 12 }}>
-        <span style={{ color: '#768390' }}>Less</span>
-        <div
-          id="ex-ghDay-legend"
-          style={{ display: 'inline-block', margin: '0 4px' }}
-        ></div>
-        <span style={{ color: '#768390', fontSize: 12 }}>More</span>
-      </div>
+      <div id="ex-ghDay" style={{overflow: 'hidden'}}></div>
+      <Flex justify='between' my='2'>
+        <a
+          style={{fontSize: 'medium'}}
+          href="#"
+          onClick={e => {
+            e.preventDefault();
+            cal.previous();
+          }}
+        >
+          ← Previous
+        </a>
+        <a
+          style={{fontSize: 'medium'}}
+          href="#"
+          onClick={e => {
+            e.preventDefault();
+            cal.next();
+          }}
+        >
+          Next →
+        </a>
+        <div style={{ float: 'right', fontSize: 12 }}>
+          <span style={{ color: '#768390' }}>Less</span>
+          <div
+            id="ex-ghDay-legend"
+            style={{ display: 'inline-block', margin: '0 4px' }}
+          ></div>
+          <span style={{ color: '#768390', fontSize: 12 }}>More</span>
+        </div>
+      </Flex>
+      
     </div>
   );
 }
