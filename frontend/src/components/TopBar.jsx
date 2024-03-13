@@ -1,7 +1,7 @@
 import * as Popover from '@radix-ui/react-popover'
 import { browserLogout } from './userAuth/userHooks'
 import { useState } from 'react'
-import { Button, Card, Flex, Link, IconButton } from '@radix-ui/themes'
+import { Button, Card, Flex, Link, IconButton, Tooltip } from '@radix-ui/themes'
 import { useQueryClient } from '@tanstack/react-query'
 import { triangle, x } from '../assets/svgImages'
 import { useNavigate, useMatch } from 'react-router-dom'
@@ -36,7 +36,9 @@ const TopBar = () => {
         <Popover.Content className='popover' style={{ zIndex: '200' }}>
           <Card>
             <Button onClick={logout}>log out</Button>
-            <IconButton onClick={seeData}><BarChartIcon/></IconButton>
+            <Tooltip content='see user data'>
+              <IconButton onClick={seeData}><BarChartIcon/></IconButton>
+            </Tooltip>
             <Popover.Close
               style={{
                 padding: '3px 3px 0 3px',
