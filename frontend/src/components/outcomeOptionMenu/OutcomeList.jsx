@@ -9,7 +9,7 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
   const { isSuccess, data } = useOutcomeTips(needOutcomes) // only queries if needOutcomes == true
 
   useEffect(() => {
-    if (isSuccess) {
+    if (needOutcomes && isSuccess) {
       setOutcomes(data.data.outcomes)
     }
   }, [isSuccess]) 
@@ -39,7 +39,6 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
       )
     setOutcomes(reordered)
   }
-console.log({outcomes})
 
   return (
     <ol>

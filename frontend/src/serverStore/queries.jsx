@@ -32,6 +32,6 @@ export const useOutcomeTips = (needOutcomes) => {
   return useQuery({
     queryKey: ['outcomeTips'],
     queryFn: () => axios.get(baseUrl.concat('outcometips/')),
-    enabled: needOutcomes // condition required for query call
+    enabled: needOutcomes // condition required for query call, but returns cached data if any available.
   })
 }
