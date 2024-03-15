@@ -2,24 +2,27 @@
 import { useState } from 'react'
 import OutcomeList from './OutcomeList'
 import { Button, Card, Flex, Box } from '@radix-ui/themes'
-import { useForm } from 'react-hook-form'
-import * as Form from '@radix-ui/react-form'
 
 const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
+  const [newOutcomeOption, setNewOutcomeOption] = useState('')
   // keycounter prevents duplication of keys in new outcomes
   const [keyCounter, setKeyCounter] = useState(outcomes.length + 1)
 
-  const { register, handleSubmit } = useForm()
+  const newOutcomeOptionHandler = (e) => {
+    setNewOutcomeOption(e.target.value)
+  }
 
-  const submitHandler = (data) => {
+  const submitHandler = () => {
     const outcome = {
-      outcome: data.outcome,
+      outcome: newOutcomeOption,
       id: keyCounter,
     }
     setOutcomes([...outcomes, outcome])
     setKeyCounter(keyCounter + 1)
+    setNewOutcomeOption('')
   }
 
+  // not using a form here to avoid nesting this form in the AddKid form
   return (
     <Card size='1' my='3'>
       <p><i>Using a past tense verb works well here.</i></p>
@@ -29,24 +32,17 @@ const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
           setOutcomes={setOutcomes}
           showOutcomeHints={showOutcomeHints}
         />
-        <Form.Root onSubmit={handleSubmit(submitHandler)}>
-          <Flex mt='3' justify='between' align='center'>
-            <Form.Field>
-              <Form.Label>Add an outcome: </Form.Label>
-              <Form.Control asChild>
-                <input
-                  type='text'
-                  name='outcome'
-                  {...register('outcome')}
-                  required
-                ></input>
-              </Form.Control>
-            </Form.Field>
-            <Form.Submit asChild>
-              <Button type='submit'>submit</Button>
-            </Form.Submit>
-          </Flex>
-        </Form.Root>
+        <Flex mt='3' justify='between' align='center'>
+          <label>Add an outcome:
+            <input
+              onChange={newOutcomeOptionHandler}
+              type='text'
+              name='outcome'
+              value={newOutcomeOption}
+            />
+          </label>
+          <Button onClick={submitHandler} type='button'>add</Button>
+        </Flex>
       </Box>
     </Card>
   )
