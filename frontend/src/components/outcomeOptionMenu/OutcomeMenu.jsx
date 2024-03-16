@@ -22,7 +22,7 @@ const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
     setNewOutcomeOption('')
   }
 
-  // not using a form here to avoid nesting this form in the AddKid form
+  // not using a form here to avoid nesting this for in the AddKid form.
   return (
     <Card size='1' my='3'>
       <p><i>Using a past tense verb works well here.</i></p>

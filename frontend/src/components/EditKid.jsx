@@ -66,7 +66,7 @@ const EditKid = ({ kid }) => {
           <OutcomeMenu outcomes={outcomes} setOutcomes={setOutcomes} />
           <Flex justify='center'>
             <Dialog.Close>
-              <Button mr='1' variant='soft' color='gray'>
+              <Button mr='1' variant='soft' color='gray' onClick={() => setOutcomes([...kid.outcomeOptions])}>
                 Cancel
               </Button>
             </Dialog.Close>

@@ -1,18 +1,19 @@
 /* eslint-disable react/prop-types */
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useOutcomeTips } from '../../serverStore/queries'
 import Outcome from './Outcome'
-import { Flex } from '@radix-ui/themes'
+import { Flex, Button } from '@radix-ui/themes'
 
 const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
-  const needOutcomes = outcomes.length == 0 && showOutcomeHints 
+  const [doGetHints, setDoGetHints] = useState(showOutcomeHints)
+  const needOutcomes = outcomes.length == 0 && doGetHints
   const { isSuccess, data } = useOutcomeTips(needOutcomes) // only queries if needOutcomes == true
 
   useEffect(() => {
     if (needOutcomes && isSuccess) {
       setOutcomes(data.data.outcomes)
     }
-  }, [isSuccess]) 
+  }, [isSuccess, doGetHints]) 
 
   const removeOutcomeHandler = (id) => {
     setOutcomes(outcomes.filter((x) => x.id !== id))
@@ -60,7 +61,10 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
             <p style={{fontSize: '0.8rem'}}>The biggest win</p>
           </>
         ) : (
-          <p>No outcome options saved</p>
+          <Flex align='start' gap='2' direction='column'>
+            <p>No outcome options saved</p>
+            <Button variant='outline' onClick={() => setDoGetHints(true)}>add default options</Button>
+          </Flex>  
         )}
       </Flex>
     </ol>
