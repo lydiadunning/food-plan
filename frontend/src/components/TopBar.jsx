@@ -14,6 +14,7 @@ const TopBar = () => {
   const matchKidList = useMatch('/kidlist')
   const match404 = useMatch('/404')
   const showBack = !matchLogin && !matchKidList && !match404
+  const showUserMenu = !matchLogin
 
   const queryClient = useQueryClient()
 
@@ -32,7 +33,7 @@ const TopBar = () => {
   // note - reversed
   return ( 
     <Flex justify='between' direction='row-reverse' mb='3'>
-      <Popover.Root open={open} onOpenChange={setOpen}>
+      {showUserMenu && <Popover.Root open={open} onOpenChange={setOpen}>
         <Popover.Content className='popover' style={{ zIndex: '200' }}>
           <Card>
             <Flex gap='2' align='start'>
@@ -59,7 +60,7 @@ const TopBar = () => {
         <Popover.Trigger asChild>
           <Button>user</Button>
         </Popover.Trigger>
-      </Popover.Root>
+      </Popover.Root>}
       {showBack && <Link onClick={() => navigate(-1)}>{triangle} Back</Link>}
     </Flex>
   )
