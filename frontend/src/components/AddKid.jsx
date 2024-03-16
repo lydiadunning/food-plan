@@ -50,7 +50,10 @@ const AddKid = () => {
               </Form.Field>
               { !showOutcomes 
                 ?
-                  <Button variant='outline' size='3' mr='3' onClick={showOutcomeOptionsMenu}>add outcome options</Button>
+                <Card>
+                  <p>Do you want to track what your child does with new foods?</p>
+                  <Button variant='outline' size='3' mt='2' onClick={showOutcomeOptionsMenu}>add outcome options</Button>
+                </Card>
                 :
                 <OutcomeMenu
                   outcomes={outcomes}
