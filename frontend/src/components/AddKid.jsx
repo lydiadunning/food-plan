@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import OutcomeMenu from './outcomeOptionMenu/OutcomeMenu.jsx'
-import { Button, Card, Box, Flex } from '@radix-ui/themes'
+import { Button, Card, Box, Flex, Heading } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form'
 
 import { useCreateKid } from '../serverStore/mutations'
@@ -12,7 +12,6 @@ const AddKid = () => {
   const [outcomes, setOutcomes] = useState([])
   const [showOutcomes, setShowOutcomes] = useState(false)
 
-  console.log('addkid outcomes', outcomes)
   const navigate = useNavigate()
   const { register, handleSubmit } = useForm()
 
@@ -34,38 +33,42 @@ const AddKid = () => {
   }
 
   return (
-    <Card>
-      <Box p='6'>
-        <Form.Root onSubmit={handleSubmit(saveHandler)}>
-          <Flex direction='column' gap='4'>
+    <>
+      <Heading align='center' mt='3' mb='6'>
+        Add A Kid
+      </Heading>
+      <Card>
+        <Box p='6'>
+          <Form.Root onSubmit={handleSubmit(saveHandler)}>
+            <Flex direction='column' gap='4' align='start'>
 
-            <Form.Field>
-              <Form.Label>{"name: "}</Form.Label>
-              <Form.Control asChild>
-                <input type='text' {...register('name')} required></input>
-              </Form.Control>
-            </Form.Field>
-            { !showOutcomes 
-              ?
-              <Flex>
-                <Button variant='outline' size='3' mr='3' onClick={showOutcomeOptionsMenu}>add outcome options</Button>
-              </Flex>
-              :
-              <OutcomeMenu
-                outcomes={outcomes}
-                setOutcomes={setOutcomes}
-                showOutcomeHints={true}
-              />
-            }
-            <Form.Submit asChild>
-              <Button size='3' mr='3'>
-                Save
-              </Button>
-            </Form.Submit>
-          </Flex>
-        </Form.Root>      
-      </Box>
-    </Card>
+              <Form.Field>
+                <Form.Label>{"name: "}</Form.Label>
+                <Form.Control asChild>
+                  <input type='text' {...register('name')} required></input>
+                </Form.Control>
+              </Form.Field>
+              { !showOutcomes 
+                ?
+                  <Button variant='outline' size='3' mr='3' onClick={showOutcomeOptionsMenu}>add outcome options</Button>
+                :
+                <OutcomeMenu
+                  outcomes={outcomes}
+                  setOutcomes={setOutcomes}
+                  showOutcomeHints={true}
+                />
+              }
+              <Form.Submit asChild style={{alignSelf: 'center'}}>
+                <Button size='3' mr='3'>
+                  Save
+                </Button>
+              </Form.Submit>
+            </Flex>
+          </Form.Root>      
+        </Box>
+      </Card>
+    </>
+    
   )
 }
 
