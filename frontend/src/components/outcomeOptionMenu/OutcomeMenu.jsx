@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
 import OutcomeList from './OutcomeList'
-import { Button, Card, Flex, Box } from '@radix-ui/themes'
+import { Button, Card, Flex, Box, Popover, IconButton } from '@radix-ui/themes'
+import { QuestionMarkCircledIcon, InfoCircledIcon, Cross1Icon } from '@radix-ui/react-icons'
 
 const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
   const [newOutcomeOption, setNewOutcomeOption] = useState('')
@@ -25,7 +26,36 @@ const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
   // not using a form here to avoid nesting this for in the AddKid form.
   return (
     <Card size='1' my='3'>
-      <p><i>Using a past tense verb works well here.</i></p>
+      <Flex>
+      <p>Brief description</p>
+      <Popover.Root>
+        <Popover.Trigger>
+          <IconButton variant='ghost'><QuestionMarkCircledIcon/></IconButton>
+        </Popover.Trigger>
+        <Popover.Content>
+          <p><i>Using a past tense verb works well here.</i></p>
+          <Popover.Close>
+            <IconButton><Cross1Icon/></IconButton>
+          </Popover.Close>
+        </Popover.Content>
+
+        
+      </Popover.Root>
+      <Popover.Root>
+        <Popover.Trigger>
+          <IconButton variant='ghost'><InfoCircledIcon/></IconButton>
+        </Popover.Trigger>
+        <Popover.Content>
+          <p><i>Using a past tense verb works well here.</i></p>
+          <Popover.Close>
+            <IconButton><Cross1Icon/></IconButton>
+          </Popover.Close>
+        </Popover.Content>
+       
+        
+      </Popover.Root>
+      </Flex>
+      
       <Box>
         <OutcomeList
           outcomes={outcomes}
