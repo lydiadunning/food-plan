@@ -1,19 +1,18 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useOutcomeTips } from '../../serverStore/queries'
 import Outcome from './Outcome'
 import { Flex, Button } from '@radix-ui/themes'
 
 const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
-  const [doGetHints, setDoGetHints] = useState(showOutcomeHints)
-  const needOutcomes = outcomes.length == 0 && doGetHints
+  const needOutcomes = outcomes.length == 0 && showOutcomeHints
   const { isSuccess, data } = useOutcomeTips(needOutcomes) // only queries if needOutcomes == true
 
   useEffect(() => {
     if (needOutcomes && isSuccess) {
       setOutcomes(data.data.outcomes)
     }
-  }, [isSuccess, doGetHints]) 
+  }, [isSuccess]) 
 
   const removeOutcomeHandler = (id) => {
     setOutcomes(outcomes.filter((x) => x.id !== id))
@@ -62,8 +61,8 @@ const OutcomeList = ({ outcomes, setOutcomes, showOutcomeHints }) => {
           </>
         ) : (
           <Flex align='start' gap='2' direction='column'>
-            <p>No outcome options saved</p>
-            <Button variant='outline' onClick={() => setDoGetHints(true)}>add default options</Button>
+            <p>No outcome options will appear</p>
+            <Button type='button' variant='outline' onClick={() => setOutcomes(data.data.outcomes)}>add default options</Button>
           </Flex>  
         )}
       </Flex>
