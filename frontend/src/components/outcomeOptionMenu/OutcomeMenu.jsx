@@ -27,33 +27,34 @@ const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
   return (
     <Card size='1' my='3'>
       <Flex>
-      <p>Brief description</p>
-      <Popover.Root>
-        <Popover.Trigger>
-          <IconButton variant='ghost'><QuestionMarkCircledIcon/></IconButton>
-        </Popover.Trigger>
-        <Popover.Content>
-          <p><i>Using a past tense verb works well here.</i></p>
-          <Popover.Close>
-            <IconButton><Cross1Icon/></IconButton>
-          </Popover.Close>
-        </Popover.Content>
-
-        
-      </Popover.Root>
+      <p>Outcomes</p>
       <Popover.Root>
         <Popover.Trigger>
           <IconButton variant='ghost'><InfoCircledIcon/></IconButton>
         </Popover.Trigger>
         <Popover.Content>
+          <p>These options let you track what your child does with new foods</p>
+          <p>You can select any number of outcomes when making an entry</p>
+          <Popover.Close>
+            <IconButton><Cross1Icon/></IconButton>
+          </Popover.Close>
+        </Popover.Content>
+      </Popover.Root>
+      <Popover.Root>
+        <Popover.Trigger>
+          <IconButton variant='ghost'><QuestionMarkCircledIcon/></IconButton>
+        </Popover.Trigger>
+        <Popover.Content>
+          <p>Choose positive outcomes that help you notice small improvements</p>
+          <p>With an older child, ask what they think</p>
+          <p>Outcomes are always optional</p>
           <p><i>Using a past tense verb works well here.</i></p>
           <Popover.Close>
             <IconButton><Cross1Icon/></IconButton>
           </Popover.Close>
         </Popover.Content>
-       
-        
       </Popover.Root>
+
       </Flex>
       
       <Box>
