@@ -17,12 +17,13 @@ const EditKid = ({ kid }) => {
   const updateKid = useUpdateKid(kid.id)
 
   const onNameUpdate = (data) => {
+    console.log('nameUpdate')
     setName(data.name)
   }
 
   const update = () => {
     const newKid = {
-      name: name,
+      name: name === '' ? kid.name : name,
       outcomeOptions: outcomes.map((option) => {
         return { outcome: option.outcome }
       }),
