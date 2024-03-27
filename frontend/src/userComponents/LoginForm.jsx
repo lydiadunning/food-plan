@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import CreateUserAccount from './CreateUserAccount'
-import { useLoginAccount } from '../../serverStore/mutations'
-import Error from '../Error'
+import { useLoginAccount } from '../serverStore/mutations'
+import Error from '../components/Error'
 import * as Form from '@radix-ui/react-form'
 import { Button, Card, Flex, Box } from '@radix-ui/themes'
-import { inputStyle } from '../../assets/styles'
+import { inputStyle } from '../assets/styles'
 import { useNavigate } from 'react-router-dom'
 
 export function LoginForm() {

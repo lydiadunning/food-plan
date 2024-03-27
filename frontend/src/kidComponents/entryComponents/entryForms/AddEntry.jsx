@@ -1,9 +1,9 @@
-import { useCreateEntry } from '../../serverStore/mutations'
+import { useCreateEntry } from '../../../serverStore/mutations'
 import { useForm } from 'react-hook-form'
 import { Button, Heading, Flex, Dialog, IconButton, Tooltip } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form'
 import OutcomeOptionPicker from './OutcomeOptionPicker'
-import { x } from '../../assets/svgImages'
+import { x } from '../../../assets/svgImages'
 import { useEffect } from 'react'
 
 const AddEntry = ({ kid, makeMessage }) => {

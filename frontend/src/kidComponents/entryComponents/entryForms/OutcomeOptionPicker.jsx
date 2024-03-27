@@ -35,7 +35,6 @@ const OutcomeOptionPicker = ({ kid, register, watch }) => {
                         name='outcome'
                         id={option.outcome}
                         value={option.outcome}
-                        // style={{ visibility: 'hidden' }}
                         tabIndex='0'
                         {...register('outcomes')}
                       />

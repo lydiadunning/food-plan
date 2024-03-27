@@ -1,6 +1,6 @@
 import { Box, Card, Heading } from "@radix-ui/themes"
-import Loader from './Loader.jsx'
-import HeatMap from './HeatMap.jsx'
+import Loader from '../components/Loader.jsx'
+import HeatMap from '../components/HeatMap.jsx'
 
 const UserData = ({ kidData }) => {
   const makeNameList = (kidNames) => {

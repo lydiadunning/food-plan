@@ -1,5 +1,5 @@
 import * as Popover from '@radix-ui/react-popover'
-import { browserLogout } from './userAuth/userHooks'
+import { browserLogout } from '../userComponents/userAuthHooks'
 import { useState } from 'react'
 import { Button, Card, Flex, Link, IconButton, Tooltip } from '@radix-ui/themes'
 import { useQueryClient } from '@tanstack/react-query'

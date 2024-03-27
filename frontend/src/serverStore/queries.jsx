@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
-import { checkForLogin, getUserConfig } from '../components/userAuth/userHooks'
+import { checkForLogin, getUserConfig } from '../userComponents/userAuthHooks'
 import sampleKids from '../assets/sample'
 
 const baseUrl = '/api/'

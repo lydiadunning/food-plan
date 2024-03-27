@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import AllEntries from './AllEntries.jsx'
-import { Delete } from './Delete.jsx'
+import AllEntries from './entryComponents/AllEntries.jsx'
+import { Delete } from '../components/Delete.jsx'
 import { Card, Heading, Flex } from '@radix-ui/themes'
 import EditKid from './EditKid.jsx'
-import AddEntry from './entryForms/AddEntry.jsx'
+import AddEntry from './entryComponents/entryForms/AddEntry.jsx'
 import { useDeleteKid } from '../serverStore/mutations.jsx'
 import {useRef} from 'react'
-import KidData from './KidData.jsx'
+import KidData from '../components/KidData.jsx'
 
 const Kid = ({ kid, makeMessage }) => {
   console.log('kid in Kid', kid)

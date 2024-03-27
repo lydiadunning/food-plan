@@ -4,13 +4,13 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { useKids } from './serverStore/queries'
 import TopBar from './components/TopBar.jsx'
 import { Container } from '@radix-ui/themes'
-import AddKid from './components/AddKid.jsx'
-import { KidList } from './components/KidList'
-import { LoginForm } from './components/userAuth/LoginForm.jsx'
-import { checkForLogin } from './components/userAuth/userHooks.jsx'
+import AddKid from './kidComponents/AddKid.jsx'
+import { KidList } from './kidComponents/KidList'
+import { LoginForm } from './userComponents/LoginForm.jsx'
+import { checkForLogin } from './userComponents/userAuthHooks.jsx'
 import MessageToast from './components/Toast.jsx'
 import PageNotFound from './components/PageNotFound.jsx'
-import UserData from './components/UserData.jsx'
+import UserData from './userComponents/UserData.jsx'
 
 function App() {
   const [message, setMessage] = useState(null)

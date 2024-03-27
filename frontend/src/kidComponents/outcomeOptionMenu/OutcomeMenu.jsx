@@ -14,7 +14,7 @@ const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
   }
 
   const submitHandler = () => {
-    const outcome = {
+     const outcome = {
       outcome: newOutcomeOption,
       id: keyCounter,
     }
@@ -23,7 +23,7 @@ const OutcomeMenu = ({ outcomes, setOutcomes, showOutcomeHints = false }) => {
     setNewOutcomeOption('')
   }
 
-  // not using a form here to avoid nesting this for in the AddKid form.
+  // not using a form here to avoid nesting this form in the AddKid form.
   return (
     <Card size='1' my='3'>
       <Flex>

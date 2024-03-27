@@ -5,7 +5,7 @@ import OutcomeMenu from './outcomeOptionMenu/OutcomeMenu.jsx'
 import { Button, Card, Box, Flex, Heading } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form'
 
-import { useCreateKid } from '../serverStore/mutations'
+import { useCreateKid } from '../serverStore/mutations.jsx'
 import { useNavigate } from 'react-router-dom'
 
 const AddKid = () => {

@@ -1,10 +1,10 @@
-import { useUpdateEntry, useDeleteEntry } from '../../serverStore/mutations'
+import { useUpdateEntry, useDeleteEntry } from '../../../serverStore/mutations'
 import { useForm } from 'react-hook-form'
 import { Button, Flex, Heading, IconButton, Card, Tooltip } from '@radix-ui/themes'
 import * as Form from '@radix-ui/react-form'
-import { x } from '../../assets/svgImages'
+import { x } from '../../../assets/svgImages'
 import OutcomeOptionPicker from './OutcomeOptionPicker'
-import { Delete } from '../Delete'
+import { Delete } from '../../../components/Delete'
 
 const EditEntry = ({ kid, entry, closeEditEntry }) => {
   const { register, handleSubmit, watch } = useForm({

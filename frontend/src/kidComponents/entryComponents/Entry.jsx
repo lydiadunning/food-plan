@@ -1,5 +1,5 @@
 import { IconButton, Card, Flex, Tooltip } from '@radix-ui/themes'
-import { pencil } from '../assets/svgImages'
+import { pencil } from '../../assets/svgImages'
 
 const Entry = ({ entry, openEditEntries }) => {
   // https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off

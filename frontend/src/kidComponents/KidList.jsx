@@ -2,7 +2,7 @@ import Kid from './Kid.jsx'
 import { IconButton, Flex, Heading, Card, Tooltip } from '@radix-ui/themes'
 import { plus } from '../assets/svgImages.jsx'
 import { useNavigate } from 'react-router-dom'
-import Loader from './Loader.jsx'
+import Loader from '../components/Loader.jsx'
 import { useRef } from 'react'
 
 export const KidList = ({ kidData, makeMessage }) => {

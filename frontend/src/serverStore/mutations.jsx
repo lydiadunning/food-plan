@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { getUserConfig } from '../components/userAuth/userHooks'
+import { getUserConfig } from '../userComponents/userAuthHooks'
 
 const baseUrl = '/api/'
 const kidUrl = baseUrl.concat('kid/')
